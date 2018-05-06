@@ -1,0 +1,51 @@
+<div>
+    <!-- BANNER -->
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Remédios BV
+                </h1>
+                <h2 class="subtitle">
+                    Ainda não encontrou seu remédio?
+                </h2>
+                <div class="control has-icons-left has-icons-right">
+                    <input class="input is-large" type="text" placeholder="Qual o nome do remédio?">
+                    <span class="icon is-medium is-right">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end BANNER -->
+
+    <section class="columns is-multiline container">
+        <div class="column is-half-tablet is-one-third-desktop" *ngFor="let m of remedios | async">
+
+            <div class="card" (click)="escolher(m.id)">
+                <div class="card-content">
+                    <div class="media">
+
+                        <div class="media-left">
+                            <figure class="image is-48x48">
+                                <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                            </figure>
+                        </div>
+
+                        <div class="media-content">
+                            <p class="title is-6">{{ m.nome }}</p>
+                            <p class="subtitle is-6">
+                                500 g
+                                <br/>
+                                indisponível
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>
