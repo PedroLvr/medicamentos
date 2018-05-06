@@ -1,41 +1,67 @@
 <div>
     <!-- BANNER -->
-    <section class="hero is-primary">
+    <section class="hero is-info">
         <div class="hero-body">
             <div class="container">
+
+                <a class="button is-primary" (click)="home()">
+                    <span class="icon">
+                        <i class="fa fa-chevron-left"></i>
+                    </span>
+                    <span>Home</span>
+                </a>
+
                 <h1 class="title">
-                    {{ remedio[0] | async }}
+                    {{ (remedio | async)?.nome }}
+                </h1>
+
+                <h1 class="subtitle">
+                    Mussum Ipsum, cacilds vidis litro abertis. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis.
+                    Vehicula non. Ut sed ex eros. Vivamus sit amet nibh non tellus tristique interdum. Viva Forevis aptent
+                    taciti sociosqu ad litora torquent. Manduma pindureta quium dia nois paga.
                 </h1>
             </div>
         </div>
     </section>
     <!-- end BANNER -->
 
-    <section class="columns is-multiline container">
-        <div class="column is-half-tablet is-one-third-desktop" *ngFor="let f of farmacias | async">
+    <section class="container resultado">
 
-            <div class="card" (click)="escolher(m.id)">
-                <div class="card-content">
-                    <div class="media">
+        <ng-container *ngIf="farmacias as lista; else loading">
 
-                        <div class="media-left">
-                            <figure class="image is-48x48">
-                                <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-                            </figure>
+            <div class="columns is-multiline">
+                <div class="column is-half-tablet is-one-third-desktop" *ngFor="let f of lista">
+
+                    <div class="card" (click)="escolher(f.id)">
+                        <div class="card-content">
+                            <div class="media">
+
+                                <div class="media-left">
+                                    <figure class="image is-64x64">
+                                        <img src="assets/img/icons/farmacia-256x256.png" alt="Placeholder image">
+                                    </figure>
+                                </div>
+
+                                <div class="media-content">
+                                    <p class="title is-6">{{ f.nome }}</p>
+                                    <p class="subtitle is-6">
+                                        {{ f.telefone }}
+                                        <br/> {{ f.endereco }}
+                                    </p>
+                                </div>
+
+                            </div>
                         </div>
-
-                        <div class="media-content">
-                            <p class="title is-6">{{ m.nome }}</p>
-                            <p class="subtitle is-6">
-                                500 g
-                                <br/> indisponível
-                            </p>
-                        </div>
-
                     </div>
-                </div>
-            </div>
 
-        </div>
+                </div>
+
+            </div>
+        </ng-container>
+
+        <ng-template #loading>
+            Carregando...
+        </ng-template>
+
     </section>
 </div>

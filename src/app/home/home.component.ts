@@ -10,19 +10,24 @@ import { Observable } from 'rxjs/Observable';
 })
 export class HomeComponent implements OnInit {
 
-    remedios: Observable<any>;
+    remedios: Observable<any[]>;
 
     constructor(
         private _db: AngularFireDatabase,
         private _router: Router
     ) {
-        this.remedios = this._db.object('remedios').valueChanges();
+        this.remedios = this._db.list('remedios').valueChanges();
     }
 
     ngOnInit() {}
 
-    public escolher(idRemedio: number): void {
-        this._router.navigate(['/', idRemedio]);
+    public escolher(idRemedio): void {
+        this._router.navigate(['/', idRemedio - 1]);
+    }
+
+    public pesquisar(texto: string): void {
+        let t = texto.toString().toLowerCase().trim();
+        console.log(t);
     }
 
 }
