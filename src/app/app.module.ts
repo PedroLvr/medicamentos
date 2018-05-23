@@ -12,6 +12,8 @@ import { FooterComponent } from './footer/footer.component';
 
 import { AppRouting } from './app.routing';
 import { firebaseConfig } from './app.firebase';
+import { ListaRemediosComponent } from './lista-remedios/lista-remedios.component';
+import { FormularioRemedioComponent } from './formulario-remedio/formulario-remedio.component';
 
 @NgModule({
     declarations: [
@@ -21,7 +23,9 @@ import { firebaseConfig } from './app.firebase';
         RemedioComponent,
         FarmaciaComponent,
         MenuComponent,
-        RemedioComponent
+        RemedioComponent,
+        ListaRemediosComponent,
+        FormularioRemedioComponent
     ],
     imports: [
         BrowserModule,

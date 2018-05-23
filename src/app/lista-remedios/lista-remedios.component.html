@@ -1,0 +1,48 @@
+<section class="container">
+    <ng-container *ngIf="(remedios | async) as lista; else loading">
+        <table class="table is-striped is-hoverable is-fullwidth">
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Nome</td>
+                    <td>Unidade</td>
+                    <td class="has-text-centered">Remover</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let r of lista">
+                    <td>{{ r.id }}</td>
+                    <td>{{ r.nome }}</td>
+                    <td>{{ r.unidade }}</td>
+                    <td class="has-text-centered">
+                        <a class="button is-danger is-small" (click)="remover(r)">
+                            <i class="fa fa-trash fa-lg"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </ng-container>
+
+    <ng-template #loading>
+        Carregando...
+    </ng-template>
+
+</section>
+
+<div class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Modal title</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <!-- Content ... -->
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-success">Save changes</button>
+            <button class="button">Cancel</button>
+        </footer>
+    </div>
+</div>

@@ -9,6 +9,26 @@
         <meta name="theme-color" content="#607d8b">
         <link rel="icon" type="image/x-icon" href="favicon.ico">
         <link rel="manifest" href="assets/manifest.json">
+
+        <style>
+            .pageloader {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                background: #00d1b2;
+            }
+            .pageloader .title {
+                font-size: 2rem;
+                font-weight: 600;
+                line-height: 1.125;
+                color: #fff;
+            }
+        </style>
     </head>
 
     <body class="has-navbar-fixed-top">
@@ -26,7 +46,11 @@
             }
         </script>
         
-        <app-root>Carregando Remédios BV...</app-root>
+        <app-root>
+            <div class="pageloader">
+                <span class="title">RemédiosBV...</span>
+            </div>
+        </app-root>
     </body>
 
 </html>
