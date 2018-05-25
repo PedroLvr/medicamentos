@@ -1,38 +1,50 @@
 <section class="container">
     <div class="field">
-        <label class="label is-medium">Nome do medicamento</label>
-        <div class="control has-icons-left has-icons-right">
-            <input class="input is-medium" type="email" placeholder="Extra small">
-            <span class="icon is-small is-left">
-                <i class="fa fa-envelope fa-xs"></i>
-            </span>
-            <span class="icon is-small is-right">
-                <i class="fa fa-check fa-xs"></i>
-            </span>
+        <label class="label is-medium">Nome comercial do medicamento</label>
+        <div class="control">
+            <input type="text" class="input is-medium" placeholder="Cimegripe" [(ngModel)]="remedio.nome">
         </div>
     </div>
 
     <div class="field">
-        <label class="label is-medium">Unidade</label>
-        <div class="control has-icons-left has-icons-right">
-            <input class="input is-medium" type="email" placeholder="Small">
-            <span class="icon is-left">
-                <i class="fa fa-envelope fa-sm"></i>
-            </span>
-            <span class="icon is-right">
-                <i class="fa fa-check fa-sm"></i>
-            </span>
+        <label class="label is-medium">Denominação Genérica (princípio ativo)</label>
+        <div class="control">
+            <input type="text" class="input is-medium" placeholder="ácido acetilsalicílico" [(ngModel)]="remedio.principio">
         </div>
+    </div>
+
+    <div class="field">
+        <label class="label is-medium">Composição / Concentração</label>
+        <div class="control">
+            <input type="text" class="input is-medium" placeholder="500 mg" [(ngModel)]="remedio.concentracao">
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label is-medium">Forma Farmacêutica</label>
+        <p class="control has-icons-left">
+            <span class="select is-medium">
+                <select [(ngModel)]="remedio.forma">
+                    <option>Comprimido</option>
+                    <option>Solução Oral</option>
+                    <option>Cápsula</option>
+                    <option>Xarope</option>
+                </select>
+            </span>
+            <span class="icon is-small is-left">
+                <i class="fa fa-globe"></i>
+            </span>
+        </p>
     </div>
 
     <div class="field is-grouped is-grouped-right">
         <p class="control">
-            <a class="button is-light">
+            <a class="button is-medium is-light" (click)="cancelar()">
                 Cancelar
             </a>
         </p>
         <p class="control">
-            <a class="button is-primary">
+            <a class="button is-medium is-primary" (click)="salvar(remedio)">
                 Salvar
             </a>
         </p>
