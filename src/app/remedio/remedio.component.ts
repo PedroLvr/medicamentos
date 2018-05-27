@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
+import { ParamsService } from '../params.service';
+import { FarmaciaService } from '../farmacia.service';
 
 @Component({
     selector: 'app-remedio',
@@ -10,31 +12,27 @@ import { Observable } from 'rxjs/Observable';
 })
 export class RemedioComponent implements OnInit {
 
-    remedio: Observable<any>;
-    farmacias = [
-        {id: 1, nome: "Farmácia 1", telefone: "(95) 3624-1234", endereco: "Av. Sebastião Diniz, n 23"},
-        {id: 2, nome: "Farmácia 2", telefone: "(95) 3624-1234", endereco: "Av. Sebastião Diniz, n 23"},
-        {id: 2, nome: "Farmácia 2", telefone: "(95) 3624-1234", endereco: "Av. Sebastião Diniz, n 23"},
-        {id: 2, nome: "Farmácia 2", telefone: "(95) 3624-1234", endereco: "Av. Sebastião Diniz, n 23"},
-        {id: 2, nome: "Farmácia 2", telefone: "(95) 3624-1234", endereco: "Av. Sebastião Diniz, n 23"},
-        {id: 2, nome: "Farmácia 2", telefone: "(95) 3624-1234", endereco: "Av. Sebastião Diniz, n 23"},
-        {id: 3, nome: "Farmácia 3", telefone: "(95) 3624-1234", endereco: "Av. Sebastião Diniz, n 23"},
-        {id: 4, nome: "Farmácia 4", telefone: "(95) 3624-1234", endereco: "Av. Sebastião Diniz, n 23"}
-    ];
+    remedio;
+    farmacias = [];
 
     constructor(
         private _db: AngularFireDatabase,
         private _router: Router,
-        private _route: ActivatedRoute
+        private _route: ActivatedRoute,
+        private _farmaciaService: FarmaciaService,
+        private _params: ParamsService
     ) {
-        let idRemedio = +this._route.snapshot.paramMap.get('idRemedio');
-        this.remedio = this._db.object("remedios/" + idRemedio).valueChanges();
+        this.remedio = this._params.getAll();     
+        console.log(this.remedio);   
     }
 
-    ngOnInit() { }
-
-    escolher(idFarmacia: number): void {
-        this._router.navigate(['farmacia/', idFarmacia]);
+    ngOnInit() {
+        this._farmaciaService.getFarmacias()
+        .valueChanges()
+        .subscribe(farmacias => {
+            console.log(farmacias);
+            this.farmacias = farmacias;
+        });
     }
 
     home(): void {

@@ -4,6 +4,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { RemedioService } from '../remedio.service';
+import { ParamsService } from '../params.service';
 
 @Component({
     selector: 'app-home',
@@ -19,6 +20,7 @@ export class HomeComponent implements OnInit {
     constructor(
         private _db: AngularFireDatabase,
         private _router: Router,
+        private _params: ParamsService,
         private _remedioService: RemedioService
     ) {}
 
@@ -31,8 +33,9 @@ export class HomeComponent implements OnInit {
         });
     }
 
-    escolher(idRemedio): void {
-        this._router.navigate(['/', idRemedio]);
+    escolher(remedio): void {
+        this._params.set(remedio);
+        this._router.navigateByUrl('remedio');
     }
 
     pesquisar(texto: string): void {

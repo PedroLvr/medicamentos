@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
+import { ParamsService } from '../params.service';
 
 @Component({
     selector: 'app-lista-remedios',
@@ -14,15 +15,17 @@ export class ListaRemediosComponent implements OnInit {
 
     constructor(
         private _db: AngularFireDatabase,
-        private _router: Router
+        private _router: Router,
+        private _params: ParamsService
     ) {
         this.remedios = this._db.list('remedios').valueChanges();
     }
 
     ngOnInit() {}
 
-    escolher(idRemedio): void {
-        this._router.navigate(['/', idRemedio - 1]);
+    farmacias(remedio): void {
+        this._params.set(remedio);
+        this._router.navigate(['/relacionar-farmacias']);
     }
 
     pesquisar(texto: string): void {

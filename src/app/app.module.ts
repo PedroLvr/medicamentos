@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
@@ -14,9 +15,16 @@ import { ListaRemediosComponent } from './lista-remedios/lista-remedios.componen
 import { FormularioRemedioComponent } from './formulario-remedio/formulario-remedio.component';
 
 import { RemedioService } from './remedio.service';
+import { FarmaciaService } from './farmacia.service';
+import { RequestService } from './request.service';
+import { ParamsService } from './params.service';
 
 import { AppRouting } from './app.routing';
 import { firebaseConfig } from './app.firebase';
+import { FormularioFarmaciaComponent } from './formulario-farmacia/formulario-farmacia.component';
+import { FormularioFuncionarioComponent } from './formulario-funcionario/formulario-funcionario.component';
+import { ListaFarmaciasComponent } from './lista-farmacias/lista-farmacias.component';
+import { RelacionarFarmaciasComponent } from './relacionar-farmacias/relacionar-farmacias.component';
 
 @NgModule({
     declarations: [
@@ -28,16 +36,26 @@ import { firebaseConfig } from './app.firebase';
         MenuComponent,
         RemedioComponent,
         ListaRemediosComponent,
-        FormularioRemedioComponent
+        FormularioRemedioComponent,
+        FormularioFarmaciaComponent,
+        FormularioFuncionarioComponent,
+        ListaFarmaciasComponent,
+        RelacionarFarmaciasComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
+        HttpModule,
         AngularFireModule.initializeApp(firebaseConfig),
         AngularFireDatabaseModule,
         AppRouting
     ],
-    providers: [ RemedioService ],
+    providers: [
+        RemedioService,
+        FarmaciaService,
+        RequestService,
+        ParamsService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,13 +4,19 @@ import { HomeComponent } from './home/home.component';
 import { RemedioComponent } from './remedio/remedio.component';
 import { FarmaciaComponent } from './farmacia/farmacia.component';
 import { ListaRemediosComponent } from './lista-remedios/lista-remedios.component';
+import { ListaFarmaciasComponent } from './lista-farmacias/lista-farmacias.component';
+import { RelacionarFarmaciasComponent } from './relacionar-farmacias/relacionar-farmacias.component';
 import { FormularioRemedioComponent } from './formulario-remedio/formulario-remedio.component';
+import { FormularioFarmaciaComponent } from './formulario-farmacia/formulario-farmacia.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'medicamentos', component: ListaRemediosComponent },
     { path: 'medicamentos/formulario', component: FormularioRemedioComponent },
-    { path: ':idRemedio', component: RemedioComponent },
+    { path: 'farmacias', component: ListaFarmaciasComponent },
+    { path: 'farmacias/formulario', component: FormularioFarmaciaComponent },
+    { path: 'remedio', component: RemedioComponent },
+    { path: 'relacionar-farmacias', component: RelacionarFarmaciasComponent },
     // { path: 'farmacia/:idFarmacia', component: FarmaciaComponent }
     // { path: 'erro404', component: Erro404Component },
     // { path: 'atividades', component: AtividadesComponent },

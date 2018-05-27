@@ -1,0 +1,31 @@
+<section class="container">
+    <ng-container *ngIf="farmacias.length; else loading">
+        <table class="table is-striped is-hoverable is-fullwidth">
+            <thead>
+                <tr>
+                    <td>Nome</td>
+                    <td>Endereco</td>
+                    <td>Telefone</td>
+                    <td class="has-text-centered">Remover</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let farmacia of farmacias">
+                    <td>{{ farmacia.nome }}</td>
+                    <td>{{ farmacia.endereco + farmacia.numero + farmacia.bairro + farmacia.cidade }}</td>
+                    <td>{{ farmacia.telefone }}</td>
+                    <td class="has-text-centered">
+                        <a class="button is-danger is-small" (click)="remover(farmacia)">
+                            <i class="fa fa-trash fa-lg"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </ng-container>
+
+    <ng-template #loading>
+        Carregando...
+    </ng-template>
+
+</section>
