@@ -24,7 +24,6 @@ export class RemedioComponent implements OnInit {
     ) {
         this.remedio = this._params.getAll();
         console.log(this.remedio);
-        this._router.
     }
 
     ngOnInit() {
