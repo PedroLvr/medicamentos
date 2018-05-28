@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 import { RemedioService } from '../remedio.service';
 import { ParamsService } from '../params.service';
 
@@ -14,8 +13,6 @@ import { ParamsService } from '../params.service';
 export class HomeComponent implements OnInit {
 
     remedios = [];
-    startAt = new Subject();
-    endAt = new Subject();
 
     constructor(
         private _db: AngularFireDatabase,
@@ -25,12 +22,7 @@ export class HomeComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this._remedioService.getRemedios('')
-        .valueChanges()
-        .subscribe(remedios => {
-            console.log(remedios);
-            this.remedios = remedios;
-        });
+        this.pesquisar();
     }
 
     escolher(remedio): void {
@@ -38,9 +30,13 @@ export class HomeComponent implements OnInit {
         this._router.navigateByUrl('remedio');
     }
 
-    pesquisar(texto: string): void {
-      this.startAt.next(texto);
-      this.endAt.next(texto + "\uf8ff");
+    pesquisar(texto = ''): void {
+        this._remedioService.getRemedios(texto)
+        .valueChanges()
+        .subscribe(remedios => {
+            console.log(remedios);
+            this.remedios = remedios;
+        });
     }
 
 }

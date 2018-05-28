@@ -1,26 +1,26 @@
 <nav class="navbar is-transparent is-fixed-top">
-    <div class="navbar-menu">
-        <div class="navbar-start">
+
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            RemédiosBV
+        </a>
+
+        <a role="button" class="navbar-burger" [ngClass]="{'is-active': menuAtivo}" aria-label="menu" aria-expanded="false" (click)="toggleMenu()">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div class="navbar-menu" [ngClass]="{'is-active': menuAtivo}">
+        <div class="navbar-end">
             <a class="navbar-item" href="/">
-                RemédiosBV
+                Login
+            </a>
+            <a class="navbar-item" href="https://bulma.io/documentation/components/breadcrumb/">
+                Quem Somos
             </a>
         </div>
-
-        <div class="navbar-end">
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link">
-                    Ver Mais
-                </a>
-                <div class="navbar-dropdown is-boxed is-right">
-                    <a class="navbar-item" href="/">
-                        Login
-                    </a>
-                    <hr class="navbar-divider">
-                    <a class="navbar-item" href="https://bulma.io/documentation/components/breadcrumb/">
-                        Quem Somos
-                    </a>
-                </div>
-            </div>
-        </div>
     </div>
+
 </nav>

@@ -6,7 +6,7 @@ export class RemedioService {
 
     constructor(private _db: AngularFireDatabase) { }
 
-    getRemedios(busca): AngularFireList<any> {
+    getRemedios(busca = ''): AngularFireList<any> {
         return this._db.list('/remedios', ref =>
             ref.orderByChild('nome')
             .startAt(busca)
