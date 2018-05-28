@@ -1,0 +1,14 @@
+{
+  "rules": {
+    // ".read": "auth != null",
+    // ".write": "auth != null"
+    ".read": true,
+    ".write": true,
+    "remedios": {
+      ".indexOn": ["nome", "principio"]
+    },
+    "farmacias": {
+      ".indexOn": ["nome"]
+    }
+  }
+}
