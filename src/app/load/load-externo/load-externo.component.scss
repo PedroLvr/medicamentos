@@ -1,0 +1,19 @@
+@import '~variables.scss';
+
+.load-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(#111, .7);
+    z-index: 99999;
+    @include flex-container;
+    @include flex-alinhar-vertical;
+    @include flex-alinhar-horizontal;
+
+    /deep/.mat-progress-spinner circle,
+    /deep/.mat-spinner circle {
+        stroke: $azul;
+    }
+}

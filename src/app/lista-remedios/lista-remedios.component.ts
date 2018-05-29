@@ -23,6 +23,14 @@ export class ListaRemediosComponent implements OnInit {
 
     ngOnInit() {}
 
+    novoRemedio() {
+        this._router.navigate(['/remedios/formulario']);
+    }
+
+    novaFarmacia() {
+        this._router.navigate(['/farmacias/formulario']);
+    }
+
     farmacias(remedio): void {
         this._params.set(remedio);
         this._router.navigate(['/relacionar-farmacias']);

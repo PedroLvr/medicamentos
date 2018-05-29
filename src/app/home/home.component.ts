@@ -4,6 +4,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { RemedioService } from '../remedio.service';
 import { ParamsService } from '../params.service';
+import { PopupService } from '../popup/popup.service';
 
 @Component({
     selector: 'app-home',
@@ -18,7 +19,8 @@ export class HomeComponent implements OnInit {
         private _db: AngularFireDatabase,
         private _router: Router,
         private _params: ParamsService,
-        private _remedioService: RemedioService
+        private _remedioService: RemedioService,
+        private _popup: PopupService
     ) {}
 
     ngOnInit() {

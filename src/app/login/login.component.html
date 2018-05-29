@@ -1,0 +1,28 @@
+<section class="container">
+    <div class="field">
+        <label class="label is-medium">Usuário ou E-mail</label>
+        <div class="control">
+            <input type="text" class="input is-medium" [(ngModel)]="usuario.login">
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label is-medium">Senha</label>
+        <div class="control">
+            <input type="password" class="input is-medium" [(ngModel)]="usuario.senha">
+        </div>
+    </div>
+
+    <div class="field is-grouped is-grouped-right">
+        <p class="control">
+            <a class="button is-medium is-light" (click)="cancelar()">
+                Cancelar
+            </a>
+        </p>
+        <p class="control">
+            <a class="button is-medium is-primary" (click)="logar(usuario)">
+                Logar
+            </a>
+        </p>
+    </div>
+</section>

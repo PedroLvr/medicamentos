@@ -5,6 +5,8 @@ import { HttpModule } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
+import { PopupModule } from './popup/popup.module';
+
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { HomeComponent } from './home/home.component';
@@ -25,6 +27,8 @@ import { FormularioFarmaciaComponent } from './formulario-farmacia/formulario-fa
 import { FormularioFuncionarioComponent } from './formulario-funcionario/formulario-funcionario.component';
 import { ListaFarmaciasComponent } from './lista-farmacias/lista-farmacias.component';
 import { RelacionarFarmaciasComponent } from './relacionar-farmacias/relacionar-farmacias.component';
+import { LoginComponent } from './login/login.component';
+import { QuemSomosComponent } from './quem-somos/quem-somos.component';
 
 @NgModule({
     declarations: [
@@ -40,7 +44,9 @@ import { RelacionarFarmaciasComponent } from './relacionar-farmacias/relacionar-
         FormularioFarmaciaComponent,
         FormularioFuncionarioComponent,
         ListaFarmaciasComponent,
-        RelacionarFarmaciasComponent
+        RelacionarFarmaciasComponent,
+        LoginComponent,
+        QuemSomosComponent
     ],
     imports: [
         BrowserModule,
@@ -48,7 +54,8 @@ import { RelacionarFarmaciasComponent } from './relacionar-farmacias/relacionar-
         HttpModule,
         AngularFireModule.initializeApp(firebaseConfig),
         AngularFireDatabaseModule,
-        AppRouting
+        AppRouting,
+        PopupModule
     ],
     providers: [
         RemedioService,
