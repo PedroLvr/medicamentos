@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { ParamsService } from '../params.service';
+import { PopupService } from '../popup/popup.service';
 
 @Component({
     selector: 'app-lista-remedios',
@@ -12,13 +13,16 @@ import { ParamsService } from '../params.service';
 export class ListaRemediosComponent implements OnInit {
 
     remedios: Observable<any[]>;
+    db: AngularFireList<any>;
 
     constructor(
         private _db: AngularFireDatabase,
         private _router: Router,
-        private _params: ParamsService
+        private _params: ParamsService,
+        private _popup: PopupService
     ) {
-        this.remedios = this._db.list('remedios').valueChanges();
+        this.db = this._db.list('remedios');
+        this.remedios = this.db.valueChanges();
     }
 
     ngOnInit() {}
@@ -41,8 +45,16 @@ export class ListaRemediosComponent implements OnInit {
         console.log(t);
     }
     
-    remover(remedio) {
-        console.log('Tem certeza que deseja remover ' + remedio.nome + '?');
+    remover(event, remedio) {
+        event.stopPropagation();
+        this._popup.confirm({
+            titulo: 'Atenção!',
+            texto: 'Tem certeza que deseja remover ' + remedio.nome + '?'
+        }).onFechar.subscribe(res => {
+            if(res.res) {
+                this.db.remove(remedio.id);
+            }
+        });
     }
 
 }

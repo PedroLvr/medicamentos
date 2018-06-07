@@ -1,63 +1,65 @@
 <section class="container">
-    <div class="field">
-        <label class="label is-medium">Nome da Farmácia</label>
-        <div class="control">
-            <input type="text" class="input is-medium" placeholder="" [(ngModel)]="farmacia.nome">
+    <form class="form">
+        <div class="field">
+            <label class="label is-medium">Nome da Farmácia</label>
+            <div class="control">
+                <input type="text" name="nome" class="input is-medium" placeholder="" [(ngModel)]="farmacia.nome">
+            </div>
         </div>
-    </div>
-
-    <div class="field">
-        <label class="label is-medium">CEP</label>
-        <div class="control">
-            <input type="text" class="input is-medium" [(ngModel)]="farmacia.cep" (input)="pesquisarCep($event)">
-        </div>
-    </div>
     
-    <div class="field">
-        <label class="label is-medium">Número</label>
-        <div class="control">
-            <input type="text" class="input is-medium" [(ngModel)]="farmacia.numero">
+        <div class="field">
+            <label class="label is-medium">CEP</label>
+            <div class="control">
+                <input type="text" name="cep" class="input is-medium" [(ngModel)]="farmacia.cep" (input)="pesquisarCep($event)">
+            </div>
         </div>
-    </div>
-
-    <div class="field">
-        <label class="label is-medium">Endereço</label>
-        <div class="control">
-            <input type="text" class="input is-medium" [(ngModel)]="farmacia.endereco">
+        
+        <div class="field">
+            <label class="label is-medium">Número</label>
+            <div class="control">
+                <input type="text" name="numero" class="input is-medium" [(ngModel)]="farmacia.numero">
+            </div>
         </div>
-    </div>
     
-    <div class="field">
-        <label class="label is-medium">Bairro</label>
-        <div class="control">
-            <input type="text" class="input is-medium" [(ngModel)]="farmacia.bairro">
+        <div class="field">
+            <label class="label is-medium">Endereço</label>
+            <div class="control">
+                <input type="text" name="endereco" class="input is-medium" [(ngModel)]="farmacia.endereco">
+            </div>
         </div>
-    </div>
+        
+        <div class="field">
+            <label class="label is-medium">Bairro</label>
+            <div class="control">
+                <input type="text" name="bairro" class="input is-medium" [(ngModel)]="farmacia.bairro">
+            </div>
+        </div>
+        
+        <div class="field">
+            <label class="label is-medium">Cidade</label>
+            <div class="control">
+                <input type="text" name="cidade" class="input is-medium" [(ngModel)]="farmacia.cidade">
+            </div>
+        </div>
     
-    <div class="field">
-        <label class="label is-medium">Cidade</label>
-        <div class="control">
-            <input type="text" class="input is-medium" [(ngModel)]="farmacia.cidade">
+        <div class="field">
+            <label class="label is-medium">Telefone</label>
+            <div class="control">
+                <input type="text" name="telefone" class="input is-medium" [(ngModel)]="farmacia.telefone">
+            </div>
         </div>
-    </div>
-
-    <div class="field">
-        <label class="label is-medium">Telefone</label>
-        <div class="control">
-            <input type="text" class="input is-medium" [(ngModel)]="farmacia.telefone">
+    
+        <div class="field is-grouped is-grouped-right">
+            <p class="control">
+                <a class="button is-medium is-light" (click)="cancelar()">
+                    Cancelar
+                </a>
+            </p>
+            <p class="control">
+                <a class="button is-medium is-primary" (click)="salvar(farmacia)">
+                    Salvar
+                </a>
+            </p>
         </div>
-    </div>
-
-    <div class="field is-grouped is-grouped-right">
-        <p class="control">
-            <a class="button is-medium is-light" (click)="cancelar()">
-                Cancelar
-            </a>
-        </p>
-        <p class="control">
-            <a class="button is-medium is-primary" (click)="salvar(farmacia)">
-                Salvar
-            </a>
-        </p>
-    </div>
+    </form>
 </section>

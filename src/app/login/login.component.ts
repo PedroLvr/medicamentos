@@ -8,7 +8,10 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-    usuario = {};
+    usuario = {
+        login: '',
+        senha: ''
+    };
 
     constructor(private _router: Router) { }
 
@@ -16,6 +19,10 @@ export class LoginComponent implements OnInit {
 
     logar(usuario) {
         this._router.navigate(['/remedios']);
+    }
+
+    cancelar() {
+        console.log('cancelar')
     }
 
 }

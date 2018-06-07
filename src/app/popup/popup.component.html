@@ -2,15 +2,15 @@
     <div class="modal-background"></div>
     <div class="modal-card">
         <header class="modal-card-head">
-            <p class="modal-card-title">Modal title</p>
-            <button class="delete" aria-label="close"></button>
+            <p class="modal-card-title">{{ titulo }}</p>
+            <button class="delete" aria-label="close" (click)="cancelar()"></button>
         </header>
         <section class="modal-card-body">
-            <!-- Content ... -->
+            {{ texto }}
         </section>
         <footer class="modal-card-foot">
-            <button class="button is-success">Save changes</button>
-            <button class="button">Cancel</button>
+            <button class="button" (click)="cancelar()">{{ textoBotaoCancel }}</button>
+            <button class="button is-primary" (click)="ok()">{{ textoBotaoOk }}</button>
         </footer>
     </div>
 </div>

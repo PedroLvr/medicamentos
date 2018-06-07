@@ -1,52 +1,54 @@
 <section class="container">
-    <div class="field">
-        <label class="label is-medium">Nome comercial do medicamento</label>
-        <div class="control">
-            <input type="text" class="input is-medium" placeholder="Cimegripe" [(ngModel)]="remedio.nome">
+    <form class="form">
+        <div class="field">
+            <label class="label is-medium">Nome comercial do medicamento</label>
+            <div class="control">
+                <input type="text" name="nome" class="input is-medium" placeholder="Cimegripe" [(ngModel)]="remedio.nome">
+            </div>
         </div>
-    </div>
-
-    <div class="field">
-        <label class="label is-medium">Denominação Genérica (princípio ativo)</label>
-        <div class="control">
-            <input type="text" class="input is-medium" placeholder="ácido acetilsalicílico" [(ngModel)]="remedio.principio">
+    
+        <div class="field">
+            <label class="label is-medium">Denominação Genérica (princípio ativo)</label>
+            <div class="control">
+                <input type="text" name="principio" class="input is-medium" placeholder="ácido acetilsalicílico" [(ngModel)]="remedio.principio">
+            </div>
         </div>
-    </div>
-
-    <div class="field">
-        <label class="label is-medium">Composição / Concentração</label>
-        <div class="control">
-            <input type="text" class="input is-medium" placeholder="500 mg" [(ngModel)]="remedio.concentracao">
+    
+        <div class="field">
+            <label class="label is-medium">Composição / Concentração</label>
+            <div class="control">
+                <input type="text" name="concentracao" class="input is-medium" placeholder="500 mg" [(ngModel)]="remedio.concentracao">
+            </div>
         </div>
-    </div>
-
-    <div class="field">
-        <label class="label is-medium">Forma Farmacêutica</label>
-        <p class="control has-icons-left">
-            <span class="select is-medium">
-                <select [(ngModel)]="remedio.forma">
-                    <option>Comprimido</option>
-                    <option>Solução Oral</option>
-                    <option>Cápsula</option>
-                    <option>Xarope</option>
-                </select>
-            </span>
-            <span class="icon is-small is-left">
-                <i class="fa fa-globe"></i>
-            </span>
-        </p>
-    </div>
-
-    <div class="field is-grouped is-grouped-right">
-        <p class="control">
-            <a class="button is-medium is-light" (click)="cancelar()">
-                Cancelar
-            </a>
-        </p>
-        <p class="control">
-            <a class="button is-medium is-primary" (click)="salvar(remedio)">
-                Salvar
-            </a>
-        </p>
-    </div>
+    
+        <div class="field">
+            <label class="label is-medium">Forma Farmacêutica</label>
+            <p class="control has-icons-left">
+                <span class="select is-medium">
+                    <select name="forma" [(ngModel)]="remedio.forma">
+                        <option>Comprimido</option>
+                        <option>Solução Oral</option>
+                        <option>Cápsula</option>
+                        <option>Xarope</option>
+                    </select>
+                </span>
+                <span class="icon is-small is-left">
+                    <i class="fa fa-globe"></i>
+                </span>
+            </p>
+        </div>
+    
+        <div class="field is-grouped is-grouped-right">
+            <p class="control">
+                <a class="button is-medium is-light" (click)="cancelar()">
+                    Cancelar
+                </a>
+            </p>
+            <p class="control">
+                <a class="button is-medium is-primary" (click)="salvar(remedio)">
+                    Salvar
+                </a>
+            </p>
+        </div>
+    </form>
 </section>

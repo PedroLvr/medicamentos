@@ -1,7 +1,7 @@
 <section class="container">
     <div>
-        <button class="button" (click)="novoRemedio()">Novo Remédio</button>
-        <button class="button is-success" (click)="novaFarmacia()">Nova Farmácia</button>
+        <button class="button is-primary" (click)="novoRemedio()">Novo Remédio</button>
+        <button class="button" (click)="novaFarmacia()">Nova Farmácia</button>
     </div>
     <ng-container *ngIf="(remedios | async) as lista; else loading">
         <table class="table is-striped is-hoverable is-fullwidth">
@@ -17,7 +17,7 @@
                     <td>{{ remedio.nome }}</td>
                     <td>{{ remedio.unidade }}</td>
                     <td class="has-text-centered">
-                        <a class="button is-danger is-small" (click)="remover(remedio)">
+                        <a class="button is-danger is-small" (click)="remover($event, remedio)">
                             <i class="fa fa-trash fa-lg"></i>
                         </a>
                     </td>
