@@ -16,6 +16,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ListaRemediosComponent } from './lista-remedios/lista-remedios.component';
 import { FormularioRemedioComponent } from './formulario-remedio/formulario-remedio.component';
 
+import { PushNotification } from './push-notification.service';
 import { RemedioService } from './remedio.service';
 import { FarmaciaService } from './farmacia.service';
 import { RequestService } from './request.service';
@@ -61,7 +62,8 @@ import { QuemSomosComponent } from './quem-somos/quem-somos.component';
         RemedioService,
         FarmaciaService,
         RequestService,
-        ParamsService
+        ParamsService,
+        PushNotification
     ],
     bootstrap: [AppComponent]
 })
