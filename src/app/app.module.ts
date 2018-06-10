@@ -30,6 +30,8 @@ import { ListaFarmaciasComponent } from './lista-farmacias/lista-farmacias.compo
 import { RelacionarFarmaciasComponent } from './relacionar-farmacias/relacionar-farmacias.component';
 import { LoginComponent } from './login/login.component';
 import { QuemSomosComponent } from './quem-somos/quem-somos.component';
+import { PainelControleComponent } from './painel-controle/painel-controle.component';
+import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
 
 @NgModule({
     declarations: [
@@ -47,7 +49,9 @@ import { QuemSomosComponent } from './quem-somos/quem-somos.component';
         ListaFarmaciasComponent,
         RelacionarFarmaciasComponent,
         LoginComponent,
-        QuemSomosComponent
+        QuemSomosComponent,
+        PainelControleComponent,
+        ListaUsuariosComponent
     ],
     imports: [
         BrowserModule,

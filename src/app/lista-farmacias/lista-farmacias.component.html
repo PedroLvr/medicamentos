@@ -1,21 +1,31 @@
 <section class="container">
+
+    <div class="control">
+        <button class="button is-info" (click)="novaFarmacia()">Nova Farmácia</button>
+    </div>
+
+    <div class="control has-icons-right has-margin">
+        <input class="input" type="text" placeholder="Pesquisar farmácia..." (input)="pesquisar($event)">
+        <span class="icon is-right">
+            <i class="fa fa-search"></i>
+        </span>
+    </div>
+
     <ng-container *ngIf="farmacias.length; else loading">
         <table class="table is-striped is-hoverable is-fullwidth">
             <thead>
                 <tr>
                     <td>Nome</td>
-                    <td>Endereco</td>
-                    <td>Telefone</td>
+                    <td>Endereço</td>
                     <td class="has-text-centered">Remover</td>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let farmacia of farmacias">
+                <tr *ngFor="let farmacia of farmacias" (click)="editar(farmacia)">
                     <td>{{ farmacia.nome }}</td>
-                    <td>{{ farmacia.endereco + farmacia.numero + farmacia.bairro + farmacia.cidade }}</td>
-                    <td>{{ farmacia.telefone }}</td>
+                    <td>{{ farmacia.endereco }}</td>
                     <td class="has-text-centered">
-                        <a class="button is-danger is-small" (click)="remover(farmacia)">
+                        <a class="button is-danger is-small" (click)="remover($event, farmacia)">
                             <i class="fa fa-trash fa-lg"></i>
                         </a>
                     </td>

@@ -10,7 +10,7 @@
         <div class="field">
             <label class="label is-medium">CEP</label>
             <div class="control">
-                <input type="text" name="cep" class="input is-medium" [(ngModel)]="farmacia.cep" (input)="pesquisarCep($event)">
+                <input type="text" name="cep" class="input is-medium" [(ngModel)]="farmacia.cep" (keyup)="pesquisarCep($event)">
             </div>
         </div>
         

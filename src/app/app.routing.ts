@@ -10,6 +10,8 @@ import { FormularioRemedioComponent } from './formulario-remedio/formulario-reme
 import { FormularioFarmaciaComponent } from './formulario-farmacia/formulario-farmacia.component';
 import { LoginComponent } from './login/login.component';
 import { QuemSomosComponent } from './quem-somos/quem-somos.component';
+import { PainelControleComponent } from './painel-controle/painel-controle.component';
+import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -17,7 +19,12 @@ const routes: Routes = [
     { path: 'remedios/formulario', component: FormularioRemedioComponent },
     { path: 'farmacias', component: ListaFarmaciasComponent },
     { path: 'farmacias/formulario', component: FormularioFarmaciaComponent },
-    { path: 'remedio', component: RemedioComponent },
+    { path: 'painel-controle', component: PainelControleComponent, children: [
+        { path: '', redirectTo: 'remedios', pathMatch: 'prefix' },
+        { path: 'remedios', component: ListaRemediosComponent },
+        { path: 'farmacias', component: ListaFarmaciasComponent },
+        { path: 'usuarios', component: ListaUsuariosComponent }
+    ] },
     { path: 'relacionar-farmacias', component: RelacionarFarmaciasComponent },
     { path: 'login', component: LoginComponent },
     { path: 'quem-somos', component: QuemSomosComponent },

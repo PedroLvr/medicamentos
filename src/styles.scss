@@ -1,11 +1,14 @@
 @import '~bulma';
 
+.navbar {
+    box-shadow: 0 1px 8px $grey-light;
+}
+
 .resultado .columns {
     margin: auto;
 
     .column {
         padding: .3rem;
-
         
         .card {
             cursor: pointer;

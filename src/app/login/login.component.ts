@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {}
 
     logar(usuario) {
-        this._router.navigate(['/remedios']);
+        this._router.navigate(['/painel-controle']);
     }
 
     cancelar() {

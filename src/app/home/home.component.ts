@@ -16,7 +16,6 @@ export class HomeComponent implements OnInit {
     remedios = [];
 
     constructor(
-        private _db: AngularFireDatabase,
         private _router: Router,
         private _params: ParamsService,
         private _remedioService: RemedioService,
@@ -32,7 +31,8 @@ export class HomeComponent implements OnInit {
         this._router.navigateByUrl('remedio');
     }
 
-    pesquisar(texto = ''): void {
+    pesquisar(event?): void {
+        let texto = event ? event.target.value.trim() : '';
         this._remedioService.getRemedios(texto)
         .valueChanges()
         .subscribe(remedios => {

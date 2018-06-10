@@ -4,6 +4,7 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { ParamsService } from '../params.service';
 import { PopupService } from '../popup/popup.service';
+import { RemedioService } from '../remedio.service';
 
 @Component({
     selector: 'app-lista-remedios',
@@ -12,47 +13,53 @@ import { PopupService } from '../popup/popup.service';
 })
 export class ListaRemediosComponent implements OnInit {
 
-    remedios: Observable<any[]>;
-    db: AngularFireList<any>;
+    remedios = [];
 
     constructor(
-        private _db: AngularFireDatabase,
+        private _remedioService: RemedioService,
         private _router: Router,
         private _params: ParamsService,
         private _popup: PopupService
-    ) {
-        this.db = this._db.list('remedios');
-        this.remedios = this.db.valueChanges();
-    }
+    ) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.pesquisar();
+    }
 
     novoRemedio() {
         this._router.navigate(['/remedios/formulario']);
     }
 
-    novaFarmacia() {
-        this._router.navigate(['/farmacias/formulario']);
+    pesquisar(event?): void {
+        let texto = event ? event.target.value.trim() : '';
+        console.log(texto)
+        this._remedioService.getRemedios(texto)
+        .valueChanges()
+        .subscribe(remedios => {
+            console.log(remedios);
+            this.remedios = remedios;
+        });
     }
 
-    farmacias(remedio): void {
+    editar(remedio) {
+        this._params.set(remedio);
+        this._router.navigate(['/remedios/formulario']);
+    }
+
+    farmacias(event, remedio): void {
+        event.stopPropagation();
         this._params.set(remedio);
         this._router.navigate(['/relacionar-farmacias']);
-    }
-
-    pesquisar(texto: string): void {
-        let t = texto.toString().toLowerCase().trim();
-        console.log(t);
     }
     
     remover(event, remedio) {
         event.stopPropagation();
         this._popup.confirm({
             titulo: 'Atenção!',
-            texto: 'Tem certeza que deseja remover ' + remedio.nome + '?'
+            texto: 'Tem certeza que deseja remover "' + remedio.nome + '"?'
         }).onFechar.subscribe(res => {
             if(res.res) {
-                this.db.remove(remedio.id);
+                this._remedioService.removeRemedio(remedio.id);
             }
         });
     }

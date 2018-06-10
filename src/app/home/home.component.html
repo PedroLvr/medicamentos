@@ -10,7 +10,7 @@
                     Ainda não encontrou seu remédio?
                 </h2>
                 <div class="control has-icons-right">
-                    <input #input class="input is-large" type="text" placeholder="Nome do remédio..." (input)="pesquisar(input.value)">
+                    <input class="input is-large" type="text" placeholder="Nome do remédio..." (input)="pesquisar($event)">
                     <span class="icon is-medium is-right">
                         <i class="fa fa-search"></i>
                     </span>

@@ -1,22 +1,27 @@
 <section class="container">
+
+    <div class="control">
+        <button class="button is-info" (click)="voltar()">Voltar</button>
+    </div>
+
     <ng-container *ngIf="farmacias.length; else loading">
         <table class="table is-striped is-hoverable is-fullwidth">
             <thead>
                 <tr>
+                    <td class="has-text-centered">Disponível</td>
                     <td>Nome</td>
                     <td>Endereco</td>
-                    <td class="has-text-centered">Disponível</td>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let farmacia of farmacias">
-                    <td>{{ farmacia.nome }}</td>
-                    <td>{{ farmacia.endereco + farmacia.numero + farmacia.bairro + farmacia.cidade }}</td>
                     <td class="has-text-centered">
-                        <label class="checkbox">
-                            <input type="checkbox" [checked]="farmacia.remedios && farmacia.remedios.indexOf(remedio.id) >= 0" (change)="toggleDisponivel($event, farmacia)"> Disponível
-                        </label>
+                        <a class="button is-small" [ngClass]="{'is-primary': (farmacia.remedios && farmacia.remedios.indexOf(remedio.id) >= 0)}" (click)="toggleDisponivel(farmacia)">
+                            {{ (farmacia.remedios && farmacia.remedios.indexOf(remedio.id) >= 0 ? 'Disponível' : 'Indisponível') }}
+                        </a>
                     </td>
+                    <td>{{ farmacia.nome }}</td>
+                    <td>{{ farmacia.endereco + ', ' + farmacia.numero + ' - ' + farmacia.bairro + ', ' + farmacia.cidade }}</td>
                 </tr>
             </tbody>
         </table>

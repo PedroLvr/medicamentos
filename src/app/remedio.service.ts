@@ -14,4 +14,8 @@ export class RemedioService {
         );
     }
 
+    removeRemedio(key): void {
+        this._db.list('/remedios').remove(key);
+    }
+
 }

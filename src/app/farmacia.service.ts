@@ -14,8 +14,8 @@ export class FarmaciaService {
         );
     }
 
-    getFarmacia(key: string): AngularFireObject<any> {
-        return this._db.object('/farmacias/' + key);
+    removeFarmacia(key): void {
+        this._db.list('/farmacias').remove(key);
     }
 
 }
