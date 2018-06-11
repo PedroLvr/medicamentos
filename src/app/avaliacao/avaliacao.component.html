@@ -1,0 +1,54 @@
+<section class="container">
+
+    <!-- BANNER -->
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Nos Avalie ;)
+                </h1>
+                <h2 class="subtitle">
+                    Para que possamos melhorar e entender melhor a sua necessidade, nos diga o que você achou no campo abaixo!
+                </h2>
+            </div>
+        </div>
+    </section>
+    <!-- end BANNER -->
+
+    <form class="form">
+
+        <div class="field">
+            <label class="label is-medium">O que você achou? (Sugestão, críticas ou problemas encontrados)</label>
+            <div class="control">
+                <textarea type="text" name="descricao" class="textarea is-medium" [(ngModel)]="avaliacao.sugestao"></textarea>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label is-medium">Seu Nome</label>
+            <div class="control">
+                <input type="text" name="nome" class="input is-medium" [(ngModel)]="avaliacao.nome">
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label is-medium">Seu E-mail</label>
+            <div class="control">
+                <input type="text" name="email" class="input is-medium" [(ngModel)]="avaliacao.email">
+            </div>
+        </div>
+
+        <div class="field is-grouped is-grouped-right">
+            <p class="control">
+                <a class="button is-medium is-light" (click)="cancelar()">
+                    Cancelar
+                </a>
+            </p>
+            <p class="control">
+                <a class="button is-medium is-primary" (click)="enviar(avaliacao)">
+                    Enviar
+                </a>
+            </p>
+        </div>
+    </form>
+</section>

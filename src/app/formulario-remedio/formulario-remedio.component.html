@@ -6,21 +6,21 @@
                 <input type="text" name="nome" class="input is-medium" placeholder="Cimegripe" [(ngModel)]="remedio.nome">
             </div>
         </div>
-    
+
         <div class="field">
             <label class="label is-medium">Denominação Genérica (princípio ativo)</label>
             <div class="control">
                 <input type="text" name="principio" class="input is-medium" placeholder="ácido acetilsalicílico" [(ngModel)]="remedio.principio">
             </div>
         </div>
-    
+
         <div class="field">
             <label class="label is-medium">Composição / Concentração</label>
             <div class="control">
                 <input type="text" name="concentracao" class="input is-medium" placeholder="500 mg" [(ngModel)]="remedio.concentracao">
             </div>
         </div>
-    
+
         <div class="field">
             <label class="label is-medium">Forma Farmacêutica</label>
             <p class="control has-icons-left">
@@ -37,7 +37,14 @@
                 </span>
             </p>
         </div>
-    
+
+        <div class="field">
+            <label class="label is-medium">Descrição</label>
+            <div class="control">
+                <textarea type="text" name="descricao" class="textarea is-medium" [(ngModel)]="remedio.descricao"></textarea>
+            </div>
+        </div>
+
         <div class="field is-grouped is-grouped-right">
             <p class="control">
                 <a class="button is-medium is-light" (click)="cancelar()">

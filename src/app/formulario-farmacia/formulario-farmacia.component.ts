@@ -49,6 +49,7 @@ export class FormularioFarmaciaComponent implements OnInit {
     }
 
     cancelar() {
+        this._params.destroy();
         this._location.back();
     }
 
@@ -57,8 +58,7 @@ export class FormularioFarmaciaComponent implements OnInit {
             this.farmacias.update(farmacia.id, farmacia)
             .then(res => {
                 console.log(res);
-                this._params.destroy();
-                this._location.back();
+                this.cancelar();
             })
             .catch(err => {
                 console.log(err);

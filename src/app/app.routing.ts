@@ -12,12 +12,12 @@ import { LoginComponent } from './login/login.component';
 import { QuemSomosComponent } from './quem-somos/quem-somos.component';
 import { PainelControleComponent } from './painel-controle/painel-controle.component';
 import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
+import { AvaliacaoComponent } from './avaliacao/avaliacao.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
-    { path: 'remedios', component: ListaRemediosComponent },
+    { path: 'remedio', component: RemedioComponent },
     { path: 'remedios/formulario', component: FormularioRemedioComponent },
-    { path: 'farmacias', component: ListaFarmaciasComponent },
     { path: 'farmacias/formulario', component: FormularioFarmaciaComponent },
     { path: 'painel-controle', component: PainelControleComponent, children: [
         { path: '', redirectTo: 'remedios', pathMatch: 'prefix' },
@@ -28,6 +28,7 @@ const routes: Routes = [
     { path: 'relacionar-farmacias', component: RelacionarFarmaciasComponent },
     { path: 'login', component: LoginComponent },
     { path: 'quem-somos', component: QuemSomosComponent },
+    { path: 'nos-avalie', component: AvaliacaoComponent },
     // { path: 'farmacia/:idFarmacia', component: FarmaciaComponent }
     // { path: 'erro404', component: Erro404Component },
     // { path: 'atividades', component: AtividadesComponent },

@@ -32,6 +32,8 @@ import { LoginComponent } from './login/login.component';
 import { QuemSomosComponent } from './quem-somos/quem-somos.component';
 import { PainelControleComponent } from './painel-controle/painel-controle.component';
 import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
+import { FormularioUsuarioComponent } from './formulario-usuario/formulario-usuario.component';
+import { AvaliacaoComponent } from './avaliacao/avaliacao.component';
 
 @NgModule({
     declarations: [
@@ -51,7 +53,9 @@ import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.componen
         LoginComponent,
         QuemSomosComponent,
         PainelControleComponent,
-        ListaUsuariosComponent
+        ListaUsuariosComponent,
+        FormularioUsuarioComponent,
+        AvaliacaoComponent
     ],
     imports: [
         BrowserModule,
