@@ -9,5 +9,12 @@ import { PushNotification } from './push-notification.service';
 export class AppComponent {
     title = 'app';
 
-    constructor(private pushNotification: PushNotification) {}
+    constructor(private pushNotification: PushNotification) {
+
+        // Workaround para bug firebase/database
+        // * Apos algum tempo em producao, ocorre o erro:
+        // * Cannot read property "myId" of undefined
+        // https://github.com/firebase/angularfire/issues/970
+        localStorage.removeItem('firebase:previous_websocket_failure');
+    }
 }
