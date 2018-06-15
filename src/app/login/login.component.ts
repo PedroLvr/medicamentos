@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase';
+import { SessaoService } from '../sessao.service';
 
 @Component({
     selector: 'app-login',
@@ -8,22 +12,48 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
+    isLoading: boolean = false;
+
     usuario = {
-        login: '',
+        email: '',
         senha: ''
     };
 
-    constructor(private _router: Router) { }
+    formularioLogin: FormGroup;
 
-    ngOnInit() {}
+    constructor(
+        private afAuth: AngularFireAuth,
+        private _sessao: SessaoService,
+        private _router: Router
+    ) { }
 
-    logar(usuario) {
-        if(usuario.login === 'tads' && usuario.senha === 'tads')
+    ngOnInit() {
+        console.log(this._sessao.isLogado);
+        if(this._sessao.isLogado) {
             this._router.navigate(['/painel-controle']);
+        }
+        this.formularioLogin = new FormGroup({
+            'email': new FormControl('', [Validators.required, Validators.email]),
+            'senha': new FormControl('', Validators.required)
+        });
     }
 
-    cancelar() {
-        console.log('cancelar')
+    logar() {
+        this.isLoading = true;
+        let formulario = this.formularioLogin.value;
+        this.afAuth.auth.signInWithEmailAndPassword(formulario.email, formulario.senha)
+        .then(usuario => {
+            this.formularioLogin.reset();
+            this._router.navigate(['/painel-controle']);
+        })
+        .catch(err => {
+            console.log(err);
+            this.isLoading = false;
+        });
+    }
+
+    home() {
+        this._router.navigate(['/']);
     }
 
 }

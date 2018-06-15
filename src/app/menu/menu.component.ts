@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SessaoService } from '../sessao.service';
 
 @Component({
     selector: 'app-menu',
@@ -9,10 +10,9 @@ export class MenuComponent implements OnInit {
 
     menuAtivo: boolean = false;
 
-    constructor() { }
+    constructor(private _sessao: SessaoService) {}
 
-    ngOnInit() {
-    }
+    ngOnInit() { }
 
     toggleMenu() {
         this.menuAtivo = !this.menuAtivo;

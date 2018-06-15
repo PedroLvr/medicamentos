@@ -1,4 +1,4 @@
-export let firebaseConfig = {
+export const firebaseConfig = {
     apiKey: "AIzaSyA62Yjs6iCHgm72ge3wemMdr04b-zjqCno",
     authDomain: "remedios-bv.firebaseapp.com",
     databaseURL: "https://remedios-bv.firebaseio.com",

@@ -14,18 +14,37 @@
 
     <div class="navbar-menu" [ngClass]="{'is-active': menuAtivo}">
         <div class="navbar-end">
-            <a class="navbar-item" href="/login">
-                <span class="icon">
-                    <i class="fa fa-sign-in" aria-hidden="true"></i>
-                </span>
-                <span>Entrar</span>
-            </a>
-            <a class="navbar-item" href="/nos-avalie">
-                <span class="icon">
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </span>
-                <span>Avalie o site</span>
-            </a>
+
+            <ng-container *ngIf="!_sessao.isLogado">
+                <a class="navbar-item" href="/login">
+                    <span class="icon">
+                        <i class="fa fa-sign-in" aria-hidden="true"></i>
+                    </span>
+                    <span>Entrar</span>
+                </a>
+                <a class="navbar-item" href="/nos-avalie">
+                    <span class="icon">
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                    </span>
+                    <span>Avalie o site</span>
+                </a>
+            </ng-container>
+
+            <ng-container *ngIf="_sessao.isLogado">
+                <div class="navbar-item">
+                    <span class="icon">
+                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                    </span>
+                    <span>{{ _sessao.usuario.email }}</span>
+                </div>
+                <a class="navbar-item" href="/login">
+                    <span class="icon">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    </span>
+                    <span>Sair</span>
+                </a>
+            </ng-container>
+
         </div>
     </div>
 

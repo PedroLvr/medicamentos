@@ -1,9 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { PopupModule } from './popup/popup.module';
 
@@ -21,6 +22,7 @@ import { RemedioService } from './remedio.service';
 import { FarmaciaService } from './farmacia.service';
 import { RequestService } from './request.service';
 import { ParamsService } from './params.service';
+import { SessaoService } from './sessao.service';
 
 import { AppRouting } from './app.routing';
 import { firebaseConfig } from './app.firebase';
@@ -60,9 +62,11 @@ import { AvaliacaoComponent } from './avaliacao/avaliacao.component';
     imports: [
         BrowserModule,
         FormsModule,
+        ReactiveFormsModule,
         HttpModule,
         AngularFireModule.initializeApp(firebaseConfig),
         AngularFireDatabaseModule,
+        AngularFireAuthModule,
         AppRouting,
         PopupModule
     ],
@@ -71,7 +75,8 @@ import { AvaliacaoComponent } from './avaliacao/avaliacao.component';
         FarmaciaService,
         RequestService,
         ParamsService,
-        PushNotification
+        PushNotification,
+        SessaoService
     ],
     bootstrap: [AppComponent]
 })
