@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {}
 
     logar(usuario) {
-        if(usuario.login === 'tads20161' && usuario.senha === 'remediosbv')
+        if(usuario.login === 'tads' && usuario.senha === 'tads')
             this._router.navigate(['/painel-controle']);
     }
 

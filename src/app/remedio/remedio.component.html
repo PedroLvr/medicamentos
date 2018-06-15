@@ -8,7 +8,7 @@
                     <span class="icon">
                         <i class="fa fa-chevron-left"></i>
                     </span>
-                    <span>Home</span>
+                    <span>Início</span>
                 </a>
 
                 <h1 class="title">
@@ -43,7 +43,7 @@
                                 <div class="media-content">
                                     <p class="title is-6">{{ farmacia.nome }}</p>
                                     <p class="subtitle is-6">
-                                        <i class="fa fa-circle" [ngClass]="{'has-text-info': (farmacia.remedios && farmacia.remedios.indexOf(remedio.id) >= 0), 'has-text-danger': (farmacia.remedios && farmacia.remedios.indexOf(remedio.id) == -1)}"></i>
+                                        <i class="fa fa-circle" [ngClass]="{'has-text-primary': (farmacia.remedios && farmacia.remedios.indexOf(remedio.id) >= 0), 'has-text-danger': (farmacia.remedios && farmacia.remedios.indexOf(remedio.id) == -1)}"></i>
                                         {{ (farmacia.remedios && farmacia.remedios.indexOf(remedio.id) >= 0) ? 'Disponível' : 'Indisponível' }}
                                         <br/>
                                         <i class="fa fa-phone"></i> <a [href]="'tel:' + farmacia.telefone">{{ farmacia.telefone }}</a>

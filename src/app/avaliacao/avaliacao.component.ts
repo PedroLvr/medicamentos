@@ -29,6 +29,10 @@ export class AvaliacaoComponent implements OnInit {
 
     ngOnInit() {}
 
+    home() {
+        this._router.navigate(['/']);
+    }
+
     cancelar() {
         this._router.navigate(['/']);
     }

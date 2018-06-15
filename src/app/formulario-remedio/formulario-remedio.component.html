@@ -26,10 +26,7 @@
             <p class="control has-icons-left">
                 <span class="select is-medium">
                     <select name="forma" [(ngModel)]="remedio.forma">
-                        <option>Comprimido</option>
-                        <option>Solução Oral</option>
-                        <option>Cápsula</option>
-                        <option>Xarope</option>
+                        <option *ngFor="let tipo of tiposRemedios" [value]="tipo.nome">{{ tipo.nome }}</option>
                     </select>
                 </span>
                 <span class="icon is-small is-left">
