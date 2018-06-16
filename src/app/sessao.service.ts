@@ -5,17 +5,13 @@ import * as firebase from 'firebase';
 @Injectable()
 export class SessaoService {
 
-    isLogado: boolean;
-
     constructor(private _auth: AngularFireAuth) {
         // Definindo o tipo de persistencia do estado do Auth.
         // SESSION: o estado será mantido somente na sessão ou guia atual e
         // será apagado quando a guia ou janela em que o usuário fez a autenticação for fechada
-        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
-
-        
+        // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
     }
-
+ 
     get usuario() {
         return this._auth.auth.currentUser;
     }
@@ -24,4 +20,7 @@ export class SessaoService {
         return this._auth.authState;
     }
 
+    logout() {
+        firebase.auth().signOut();
+    }
 }

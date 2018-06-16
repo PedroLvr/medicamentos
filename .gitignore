@@ -40,3 +40,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# proteger firebase api key
+src/app/app.firebase.ts

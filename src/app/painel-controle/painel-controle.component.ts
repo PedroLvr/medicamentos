@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SessaoService } from '../sessao.service';
+import { LoadingService } from '../loading/loading.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-painel-controle',
@@ -8,13 +10,28 @@ import { SessaoService } from '../sessao.service';
 })
 export class PainelControleComponent implements OnInit {
 
-    constructor(private _sessao: SessaoService) { }
+    usuario: object = null;
+
+    constructor(
+        private _sessao: SessaoService,
+        private _loading: LoadingService,
+        private _router: Router
+    ) { }
 
     ngOnInit() {
-        console.log(this._sessao)
-        if(!this._sessao.isLogado) {
-            
-        }
+        console.log("COmecou painel de controle");
+        this._loading.show();
+        this._sessao.hasSessao
+        .subscribe(usuario => {
+            console.log(usuario);
+            if(usuario) {
+                this.usuario = usuario;
+            } else {
+                this._sessao.logout();
+                this._router.navigate(['/login']);
+            }
+            this._loading.hide();
+        })
     }
 
 }

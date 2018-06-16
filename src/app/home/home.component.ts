@@ -38,6 +38,8 @@ export class HomeComponent implements OnInit {
         .subscribe(remedios => {
             console.log(remedios);
             this.remedios = remedios;
+        }, err => {
+            console.log(err);
         });
     }
 

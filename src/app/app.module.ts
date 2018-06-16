@@ -5,7 +5,6 @@ import { HttpModule } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-
 import { PopupModule } from './popup/popup.module';
 
 import { AppComponent } from './app.component';
@@ -16,16 +15,6 @@ import { RemedioComponent } from './remedio/remedio.component';
 import { FooterComponent } from './footer/footer.component';
 import { ListaRemediosComponent } from './lista-remedios/lista-remedios.component';
 import { FormularioRemedioComponent } from './formulario-remedio/formulario-remedio.component';
-
-import { PushNotification } from './push-notification.service';
-import { RemedioService } from './remedio.service';
-import { FarmaciaService } from './farmacia.service';
-import { RequestService } from './request.service';
-import { ParamsService } from './params.service';
-import { SessaoService } from './sessao.service';
-
-import { AppRouting } from './app.routing';
-import { firebaseConfig } from './app.firebase';
 import { FormularioFarmaciaComponent } from './formulario-farmacia/formulario-farmacia.component';
 import { FormularioFuncionarioComponent } from './formulario-funcionario/formulario-funcionario.component';
 import { ListaFarmaciasComponent } from './lista-farmacias/lista-farmacias.component';
@@ -36,6 +25,18 @@ import { PainelControleComponent } from './painel-controle/painel-controle.compo
 import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
 import { FormularioUsuarioComponent } from './formulario-usuario/formulario-usuario.component';
 import { AvaliacaoComponent } from './avaliacao/avaliacao.component';
+import { LoadingComponent } from './loading/loading.component';
+
+import { PushNotification } from './push-notification.service';
+import { RemedioService } from './remedio.service';
+import { FarmaciaService } from './farmacia.service';
+import { RequestService } from './request.service';
+import { ParamsService } from './params.service';
+import { SessaoService } from './sessao.service';
+import { LoadingService } from './loading/loading.service';
+
+import { AppRouting } from './app.routing';
+import { firebaseConfig } from './app.firebase';
 
 @NgModule({
     declarations: [
@@ -57,7 +58,11 @@ import { AvaliacaoComponent } from './avaliacao/avaliacao.component';
         PainelControleComponent,
         ListaUsuariosComponent,
         FormularioUsuarioComponent,
-        AvaliacaoComponent
+        AvaliacaoComponent,
+        LoadingComponent
+    ],
+    entryComponents: [
+        LoadingComponent
     ],
     imports: [
         BrowserModule,
@@ -76,7 +81,8 @@ import { AvaliacaoComponent } from './avaliacao/avaliacao.component';
         RequestService,
         ParamsService,
         PushNotification,
-        SessaoService
+        SessaoService,
+        LoadingService
     ],
     bootstrap: [AppComponent]
 })

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SessaoService } from '../sessao.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-menu',
@@ -8,13 +9,28 @@ import { SessaoService } from '../sessao.service';
 })
 export class MenuComponent implements OnInit {
 
+    usuario: object = null;
     menuAtivo: boolean = false;
 
-    constructor(private _sessao: SessaoService) {}
+    constructor(
+        private _sessao: SessaoService,
+        private _router: Router
+    ) {}
 
-    ngOnInit() { }
+    ngOnInit() {
+        this._sessao.hasSessao
+        .subscribe(usuario => {
+            this.usuario = usuario;
+        })
+    }
 
     toggleMenu() {
         this.menuAtivo = !this.menuAtivo;
+    }
+
+    logout() {
+        this._sessao.logout();
+        this._router.navigate(['/']);
+        this.toggleMenu();
     }
 }

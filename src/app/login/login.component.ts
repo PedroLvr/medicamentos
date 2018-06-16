@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase';
 import { SessaoService } from '../sessao.service';
+import { LoadingService } from '../loading/loading.service';
 
 @Component({
     selector: 'app-login',
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit {
     constructor(
         private afAuth: AngularFireAuth,
         private _sessao: SessaoService,
-        private _router: Router
+        private _router: Router,
+        private _loading: LoadingService
     ) { }
 
     ngOnInit() {

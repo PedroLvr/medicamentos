@@ -1,10 +1,10 @@
 import { ComponentFactoryResolver, ApplicationRef, Injector, Injectable, EmbeddedViewRef, ComponentRef } from '@angular/core';
-import { LoadExternoComponent } from './load-externo.component';
+import { LoadingComponent } from './loading.component';
 
 @Injectable()
-export class LoadExternoService {
+export class LoadingService {
 
-    componentRef: ComponentRef<LoadExternoComponent> = null;
+    componentRef: ComponentRef<LoadingComponent> = null;
     private _calls: number = 0;
 
     constructor(
@@ -18,7 +18,7 @@ export class LoadExternoService {
         if(!this.componentRef) {
             // 1. Create a component reference from the component 
             this.componentRef = this.componentFactoryResolver
-                .resolveComponentFactory(LoadExternoComponent)
+                .resolveComponentFactory(LoadingComponent)
                 .create(this.injector);
             this.componentRef.changeDetectorRef.detectChanges();
             
