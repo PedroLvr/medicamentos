@@ -13,7 +13,7 @@ import { PopupService } from '../popup/popup.service';
 })
 export class HomeComponent implements OnInit {
 
-    remedios = [];
+    remedios = null;
 
     constructor(
         private _router: Router,
@@ -36,10 +36,10 @@ export class HomeComponent implements OnInit {
         this._remedioService.getRemedios(texto)
         .valueChanges()
         .subscribe(remedios => {
-            console.log(remedios);
             this.remedios = remedios;
         }, err => {
             console.log(err);
+            this.remedios = null;
         });
     }
 

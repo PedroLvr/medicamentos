@@ -23,46 +23,122 @@
     </section>
     <!-- end BANNER -->
 
+    <section class="section notificar" *ngIf="farmaciasDisponiveis === 0">
+        <div class="container">
+
+            <div class="subtitle is-6" style="margin-bottom: 0;">
+                Poxa, parece que nenhuma farmácia tem este remédio disponível. Quer ser notificado quando o remédio chegar? Preencha o formulário
+                abaixo.
+            </div>
+
+            <form class="form" (ngSubmit)="notificar()" [formGroup]="formularioNotificar">
+
+                <div class="field">
+                    <label class="label">Email</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input type="text" class="input" [ngClass]="{'is-primary': formularioNotificar.get('email').valid, 'is-danger': formularioNotificar.get('email').touched && formularioNotificar.get('email').errors}"
+                            placeholder="fulano@mail.com.br" formControlName="email" required>
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-envelope"></i>
+                        </span>
+                        <span class="icon is-small is-right" *ngIf="formularioNotificar.get('email').invalid">
+                            <i class="fa fa-exclamation-triangle"></i>
+                        </span>
+                        <span class="icon is-small is-right" *ngIf="formularioNotificar.get('email').valid">
+                            <i class="fa fa-check"></i>
+                        </span>
+                    </div>
+                    <p class="help is-danger" *ngIf="formularioNotificar.get('email').touched && formularioNotificar.get('email').errors">E-mail inválido!</p>
+                </div>
+
+                <div class="field">
+                    <label class="label">Telefone</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input type="tel" class="input" [ngClass]="{'is-primary': formularioNotificar.get('telefone').valid, 'is-danger': formularioNotificar.get('telefone').touched && formularioNotificar.get('telefone').errors}"
+                            placeholder="(95) 98117-5952" formControlName="telefone" required>
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-phone"></i>
+                        </span>
+                        <!-- <span class="icon is-small is-right" *ngIf="email.errors.required || email.erros.email">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </span> -->
+                    </div>
+                    <!-- <p class="help is-danger" *ngIf="email.errors.required || email.erros.email">E-mail inválido!</p> -->
+                </div>
+
+                <div class="field">
+                    <p class="control has-text-right">
+                        <button type="submit" class="button is-primary" [ngClass]="{'is-loading': isLoading}" [disabled]="isLoading">
+                            Solicitar Notificação
+                        </button>
+                    </p>
+                </div>
+            </form>
+
+        </div>
+    </section>
+
     <section class="container resultado">
 
-        <ng-container *ngIf="farmacias.length > 0">
+        <ng-container *ngIf="farmacias != null; else loading">
 
             <div class="columns is-multiline">
-                <div class="column is-half-tablet is-one-third-desktop" *ngFor="let farmacia of farmacias">
 
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="media">
+                <ng-container *ngIf="farmacias.length > 0; else naoencontrado">
+                    <div class="column is-half-tablet is-one-third-desktop" *ngFor="let farmacia of farmacias">
 
-                                <div class="media-left">
-                                    <figure class="image is-64x64">
-                                        <img src="assets/img/icons/farmacia-256x256.png" alt="Placeholder image">
-                                    </figure>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="media">
+
+                                    <div class="media-left">
+                                        <a [href]="'https://www.google.com/maps/search/?api=1&query=' + farmacia.endereco + ', ' + farmacia.bairro" target="_blank">
+                                            <figure class="image is-64x64">
+                                                <img src="assets/img/icons/farmacia-256x256.png" alt="Placeholder image">
+                                            </figure>
+                                        </a>
+                                    </div>
+
+                                    <div class="media-content">
+                                        <p class="title is-6">{{ farmacia.nome }}</p>
+                                        <p class="subtitle is-6">
+                                            <i class="fa fa-circle" [ngClass]="{'has-text-primary': (farmacia.remedios && farmacia.remedios.indexOf(remedio.id) >= 0), 'has-text-danger': (!farmacia.remedios || farmacia.remedios.indexOf(remedio.id) == -1)}"></i>
+                                            {{ (farmacia.remedios && farmacia.remedios.indexOf(remedio.id) >= 0) ? 'Disponível' : 'Indisponível' }}
+                                            <br/>
+                                            <i class="fa fa-phone"></i>
+                                            <a [href]="'tel:' + farmacia.telefone">{{ farmacia.telefone }}</a>
+                                            <br/>
+                                            <i class="fa fa-map-marker"></i>
+                                            <a [href]="'https://www.google.com/maps/search/?api=1&query=' + farmacia.endereco + ', ' + farmacia.bairro" target="_blank">{{ farmacia.endereco + ', ' + farmacia.bairro }}</a>
+                                        </p>
+                                    </div>
+
                                 </div>
-
-                                <div class="media-content">
-                                    <p class="title is-6">{{ farmacia.nome }}</p>
-                                    <p class="subtitle is-6">
-                                        <i class="fa fa-circle" [ngClass]="{'has-text-primary': (farmacia.remedios && farmacia.remedios.indexOf(remedio.id) >= 0), 'has-text-danger': (farmacia.remedios && farmacia.remedios.indexOf(remedio.id) == -1)}"></i>
-                                        {{ (farmacia.remedios && farmacia.remedios.indexOf(remedio.id) >= 0) ? 'Disponível' : 'Indisponível' }}
-                                        <br/>
-                                        <i class="fa fa-phone"></i> <a [href]="'tel:' + farmacia.telefone">{{ farmacia.telefone }}</a>
-                                        <br/>
-                                        <i class="fa fa-map-marker"></i> <a [href]="'https://www.google.com/maps/search/?api=1&query=' + farmacia.endereco + ', ' + farmacia.bairro" target="_blank">{{ farmacia.endereco + ', ' + farmacia.bairro }}</a>
-                                    </p>
-                                </div>
-
                             </div>
                         </div>
-                    </div>
 
-                </div>
+                    </div>
+                </ng-container>
+
+                <ng-template #naoencontrado>
+                    <div class="column has-text-centered" style="padding: 20px 0;">
+                        <p class="title is-4 has-text-grey" style="margin-bottom: 5px">
+                            Nenhuma farmácia encontrada
+                        </p>
+                        <i class="fa fa-frown-o fa-4x has-text-grey"></i>
+                    </div>
+                </ng-template>
 
             </div>
         </ng-container>
 
         <ng-template #loading>
-            Carregando...
+            <div class="column has-text-centered" style="padding: 20px 0;">
+                <p class="title is-4 has-text-grey" style="margin-bottom: 5px">
+                    Carregando
+                </p>
+                <i class="fa fa-spinner fa-spin fa-2x"></i>
+            </div>
         </ng-template>
 
     </section>

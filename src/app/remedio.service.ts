@@ -18,4 +18,12 @@ export class RemedioService {
         this._db.list('/remedios').remove(key);
     }
 
+    notificar(idRemedio, email, telefone) {
+        this._db.list('/notificacoes').push({
+            idRemedio: idRemedio,
+            email: email,
+            telefone: telefone
+        });
+    }
+
 }

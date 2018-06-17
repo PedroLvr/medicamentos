@@ -30,10 +30,6 @@ export class LoginComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        console.log(this._sessao.isLogado);
-        if(this._sessao.isLogado) {
-            this._router.navigate(['/painel-controle']);
-        }
         this.formularioLogin = new FormGroup({
             'email': new FormControl('', [Validators.required, Validators.email]),
             'senha': new FormControl('', Validators.required)
