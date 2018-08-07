@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { BuscaComponent } from './busca/busca.component';
 import { RemedioComponent } from './remedio/remedio.component';
 import { FarmaciaComponent } from './farmacia/farmacia.component';
 import { ListaRemediosComponent } from './lista-remedios/lista-remedios.component';
@@ -16,6 +17,7 @@ import { AvaliacaoComponent } from './avaliacao/avaliacao.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
+    { path: 'busca', component: BuscaComponent },
     { path: 'remedio', component: RemedioComponent },
     { path: 'remedios/formulario', component: FormularioRemedioComponent },
     { path: 'farmacias/formulario', component: FormularioFarmaciaComponent },
@@ -27,8 +29,8 @@ const routes: Routes = [
     ] },
     { path: 'relacionar-farmacias', component: RelacionarFarmaciasComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'quem-somos', component: QuemSomosComponent },
-    { path: 'nos-avalie', component: AvaliacaoComponent },
+    // { path: 'quem-somos', component: QuemSomosComponent },
+    // { path: 'nos-avalie', component: AvaliacaoComponent },
     // { path: 'farmacia/:idFarmacia', component: FarmaciaComponent }
     // { path: 'erro404', component: Erro404Component },
     // { path: 'atividades', component: AtividadesComponent },

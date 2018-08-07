@@ -37,6 +37,7 @@ import { LoadingService } from './loading/loading.service';
 
 import { AppRouting } from './app.routing';
 import { firebaseConfig } from './app.firebase';
+import { BuscaComponent } from './busca/busca.component';
 
 @NgModule({
     declarations: [
@@ -59,7 +60,8 @@ import { firebaseConfig } from './app.firebase';
         ListaUsuariosComponent,
         FormularioUsuarioComponent,
         AvaliacaoComponent,
-        LoadingComponent
+        LoadingComponent,
+        BuscaComponent
     ],
     entryComponents: [
         LoadingComponent

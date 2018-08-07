@@ -1,0 +1,82 @@
+<div>
+  <!-- BANNER -->
+  <section class="hero is-primary">
+      <div class="hero-body">
+          <div class="container">
+              <h1 class="title">
+                  Remédios BV
+              </h1>
+              <h2 class="subtitle">
+                  Ainda não encontrou seu remédio?
+              </h2>
+              <div class="control has-icons-right">
+                  <input class="input is-large" type="text" placeholder="Nome do remédio..." (input)="pesquisar($event)">
+                  <span class="icon is-medium is-right">
+                      <i class="fa fa-search"></i>
+                  </span>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!-- end BANNER -->
+
+  <section class="container resultado">
+
+      <ng-container *ngIf="remedios != null; else loading">
+
+          <div class="columns is-multiline">
+
+              <ng-container *ngIf="remedios.length > 0; else naoencontrado">
+                  <div class="column is-half-tablet is-one-third-desktop" *ngFor="let remedio of remedios">
+
+                      <div class="card" (click)="escolher(remedio)">
+                          <div class="card-content">
+                              <div class="media">
+
+                                  <div class="media-left">
+                                      <figure class="image is-64x64">
+                                          <img src="assets/img/icons/remedio-256x256.png" alt="Placeholder image">
+                                      </figure>
+                                  </div>
+
+                                  <div class="media-content">
+                                      <p class="title is-6">{{ remedio.nome }}</p>
+                                      <p class="subtitle is-6">
+                                          <i class="fa fa-eyedropper"></i>
+                                          {{ remedio.concentracao }}
+                                          <br/>
+                                          <i class="fa fa-flask"></i>
+                                          {{ remedio.forma }}
+                                      </p>
+                                  </div>
+
+                              </div>
+                          </div>
+                      </div>
+
+                  </div>
+              </ng-container>
+
+              <ng-template #naoencontrado>
+                  <div class="column has-text-centered" style="padding: 20px 0;">
+                      <p class="title is-4 has-text-grey" style="margin-bottom: 5px">
+                          Nenhum remédio encontrado
+                      </p>
+                      <i class="fa fa-frown-o fa-4x has-text-grey"></i>
+                  </div>
+              </ng-template>
+          </div>
+
+      </ng-container>
+
+      <ng-template #loading>
+          <div class="column has-text-centered" style="padding: 20px 0;">
+              <p class="title is-4 has-text-grey" style="margin-bottom: 5px">
+                  Carregando
+              </p>
+              <i class="fa fa-spinner fa-spin fa-2x"></i>
+          </div>
+      </ng-template>
+
+  </section>
+</div>
