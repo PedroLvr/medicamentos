@@ -7,7 +7,7 @@
             <h2 class="subtitle is-6">
                 Ainda não encontrou seu remédio?
             </h2>
-            <form (ngSubmit)="buscar($event)">
+            <form (ngSubmit)="buscar($event.target.elements[0].value)">
                 <div class="field has-addons">
                     <div class="control">
                         <input class="input is-medium" type="text" placeholder="Digite aqui o remédio que procura" (input)="autocompletar($event)">
@@ -21,8 +21,8 @@
                     </div>
                 </div>
                 <nav class="panel painel-completes" *ngIf="autocompletes.length > 0">
-                    <a class="panel-block is-active" *ngFor="let complete of autocompletes">
-                        {{ complete }}
+                    <a class="panel-block" *ngFor="let complete of autocompletes" (click)="buscar(complete.nome + ' ' + complete.concentracao)">
+                        {{ complete.nome + ' ' + complete.concentracao }}
                     </a>
                 </nav>
             </form>

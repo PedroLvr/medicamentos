@@ -4,7 +4,16 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 @Injectable()
 export class RemedioService {
 
-    constructor(private _db: AngularFireDatabase) { }
+    constructor(private _db: AngularFireDatabase) {}
+
+    filtrar(start, end): AngularFireList<any> {
+        return this._db.list('/remedios', ref =>
+            ref.orderByChild('nome')
+            .limitToFirst(5)
+            .startAt(start)
+            .endAt(end)
+        );
+    }
 
     getRemedios(busca = ''): AngularFireList<any> {
         return this._db.list('/remedios', ref =>
