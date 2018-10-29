@@ -2,7 +2,6 @@
 
     <div class="control">
         <button class="button is-primary has-margin-v" (click)="novoRemedio()">Novo Remédio</button>
-        <!-- <button class="button is-info" (click)="novaFarmacia()">Nova Farmácia</button> -->
     </div>
 
     <div class="control has-icons-right">
@@ -17,19 +16,16 @@
             <thead>
                 <tr>
                     <td>Nome</td>
-                    <td class="has-text-centered">Farmácias</td>
-                    <td class="has-text-centered">Remover</td>
+                    <td class="has-text-centered">Editar/Excluir</td>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let remedio of remedios" (click)="editar(remedio)">
+                <tr *ngFor="let remedio of remedios">
                     <td>{{ remedio.nome }}</td>
                     <td class="has-text-centered">
-                        <a class="button is-info is-small" (click)="farmacias($event, remedio)">
-                            <i class="fa fa-hospital-o fa-lg"></i>
+                        <a class="button is-danger is-small" (click)="editar(remedio)">
+                            <i class="fa fa-pencil-square-o fa-lg"></i>
                         </a>
-                    </td>
-                    <td class="has-text-centered">
                         <a class="button is-danger is-small" (click)="remover($event, remedio)">
                             <i class="fa fa-trash fa-lg"></i>
                         </a>

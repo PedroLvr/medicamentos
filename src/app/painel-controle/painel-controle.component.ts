@@ -5,12 +5,11 @@ import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-painel-controle',
-    templateUrl: './painel-controle.component.html',
-    styleUrls: ['./painel-controle.component.scss']
+    templateUrl: './painel-controle.component.html'
 })
 export class PainelControleComponent implements OnInit {
 
-    usuario: object = null;
+    usuario = {};
 
     constructor(
         private _sessao: SessaoService,
@@ -19,19 +18,15 @@ export class PainelControleComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        console.log("COmecou painel de controle");
         this._loading.show();
-        this._sessao.hasSessao
-        .subscribe(usuario => {
-            console.log(usuario);
-            if(usuario) {
-                this.usuario = usuario;
-            } else {
-                this._sessao.logout();
-                this._router.navigate(['/login']);
-            }
-            this._loading.hide();
-        })
+        if(!this._sessao.hasSessao()) {
+            console.log("sem sessao")
+            this._sessao.logout();
+            this._router.navigate(['/login']);
+        } else {
+            this.usuario = this._sessao.getUser();
+        }
+        this._loading.hide();
     }
 
 }

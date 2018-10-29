@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FarmaciaService } from '../farmacia.service';
 import { ParamsService } from '../params.service';
 import { PopupService } from '../popup/popup.service';
 
 @Component({
     selector: 'app-lista-farmacias',
-    templateUrl: './lista-farmacias.component.html',
-    styleUrls: ['./lista-farmacias.component.scss']
+    templateUrl: './lista-farmacias.component.html'
 })
 export class ListaFarmaciasComponent implements OnInit {
 
@@ -17,6 +16,7 @@ export class ListaFarmaciasComponent implements OnInit {
         private _farmaciaService: FarmaciaService,
         private _params: ParamsService,
         private _popup: PopupService,
+        private _route: ActivatedRoute,
         private _router: Router
     ) { }
 
@@ -25,7 +25,7 @@ export class ListaFarmaciasComponent implements OnInit {
     }
 
     novaFarmacia() {
-        this._router.navigate(['/farmacias/formulario']);
+        this._router.navigate(['formulario'], { relativeTo: this._route });
     }
 
     pesquisar(event?): void {

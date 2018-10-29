@@ -6,8 +6,7 @@ import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-relacionar-farmacias',
-    templateUrl: './relacionar-farmacias.component.html',
-    styleUrls: ['./relacionar-farmacias.component.scss']
+    templateUrl: './relacionar-farmacias.component.html'
 })
 export class RelacionarFarmaciasComponent implements OnInit {
 

@@ -4,8 +4,7 @@ import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-menu',
-    templateUrl: './menu.component.html',
-    styleUrls: ['./menu.component.scss']
+    templateUrl: './menu.component.html'
 })
 export class MenuComponent implements OnInit {
 
@@ -18,10 +17,9 @@ export class MenuComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this._sessao.hasSessao
-        .subscribe(usuario => {
-            this.usuario = usuario;
-        })
+        if(this._sessao.hasSessao()) {
+            this.usuario = this._sessao.getUser();
+        }
     }
 
     toggleMenu() {

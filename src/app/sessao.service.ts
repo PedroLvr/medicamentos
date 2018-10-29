@@ -1,26 +1,37 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase';
+import { throws } from 'assert';
 
 @Injectable()
 export class SessaoService {
 
-    constructor(private _auth: AngularFireAuth) {
-        // Definindo o tipo de persistencia do estado do Auth.
-        // SESSION: o estado será mantido somente na sessão ou guia atual e
-        // será apagado quando a guia ou janela em que o usuário fez a autenticação for fechada
-        // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
-    }
- 
-    get usuario() {
-        return this._auth.auth.currentUser;
-    }
-
-    get hasSessao() {
-        return this._auth.authState;
+    login(user) {
+        try {
+            localStorage.setItem("remediosbv_usuario", JSON.stringify(user));
+        } catch (e) {
+            console.error('Error loging in!', e);
+        }
     }
 
     logout() {
-        firebase.auth().signOut();
+        try {
+            localStorage.removeItem("remediosbv_usuario");
+        } catch (e) {
+            console.error('Error login out!', e);
+        }
+    }
+
+    getUser() {
+        try {
+            return JSON.parse(localStorage.getItem("remediosbv_usuario"));
+        } catch (e) {
+            console.error('Error getting data from localStorage', e);
+        }
+    }
+
+    hasSessao() {
+        let u = this.getUser();
+        return u != null && u != "";
     }
 }

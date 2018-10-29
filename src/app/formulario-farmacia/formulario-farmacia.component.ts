@@ -9,8 +9,7 @@ import { ParamsService } from '../params.service';
 
 @Component({
     selector: 'app-formulario-farmacia',
-    templateUrl: './formulario-farmacia.component.html',
-    styleUrls: ['./formulario-farmacia.component.scss']
+    templateUrl: './formulario-farmacia.component.html'
 })
 export class FormularioFarmaciaComponent implements OnInit {
 

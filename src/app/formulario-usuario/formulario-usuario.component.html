@@ -15,10 +15,18 @@
         </div>
 
         <div class="field">
-            <label class="label is-medium">Senha</label>
-            <div class="control">
-                <input type="password" name="senha" class="input is-medium" [(ngModel)]="usuario.senha">
-            </div>
+            <label class="label is-medium">Permissão</label>
+            <p class="control has-icons-left">
+                <span class="select is-medium">
+                    <select name="permissao" [(ngModel)]="usuario.permissao">
+                        <option value="farmaceutico">Farmacêutico</option>
+                        <option value="administrador">Administrador</option>
+                    </select>
+                </span>
+                <span class="icon is-small is-left">
+                    <i class="fa fa-globe"></i>
+                </span>
+            </p>
         </div>
 
         <div class="field is-grouped is-grouped-right">

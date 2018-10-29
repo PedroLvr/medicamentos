@@ -1,7 +1,8 @@
 <section class="container">
 
-    <div class="control">
-        <button class="button is-info has-margin-v" (click)="novaFarmacia()">Nova Farmácia</button>
+    <div>
+        <h2>{{ usuario.nome }}</h2>
+        <h3>{{ usuario.email }}</h3>
     </div>
 
     <div class="control has-icons-right has-margin">
@@ -15,21 +16,18 @@
         <table class="table is-striped is-hoverable is-fullwidth">
             <thead>
                 <tr>
-                    <td>Nome</td>
-                    <td class="has-text-centered">Editar/Excluir</td>
+                    <td>Colaborador</td>
+                    <td>Farmácia</td>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let farmacia of farmacias">
-                    <td>{{ farmacia.nome }}</td>
-                    <td class="has-text-centered">
-                        <a class="button is-danger is-small" (click)="editar(farmacia)">
-                            <i class="fa fa-pencil-square-o fa-lg"></i>
-                        </a>
-                        <a class="button is-danger is-small" (click)="remover($event, farmacia)">
-                            <i class="fa fa-trash fa-lg"></i>
+                    <td>
+                        <a class="button is-small" (click)="toggleColaborador(farmacia)">
+                            {{ (usuario.farmacias && usuario.farmacias.indexOf(farmacia.id) > -1 ? 'Sim' : 'Não') }}
                         </a>
                     </td>
+                    <td>{{ farmacia.nome }}</td>
                 </tr>
             </tbody>
         </table>

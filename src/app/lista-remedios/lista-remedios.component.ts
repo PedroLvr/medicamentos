@@ -8,8 +8,7 @@ import { RemedioService } from '../remedio.service';
 
 @Component({
     selector: 'app-lista-remedios',
-    templateUrl: './lista-remedios.component.html',
-    styleUrls: ['./lista-remedios.component.scss']
+    templateUrl: './lista-remedios.component.html'
 })
 export class ListaRemediosComponent implements OnInit {
 
@@ -18,6 +17,7 @@ export class ListaRemediosComponent implements OnInit {
     constructor(
         private _remedioService: RemedioService,
         private _router: Router,
+        private _route: ActivatedRoute,
         private _params: ParamsService,
         private _popup: PopupService
     ) {}
@@ -27,29 +27,21 @@ export class ListaRemediosComponent implements OnInit {
     }
 
     novoRemedio() {
-        this._router.navigate(['/remedios/formulario']);
+        this._router.navigate(['formulario'], { relativeTo: this._route });
     }
 
-    pesquisar(event?): void {
+    pesquisar(event?) {
         let texto = event ? event.target.value.trim() : '';
-        console.log(texto)
         this._remedioService.getRemedios(texto)
         .valueChanges()
         .subscribe(remedios => {
-            console.log(remedios);
             this.remedios = remedios;
         });
     }
 
     editar(remedio) {
         this._params.set(remedio);
-        this._router.navigate(['/remedios/formulario']);
-    }
-
-    farmacias(event, remedio): void {
-        event.stopPropagation();
-        this._params.set(remedio);
-        this._router.navigate(['/relacionar-farmacias']);
+        this.novoRemedio();
     }
     
     remover(event, remedio) {

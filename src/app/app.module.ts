@@ -30,6 +30,7 @@ import { LoadingComponent } from './loading/loading.component';
 import { PushNotification } from './push-notification.service';
 import { RemedioService } from './remedio.service';
 import { FarmaciaService } from './farmacia.service';
+import { UsuarioService } from './usuario.service';
 import { RequestService } from './request.service';
 import { ParamsService } from './params.service';
 import { SessaoService } from './sessao.service';
@@ -38,6 +39,9 @@ import { LoadingService } from './loading/loading.service';
 import { AppRouting } from './app.routing';
 import { firebaseConfig } from './app.firebase';
 import { BuscaComponent } from './busca/busca.component';
+import { RelacaoFarmaciaUsuarioComponent } from './relacao-farmacia-usuario/relacao-farmacia-usuario.component';
+import { RelacaoFarmaciaRemedioComponent } from './relacao-farmacia-remedio/relacao-farmacia-remedio.component';
+import { UsuarioFarmaciaComponent } from './usuario-farmacia/usuario-farmacia.component';
 
 @NgModule({
     declarations: [
@@ -61,7 +65,10 @@ import { BuscaComponent } from './busca/busca.component';
         FormularioUsuarioComponent,
         AvaliacaoComponent,
         LoadingComponent,
-        BuscaComponent
+        BuscaComponent,
+        RelacaoFarmaciaUsuarioComponent,
+        RelacaoFarmaciaRemedioComponent,
+        UsuarioFarmaciaComponent
     ],
     entryComponents: [
         LoadingComponent
@@ -80,6 +87,7 @@ import { BuscaComponent } from './busca/busca.component';
     providers: [
         RemedioService,
         FarmaciaService,
+        UsuarioService,
         RequestService,
         ParamsService,
         PushNotification,

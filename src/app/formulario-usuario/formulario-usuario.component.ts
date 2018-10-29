@@ -8,10 +8,9 @@ import { UsuarioService } from '../usuario.service';
 
 @Component({
     selector: 'app-formulario-usuario',
-    templateUrl: './formulario-usuario.component.html',
-    styleUrls: ['./formulario-usuario.component.scss']
+    templateUrl: './formulario-usuario.component.html'
 })
-export class FormularioUsuarioComponent implements OnInit {
+export class FormularioUsuarioComponent {
 
     usuario: any = {};
     usuarios: AngularFireList<any>;
@@ -39,23 +38,23 @@ export class FormularioUsuarioComponent implements OnInit {
     salvar(usuario) {
         if ('id' in usuario) {
             this.usuarios.update(usuario.id, usuario)
-            .then(res => {
-                console.log(res);
-                this.cancelar();
-            })
-            .catch(err => {
-                console.log(err);
-            });
+                .then(res => {
+                    console.log(res);
+                    this.cancelar();
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         } else {
             let key = this.usuarios.push(usuario).key;
             this.usuarios.update(key, { id: key })
-            .then(res => {
-                console.log(res);
-                this.usuario = {};
-            })
-            .catch(err => {
-                console.log(err);
-            });
+                .then(res => {
+                    console.log(res);
+                    this.usuario = { };
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
     }
 

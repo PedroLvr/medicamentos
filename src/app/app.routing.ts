@@ -9,6 +9,9 @@ import { ListaFarmaciasComponent } from './lista-farmacias/lista-farmacias.compo
 import { RelacionarFarmaciasComponent } from './relacionar-farmacias/relacionar-farmacias.component';
 import { FormularioRemedioComponent } from './formulario-remedio/formulario-remedio.component';
 import { FormularioFarmaciaComponent } from './formulario-farmacia/formulario-farmacia.component';
+import { FormularioUsuarioComponent } from './formulario-usuario/formulario-usuario.component';
+import { RelacaoFarmaciaRemedioComponent } from './relacao-farmacia-remedio/relacao-farmacia-remedio.component';
+import { RelacaoFarmaciaUsuarioComponent } from './relacao-farmacia-usuario/relacao-farmacia-usuario.component';
 import { LoginComponent } from './login/login.component';
 import { QuemSomosComponent } from './quem-somos/quem-somos.component';
 import { PainelControleComponent } from './painel-controle/painel-controle.component';
@@ -19,29 +22,21 @@ const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'busca', component: BuscaComponent },
     { path: 'remedio', component: RemedioComponent },
-    { path: 'remedios/formulario', component: FormularioRemedioComponent },
-    { path: 'farmacias/formulario', component: FormularioFarmaciaComponent },
+    { path: 'farmacia', component: FarmaciaComponent},
+    { path: 'farmacia/remedios', component: RelacaoFarmaciaRemedioComponent },
     { path: 'painel-controle', component: PainelControleComponent, children: [
         { path: '', redirectTo: 'remedios', pathMatch: 'prefix' },
         { path: 'remedios', component: ListaRemediosComponent },
+        { path: 'remedios/formulario', component: FormularioRemedioComponent },
+
         { path: 'farmacias', component: ListaFarmaciasComponent },
-        { path: 'usuarios', component: ListaUsuariosComponent }
+        { path: 'farmacias/formulario', component: FormularioFarmaciaComponent },
+
+        { path: 'usuarios', component: ListaUsuariosComponent },
+        { path: 'usuarios/formulario', component: FormularioUsuarioComponent },
+        { path: 'usuarios/farmacias', component: RelacaoFarmaciaUsuarioComponent }
     ] },
-    { path: 'relacionar-farmacias', component: RelacionarFarmaciasComponent },
-    { path: 'login', component: LoginComponent },
-    // { path: 'quem-somos', component: QuemSomosComponent },
-    // { path: 'nos-avalie', component: AvaliacaoComponent },
-    // { path: 'farmacia/:idFarmacia', component: FarmaciaComponent }
-    // { path: 'erro404', component: Erro404Component },
-    // { path: 'atividades', component: AtividadesComponent },
-    // { path: 'atividades/:idAtividade', component: AtividadeDetalhesContainer, children: [
-    //     { path: '', component: AtividadeInfoContainer },
-    //     { path: 'ticket', component: AtividadeTicketContainer },
-    // ] },
-    // { path: '', redirectTo: '/atividades', pathMatch: 'full' },
-    // { path: ':idAtividade', redirectTo: '/atividades/:idAtividade', pathMatch: 'full' },
-    // { path: ':idAtividade/pagamento', redirectTo: '/atividades/:idAtividade/pagamento', pathMatch: 'full' },
-    // { path: ':idAtividade/impressao', redirectTo: '/atividades/:idAtividade/impressao', pathMatch: 'full' },
+    { path: 'login', component: LoginComponent }
     // { path: '**', redirectTo: '/erro404', pathMatch: 'full' }
 ];
 
