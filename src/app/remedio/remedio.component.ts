@@ -38,8 +38,10 @@ export class RemedioComponent implements OnInit {
         this._farmaciaService.getFarmacias()
         .valueChanges()
         .subscribe(farmacias => {
-            this.farmacias = farmacias;
-            this.farmaciasDisponiveis = farmacias.reduce((total, farmacia) => farmacia.remedios && farmacia.remedios.indexOf(this.remedio.id) ? ++total : total, 0);
+            if(this.remedio['farmacias']) {
+                this.farmacias = farmacias.filter(farmacia => this.remedio['farmacias'].indexOf(farmacia.id) > -1);
+                this.farmaciasDisponiveis = this.farmacias.reduce((total, farmacia) => farmacia.remedios && farmacia.remedios.indexOf(this.remedio.id) ? ++total : total, 0);
+            }
         }, err => {
             console.log(err);
             this.farmacias = null;

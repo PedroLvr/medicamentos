@@ -1,8 +1,7 @@
 <section class="container">
 
     <div>
-        <h2>{{ usuario.nome }}</h2>
-        <h3>{{ usuario.email }}</h3>
+        <h1>{{ farmacia.nome }}</h1>
     </div>
 
     <div class="control has-icons-right has-margin">
@@ -12,22 +11,22 @@
         </span>
     </div>
 
-    <ng-container *ngIf="farmacias.length; else loading">
+    <ng-container *ngIf="remedios.length; else loading">
         <table class="table is-striped is-hoverable is-fullwidth">
             <thead>
                 <tr>
-                    <td>Colaborador</td>
-                    <td>Farmácia</td>
+                    <td>Possui</td>
+                    <td>Remédio</td>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let farmacia of farmacias">
+                <tr *ngFor="let remedio of remedios">
                     <td>
-                        <a class="button is-small" (click)="toggleColaborador(farmacia)">
-                            {{ (usuario.farmacias && usuario.farmacias.indexOf(farmacia.id) > -1 ? 'Sim' : 'Não') }}
+                        <a class="button is-small" (click)="togglePossui(remedio)">
+                            {{ (remedio.farmacias && remedio.farmacias.includes(farmacia.id) ? 'Sim' : 'Não') }}
                         </a>
                     </td>
-                    <td>{{ farmacia.nome }}</td>
+                    <td>{{ remedio.nome }}</td>
                 </tr>
             </tbody>
         </table>

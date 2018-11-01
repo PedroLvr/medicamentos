@@ -4,8 +4,8 @@
         <label class="label">Farmácia</label>
         <div class="control">
             <div class="select is-primary">
-                <select [(ngModel)]="farmaciaSelecionada">
-                    <option *ngFor="let farmacia of farmacias" [value]="farmacia">{{ farmacia.nome }}</option>
+                <select (change)="escolherFarmacia($event)">
+                    <option *ngFor="let farmacia of farmacias" [value]="farmacia.id">{{ farmacia.nome }}</option>
                 </select>
             </div>
         </div>
@@ -34,7 +34,7 @@
                 <tr *ngFor="let remedio of remedios">
                     <td class="has-text-centered">
                         <a class="button is-danger is-small" (click)="toggleDisponivel(remedio)">
-                            <i class="fa fa-pencil-square-o fa-lg"></i>
+                            {{ (farmaciaSelecionada.remedios && farmaciaSelecionada.remedios.includes(remedio.id)) ? 'Disponível' : 'Indisponível' }}
                         </a>
                     </td>
                     <td>{{ remedio.nome }}</td>

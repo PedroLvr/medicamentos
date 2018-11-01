@@ -12,8 +12,9 @@ export class FarmaciaComponent implements OnInit {
 
     usuario = {};
     farmacias = [];
+    farmaciaSelecionada = {};
+    allRemedios = [];
     remedios = [];
-    farmaciaSelecionada;
 
     constructor(
         private _db: AngularFireDatabase,
@@ -28,19 +29,39 @@ export class FarmaciaComponent implements OnInit {
             this.usuario = this._sessao.getUser();
             if(this.usuario['farmacias']) {
                 this._db.list('/farmacias').valueChanges().subscribe(farmacias => {
-                    console.log(farmacias);
                     this.farmacias = farmacias.filter(f => this.usuario['farmacias'].includes(f['id']));
                 });
             }
 
             this._db.list('/remedios').valueChanges().subscribe(remedios => {
-                this.remedios = remedios;
+                this.allRemedios = remedios;
             });
         }
     }
 
+    toggleDisponivel(remedio) {
+        if(!this.farmaciaSelecionada['remedios']) {
+            this.farmaciaSelecionada['remedios'] = [];
+            this.farmaciaSelecionada['remedios'].push(remedio['id'])
+        } else if(this.farmaciaSelecionada['remedios'].indexOf(remedio['id']) > -1) {
+            let index = this.farmaciaSelecionada['remedios'].indexOf(remedio['id']);
+            this.farmaciaSelecionada['remedios'].splice(index, 1);
+        } else {
+            this.farmaciaSelecionada['remedios'].push(remedio['id']);
+        }
+
+        this._db.list('/farmacias').update(this.farmaciaSelecionada['id'], this.farmaciaSelecionada);
+    }
+
     editarRemedios() {
+        this._params.set(this.farmaciaSelecionada);
         this._router.navigate(['/farmacia/remedios']);
+    }
+
+    escolherFarmacia(event) {
+        let farmacia = this.farmacias.find(f => f.id == event.target.value);
+        this.farmaciaSelecionada = farmacia;
+        this.remedios = this.allRemedios.filter(r => r['farmacias'] && r['farmacias'].includes(farmacia.id));
     }
 
 }

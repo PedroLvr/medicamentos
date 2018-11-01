@@ -35,11 +35,6 @@ export class BuscaComponent implements OnInit {
         this.inputBusca.nativeElement.value = this.busca;
     }
 
-    escolher(remedio): void {
-        this._params.set(remedio);
-        this._router.navigateByUrl('remedio');
-    }
-
     pesquisar(event?): void {
         let texto = event ? event.target.value.trim() : '';
         this._remedioService.getRemedios(texto)
