@@ -3,8 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
     selector: 'popup',
-    templateUrl: './popup.component.html',
-    styleUrls: ['./popup.component.scss']
+    templateUrl: './popup.component.html'
 })
 export class PopupComponent {
 

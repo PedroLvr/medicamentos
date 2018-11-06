@@ -42,7 +42,7 @@ export class FarmaciaComponent implements OnInit {
     toggleDisponivel(remedio) {
         if(!this.farmaciaSelecionada['remedios']) {
             this.farmaciaSelecionada['remedios'] = [];
-            this.farmaciaSelecionada['remedios'].push(remedio['id'])
+            this.farmaciaSelecionada['remedios'].push(remedio['id']);
         } else if(this.farmaciaSelecionada['remedios'].indexOf(remedio['id']) > -1) {
             let index = this.farmaciaSelecionada['remedios'].indexOf(remedio['id']);
             this.farmaciaSelecionada['remedios'].splice(index, 1);

@@ -23,45 +23,73 @@
     </section>
     <!-- end BANNER -->
 
-    <section class="container">
+    <section class="container" style="max-width: 450px;">
         <form class="form" (ngSubmit)="logar()" [formGroup]="formularioLogin">
 
             <div class="field">
-                <label class="label">Email</label>
+                <label class="label">E-mail</label>
                 <div class="control has-icons-left has-icons-right">
-                    <input type="text" class="input" [ngClass]="{'is-primary': formularioLogin.get('email').valid, 'is-danger': formularioLogin.get('email').touched && formularioLogin.get('email').errors}" placeholder="fulano@mail.com.br" formControlName="email" required>
                     <span class="icon is-small is-left">
                         <i class="fa fa-envelope"></i>
                     </span>
-                    <span class="icon is-small is-right" *ngIf="formularioLogin.get('email').invalid">
+
+                    <input type="text" class="input"
+                        placeholder="Digite o e-mail"
+                        [ngClass]="{'is-primary': formularioLogin.get('email').valid, 'is-danger': formularioLogin.get('email').touched && formularioLogin.get('email').errors}"
+                        formControlName="email" required/>
+
+                    <span class="icon is-small is-right"
+                        *ngIf="formularioLogin.get('email').value && formularioLogin.get('email').invalid">
                         <i class="fa fa-exclamation-triangle"></i>
                     </span>
-                    <span class="icon is-small is-right" *ngIf="formularioLogin.get('email').valid">
+                    <span class="icon is-small is-right"
+                        *ngIf="formularioLogin.get('email').valid">
                         <i class="fa fa-check"></i>
                     </span>
                 </div>
-                <p class="help is-danger" *ngIf="formularioLogin.get('email').touched && formularioLogin.get('email').errors">E-mail inválido!</p>
+                <p class="help is-danger"
+                    *ngIf="formularioLogin.get('email').touched && !formularioLogin.get('email').value">
+                    Campo obrigatório!
+                </p>
+                <p class="help is-danger"
+                    *ngIf="formularioLogin.get('email').touched && formularioLogin.get('email').value && formularioLogin.get('email').errors">
+                    E-mail inválido!
+                </p>
             </div>
 
             <div class="field">
                 <label class="label">Senha</label>
                 <div class="control has-icons-left has-icons-right">
-                    <input type="password" class="input"[ngClass]="{'is-primary': formularioLogin.get('senha').valid, 'is-danger': formularioLogin.get('senha').touched && formularioLogin.get('senha').errors}" placeholder="senha123" formControlName="senha" required>
                     <span class="icon is-small is-left">
                         <i class="fa fa-lock"></i>
                     </span>
-                    <!-- <span class="icon is-small is-right" *ngIf="email.errors.required || email.erros.email">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </span> -->
+
+                    <input type="password" class="input"
+                        placeholder="Digite a senha"
+                        [ngClass]="{'is-primary': formularioLogin.get('senha').valid, 'is-danger': formularioLogin.get('senha').touched && formularioLogin.get('senha').errors}"
+                        formControlName="senha" required/>
+
+                    <span class="icon is-small is-right"
+                        *ngIf="formularioLogin.get('senha').valid">
+                        <i class="fa fa-check"></i>
+                    </span>
                 </div>
-                <!-- <p class="help is-danger" *ngIf="email.errors.required || email.erros.email">E-mail inválido!</p> -->
+                <p class="help is-danger"
+                    *ngIf="formularioLogin.get('senha').touched && !formularioLogin.get('senha').value">
+                    Campo obrigatório!
+                </p>
             </div>
 
             <div class="field">
-                <p class="control has-text-right">
-                    <button type="submit" class="button is-primary" [ngClass]="{'is-loading': isLoading}" [disabled]="isLoading">
+                <p class="control has-text-centered">
+                    <button type="submit" class="button is-fullwidth is-primary"
+                        [ngClass]="{'is-loading': isLoading}"
+                        [disabled]="formularioLogin.invalid || isLoading">
                         Entrar
                     </button>
+                </p>
+                <p class="control has-text-centered" style="margin-top: 25px;">
+                    <a href="">Esqueci a Senha!</a>
                 </p>
             </div>
         </form>

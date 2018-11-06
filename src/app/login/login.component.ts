@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SessaoService } from '../sessao.service';
 import { LoadingService } from '../loading/loading.service';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { PopupService } from '../popup/popup.service';
 
 @Component({
     selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
         private _db: AngularFireDatabase,
         private _sessao: SessaoService,
         private _router: Router,
-        private _loading: LoadingService
+        private _loading: LoadingService,
+        private _popup: PopupService
     ) { }
 
     ngOnInit() {
@@ -32,23 +34,21 @@ export class LoginComponent implements OnInit {
         this.isLoading = true;
         let formulario = this.formularioLogin.value;
 
-        let obs = this._db.list('/usuarios', ref =>
+        this._db.list('/usuarios', ref =>
             ref.orderByChild('email')
                 .startAt(formulario.email)
                 .endAt(formulario.email + "\uf8ff")
-        ).valueChanges().subscribe(res => {
-
-            console.log(res);
-
+        ).valueChanges()
+        .first()
+        .subscribe(usuarios => {
             let user = null;
-            res.forEach(u => {
+            usuarios.forEach(u => {
                 if(u['senha'] == formulario.senha) {
                     user = u;
                 }
             });
 
             if(user != null) {
-                console.log("Usuario Logado!");
                 this._sessao.login(user);
                 this.formularioLogin.reset();
                 if(user['permissao'] === 'administrador')
@@ -56,11 +56,15 @@ export class LoginComponent implements OnInit {
                 else
                     this._router.navigate(['/farmacia']);
             } else {
-                console.log("Usuario nao encontrado!");
+                this._popup.alert({
+                    titulo: 'Falha no Login',
+                    texto: 'E-mail não encontrado!'
+                });
                 this.isLoading = false;
             }
-
-            obs.unsubscribe();
+            this.isLoading = false;
+        }, err => {
+            console.log(err);
         });
     }
 
