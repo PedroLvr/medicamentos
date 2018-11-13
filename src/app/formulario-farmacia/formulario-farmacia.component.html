@@ -1,64 +1,92 @@
-<section class="container">
-    <form class="form">
+<section class="container" style="max-width: 600px;">
+
+    <div class="control side-margin">
+        <button class="button has-margin-v is-info is-inverted" (click)="cancelar()">
+            <span class="icon">
+                <i class="fa fa-chevron-left"></i>
+            </span>
+            <span>Voltar</span>
+        </button>
+    </div>
+
+    <form class="form" (ngSubmit)="salvar()" [formGroup]="form">
         <div class="field">
-            <label class="label is-medium">Nome da Farmácia</label>
+            <label class="label">Nome da Farmácia</label>
             <div class="control">
-                <input type="text" name="nome" class="input is-medium" placeholder="" [(ngModel)]="farmacia.nome">
+                <input type="text"
+                    class="input"
+                    placeholder=""
+                    formControlName="nome" required>
             </div>
         </div>
     
         <div class="field">
-            <label class="label is-medium">CEP</label>
+            <label class="label">CEP</label>
             <div class="control">
-                <input type="text" name="cep" class="input is-medium" [(ngModel)]="farmacia.cep" (keyup)="pesquisarCep($event)">
-            </div>
-        </div>
-        
-        <div class="field">
-            <label class="label is-medium">Número</label>
-            <div class="control">
-                <input type="text" name="numero" class="input is-medium" [(ngModel)]="farmacia.numero">
+                <input type="tel"
+                    class="input"
+                    formControlName="cep" required
+                    (keyup)="pesquisarCep($event)">
             </div>
         </div>
     
         <div class="field">
-            <label class="label is-medium">Endereço</label>
+            <label class="label">Logradouro</label>
             <div class="control">
-                <input type="text" name="endereco" class="input is-medium" [(ngModel)]="farmacia.endereco">
+                <input type="text"
+                    class="input"
+                    formControlName="logradouro" required>
             </div>
         </div>
         
         <div class="field">
-            <label class="label is-medium">Bairro</label>
+            <label class="label">Número</label>
             <div class="control">
-                <input type="text" name="bairro" class="input is-medium" [(ngModel)]="farmacia.bairro">
+                <input type="text"
+                    class="input"
+                    formControlName="numero" required>
             </div>
         </div>
         
         <div class="field">
-            <label class="label is-medium">Cidade</label>
+            <label class="label">Bairro</label>
             <div class="control">
-                <input type="text" name="cidade" class="input is-medium" [(ngModel)]="farmacia.cidade">
+                <input type="text"
+                    class="input"
+                    formControlName="bairro" required>
+            </div>
+        </div>
+        
+        <div class="field">
+            <label class="label">Cidade</label>
+            <div class="control">
+                <input type="text"
+                    class="input"
+                    formControlName="cidade" required>
             </div>
         </div>
     
         <div class="field">
-            <label class="label is-medium">Telefone</label>
+            <label class="label">Telefone</label>
             <div class="control">
-                <input type="text" name="telefone" class="input is-medium" [(ngModel)]="farmacia.telefone">
+                <input type="text"
+                    class="input"
+                    formControlName="telefone" required>
             </div>
         </div>
     
         <div class="field is-grouped is-grouped-right">
             <p class="control">
-                <a class="button is-medium is-light" (click)="cancelar()">
+                <a class="button is-light" (click)="cancelar()">
                     Cancelar
                 </a>
             </p>
             <p class="control">
-                <a class="button is-medium is-primary" (click)="salvar(farmacia)">
+                <button type="submit" class="button is-info"
+                    [ngClass]="{'is-loading': isLoading}"
+                    [disabled]="form.invalid || isLoading">
                     Salvar
-                </a>
+                </button>
             </p>
         </div>
     </form>

@@ -1,23 +1,33 @@
-<section class="container">
+<section class="container" style="max-width: 600px;">
+
+    <div class="control side-margin">
+        <button class="button has-margin-v is-warning is-inverted" (click)="cancelar()">
+            <span class="icon">
+                <i class="fa fa-chevron-left"></i>
+            </span>
+            <span>Voltar</span>
+        </button>
+    </div>
+
     <form class="form">
         <div class="field">
-            <label class="label is-medium">Nome</label>
+            <label class="label">Nome</label>
             <div class="control">
-                <input type="text" name="nome" class="input is-medium" [(ngModel)]="usuario.nome">
+                <input type="text" name="nome" class="input" [(ngModel)]="usuario.nome">
             </div>
         </div>
 
         <div class="field">
-            <label class="label is-medium">E-mail</label>
+            <label class="label">E-mail</label>
             <div class="control">
-                <input type="text" name="email" class="input is-medium" [(ngModel)]="usuario.email">
+                <input type="text" name="email" class="input" [(ngModel)]="usuario.email">
             </div>
         </div>
 
         <div class="field">
-            <label class="label is-medium">Permissão</label>
+            <label class="label">Permissão</label>
             <p class="control has-icons-left">
-                <span class="select is-medium">
+                <span class="select">
                     <select name="permissao" [(ngModel)]="usuario.permissao">
                         <option value="farmaceutico">Farmacêutico</option>
                         <option value="administrador">Administrador</option>
@@ -31,14 +41,16 @@
 
         <div class="field is-grouped is-grouped-right">
             <p class="control">
-                <a class="button is-medium is-light" (click)="cancelar()">
+                <a class="button is-light" (click)="cancelar()">
                     Cancelar
                 </a>
             </p>
             <p class="control">
-                <a class="button is-medium is-primary" (click)="salvar(usuario)">
+                <button type="submit" class="button is-warning"
+                    [ngClass]="{'is-loading': isLoading}"
+                    [disabled]="form.invalid || isLoading">
                     Salvar
-                </a>
+                </button>
             </p>
         </div>
     </form>

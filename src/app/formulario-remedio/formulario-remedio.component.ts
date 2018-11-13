@@ -1,31 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { ParamsService } from '../params.service';
 import { Location } from '@angular/common';
 import { RemedioService } from '../remedio.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
-    selector: 'app-formulario-remedio',
+    selector: 'formulario-remedio',
     templateUrl: './formulario-remedio.component.html',
-    styleUrls: ['./formulario-remedio.component.scss']
+    styles: [`
+        .select,
+        .select select {
+            width: 100%;
+        }
+    `]
 })
-export class FormularioRemedioComponent implements OnInit {
+export class FormularioRemedioComponent {
 
     remedio: any = {};
+    form: FormGroup;
     remedios: AngularFireList<any>;
-
-    constructor(
-        private _params: ParamsService,
-        private _remedioService: RemedioService,
-        private _router: Router,
-        private _location: Location
-    ) {
-        this.remedios = this._remedioService.getRemedios();
-        this.remedio = this._params.getAll() || {};
-        console.log(this.remedio);
-    }
+    isLoading: boolean = false;
 
     tiposRemedios = [
         {nome: "Aerossol Oral"},
@@ -83,34 +80,57 @@ export class FormularioRemedioComponent implements OnInit {
         {nome: "Pastilha"}
     ];
 
-    ngOnInit() {}
+    constructor(
+        private _params: ParamsService,
+        private _remedioService: RemedioService,
+        private _router: Router,
+        private _location: Location
+    ) {
+        this.remedios = this._remedioService.getRemedios();
+        this.remedio = this._params.getAll() || {};
+
+        this.form = new FormGroup({
+            'nome': new FormControl(this.remedio.nome, Validators.required),
+            'principio': new FormControl(this.remedio.principio),
+            'concentracao': new FormControl(this.remedio.concentracao, Validators.required),
+            'forma': new FormControl(this.remedio.forma, Validators.required),
+            'descricao': new FormControl(this.remedio.descricao)
+        });
+    }
+
+    salvar() {
+        this.isLoading = true;
+        let remedio = this.form.value;
+        remedio.index = remedio.nome + remedio.principio + remedio.concentracao + remedio.forma;
+
+        // update
+        if('id' in this.remedio) {
+            this.remedios.update(this.remedio.id, remedio)
+            .then(res => {
+                this.cancelar();
+            })
+            .catch(err => {
+                console.log(err);
+                this.isLoading = false;
+            });
+        
+        // novo
+        } else {
+            let key = this.remedios.push(remedio).key;
+            this.remedios.update(key, {id: key})
+            .then(res => {
+                this.form.reset();
+                this.isLoading = false;
+            })
+            .catch(err => {
+                console.log(err);
+                this.isLoading = false;
+            });
+        }
+    }
 
     cancelar() {
         this._params.destroy();
         this._location.back();
     }
-
-    salvar(remedio) {
-        if('id' in remedio) {
-            this.remedios.update(remedio.id, remedio)
-            .then(res => {
-                console.log(res);
-                this.cancelar();
-            })
-            .catch(err => {
-                console.log(err);
-            });
-        } else {
-            let key = this.remedios.push(remedio).key;
-            this.remedios.update(key, {id: key})
-            .then(res => {
-                console.log(res);
-                this.remedio = {};
-            })
-            .catch(err => {
-                console.log(err);
-            });
-        }
-    }
-
 }

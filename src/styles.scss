@@ -1,6 +1,5 @@
 @import 'colors';
 
-
 $footer-background-color: #f1f1f1;
 
 @import '~bulma';
@@ -8,6 +7,12 @@ $footer-background-color: #f1f1f1;
 .has-margin-v {
     margin-top: 12px;
     margin-bottom: 12px;
+}
+
+@media screen and (max-width: 1088px) {
+    .side-margin {
+        margin: 0 15px;
+    }
 }
 
 .navbar {

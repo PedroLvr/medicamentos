@@ -1,57 +1,97 @@
-<section class="container">
-    <form class="form">
-        <div class="field">
-            <label class="label is-medium">Nome comercial do medicamento</label>
-            <div class="control">
-                <input type="text" name="nome" class="input is-medium" placeholder="Cimegripe" [(ngModel)]="remedio.nome">
-            </div>
-        </div>
+<section class="container" style="max-width: 600px;">
 
-        <div class="field">
-            <label class="label is-medium">Denominação Genérica (princípio ativo)</label>
-            <div class="control">
-                <input type="text" name="principio" class="input is-medium" placeholder="ácido acetilsalicílico" [(ngModel)]="remedio.principio">
-            </div>
-        </div>
+    <div class="control side-margin">
+        <button class="button has-margin-v is-primary is-inverted" (click)="cancelar()">
+            <span class="icon">
+                <i class="fa fa-chevron-left"></i>
+            </span>
+            <span>Voltar</span>
+        </button>
+    </div>
 
+    <form class="form" (ngSubmit)="salvar()" [formGroup]="form">
         <div class="field">
-            <label class="label is-medium">Composição / Concentração</label>
+            <label class="label">Nome Comercial</label>
             <div class="control">
-                <input type="text" name="concentracao" class="input is-medium" placeholder="500 mg" [(ngModel)]="remedio.concentracao">
+                <input type="text"
+                    class="input"
+                    [ngClass]="{'is-primary': form.get('nome').valid, 'is-danger': form.get('nome').touched && form.get('nome').errors}"
+                    placeholder="Paracetamol"
+                    formControlName="nome" required>
             </div>
-        </div>
-
-        <div class="field">
-            <label class="label is-medium">Forma Farmacêutica</label>
-            <p class="control has-icons-left">
-                <span class="select is-medium">
-                    <select name="forma" [(ngModel)]="remedio.forma">
-                        <option *ngFor="let tipo of tiposRemedios" [value]="tipo.nome">{{ tipo.nome }}</option>
-                    </select>
-                </span>
-                <span class="icon is-small is-left">
-                    <i class="fa fa-globe"></i>
-                </span>
+            <p class="help is-danger"
+                *ngIf="form.get('nome').touched && !form.get('nome').value">
+                Campo obrigatório!
             </p>
         </div>
 
         <div class="field">
-            <label class="label is-medium">Descrição</label>
+            <label class="label">Denominação Genérica (princípio ativo)</label>
             <div class="control">
-                <textarea type="text" name="descricao" class="textarea is-medium" [(ngModel)]="remedio.descricao"></textarea>
+                <input type="text"
+                    class="input"
+                    [ngClass]="{'is-primary': form.get('principio').value}"
+                    placeholder="Ácido Acetilsalicílico"
+                    formControlName="principio">
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Composição / Concentração</label>
+            <div class="control">
+                <input type="text"
+                    class="input"
+                    [ngClass]="{'is-primary': form.get('concentracao').valid, 'is-danger': form.get('concentracao').touched && form.get('concentracao').errors}"
+                    placeholder="500 mg"
+                    formControlName="concentracao" required>
+            </div>
+            <p class="help is-danger"
+                *ngIf="form.get('concentracao').touched && !form.get('concentracao').value">
+                Campo obrigatório!
+            </p>
+        </div>
+
+        <div class="field">
+            <label class="label">Forma Farmacêutica</label>
+            <div class="control has-icons-left">
+                <div class="select"
+                    [ngClass]="{'is-primary': form.get('forma').valid, 'is-danger': form.get('forma').touched && form.get('forma').errors}">
+                    <select formControlName="forma" required>
+                        <option *ngFor="let tipo of tiposRemedios" [value]="tipo.nome">{{ tipo.nome }}</option>
+                    </select>
+                </div>
+                <div class="icon is-small is-left">
+                    <i class="fa fa-flask"></i>
+                </div>
+            </div>
+            <p class="help is-danger"
+                *ngIf="form.get('forma').touched && !form.get('forma').value">
+                Campo obrigatório!
+            </p>
+        </div>
+
+        <div class="field">
+            <label class="label">Descrição</label>
+            <div class="control">
+                <textarea class="textarea"
+                    placeholder="Aqui vai a descrição do remédio..."
+                    [ngClass]="{'is-primary': form.get('descricao').value}"
+                    formControlName="descricao"></textarea>
             </div>
         </div>
 
         <div class="field is-grouped is-grouped-right">
             <p class="control">
-                <a class="button is-medium is-light" (click)="cancelar()">
+                <a class="button is-light" (click)="cancelar()">
                     Cancelar
                 </a>
             </p>
             <p class="control">
-                <a class="button is-medium is-primary" (click)="salvar(remedio)">
+                <button type="submit" class="button is-primary"
+                    [ngClass]="{'is-loading': isLoading}"
+                    [disabled]="form.invalid || isLoading">
                     Salvar
-                </a>
+                </button>
             </p>
         </div>
     </form>

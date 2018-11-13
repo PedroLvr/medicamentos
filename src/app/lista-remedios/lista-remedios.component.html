@@ -1,42 +1,49 @@
 <section class="container">
 
-    <div class="control">
-        <button class="button is-primary has-margin-v" (click)="novoRemedio()">Novo Remédio</button>
+    <div class="control side-margin">
+        <button class="button is-primary has-margin-v is-inverted" (click)="novoRemedio()">
+            <span class="icon">
+                <i class="fa fa-plus"></i>
+            </span>
+            <span>Novo Remédio</span>
+        </button>
     </div>
 
-    <div class="control has-icons-right">
+    <div class="control has-icons-right side-margin">
         <input class="input" type="text" placeholder="Pesquisar remédio..." (input)="pesquisar($event)">
         <span class="icon is-right">
             <i class="fa fa-search"></i>
         </span>
     </div>
 
-    <ng-container *ngIf="remedios.length > 0; else loading">
-        <table class="table is-striped is-hoverable is-fullwidth">
-            <thead>
-                <tr>
-                    <td>Nome</td>
-                    <td class="has-text-centered">Editar/Excluir</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let remedio of remedios">
-                    <td>{{ remedio.nome }}</td>
-                    <td class="has-text-centered">
-                        <a class="button is-danger is-small" (click)="editar(remedio)">
-                            <i class="fa fa-pencil-square-o fa-lg"></i>
-                        </a>
-                        <a class="button is-danger is-small" (click)="remover($event, remedio)">
-                            <i class="fa fa-trash fa-lg"></i>
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </ng-container>
-
-    <ng-template #loading>
-        Carregando...
-    </ng-template>
+    <div class="control side-margin">
+        <ng-container *ngIf="remedios.length > 0; else loading">
+            <table class="table is-striped is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <td>Nome</td>
+                        <td class="has-text-centered">Editar/Excluir</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let remedio of remedios">
+                        <td>{{ remedio.nome }}</td>
+                        <td class="has-text-centered">
+                            <a class="button is-danger is-small" (click)="editar(remedio)">
+                                <i class="fa fa-pencil-square-o fa-lg"></i>
+                            </a>
+                            <a class="button is-danger is-small" (click)="remover($event, remedio)">
+                                <i class="fa fa-trash fa-lg"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+    
+        <ng-template #loading>
+            Carregando...
+        </ng-template>
+    </div>
 
 </section>

@@ -58,11 +58,10 @@ export class LoginComponent implements OnInit {
             } else {
                 this._popup.alert({
                     titulo: 'Falha no Login',
-                    texto: 'E-mail não encontrado!'
+                    texto: 'E-mail ou senha incorretos!'
                 });
                 this.isLoading = false;
             }
-            this.isLoading = false;
         }, err => {
             console.log(err);
         });

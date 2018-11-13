@@ -1,53 +1,60 @@
 <section class="container">
 
-    <div class="control">
-        <button class="button is-primary has-margin-v" (click)="novoUsuario()">Novo Usuário</button>
-        <!-- <button class="button is-info" (click)="novaFarmacia()">Nova Farmácia</button> -->
+    <div class="control side-margin">
+        <button class="button is-warning has-margin-v is-inverted" (click)="novoUsuario()">
+            <span class="icon">
+                <i class="fa fa-plus"></i>
+            </span>
+            <span>Novo Usuário</span>
+        </button>
     </div>
 
-    <div class="control has-icons-right">
-        <input class="input" type="text" placeholder="Pesquisar remédio..." (input)="pesquisar($event)">
+    <div class="control has-icons-right side-margin">
+        <input class="input" type="text" placeholder="Pesquisar usuário..." (input)="pesquisar($event)">
         <span class="icon is-right">
             <i class="fa fa-search"></i>
         </span>
     </div>
 
-    <ng-container *ngIf="usuarios.length > 0; else loading">
-        <table class="table is-striped is-hoverable is-fullwidth">
-            <thead>
-                <tr>
-                    <td>Nome</td>
-                    <td class="has-text-centered">E-mail</td>
-                    <td class="has-text-centered">Permissão</td>
-                    <td class="has-text-centered">Farmácias</td>
-                    <td class="has-text-centered">Editar/Excluir</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let usuario of usuarios">
-                    <td>{{ usuario.nome }}</td>
-                    <td class="has-text-centered">{{ usuario.email }}</td>
-                    <td class="has-text-centered">{{ usuario.permissao }}</td>
-                    <td class="has-text-centered">
-                        <a class="button is-danger is-small" (click)="editarFarmacias(usuario)">
-                            <i class="fa fa-medkit fa-lg"></i>
-                        </a>
-                    </td>
-                    <td class="has-text-centered">
-                        <a class="button is-danger is-small" (click)="editarUsuario(usuario)">
-                            <i class="fa fa-pencil-square-o fa-lg"></i>
-                        </a>
-                        <a class="button is-danger is-small" (click)="excluirUsuario(usuario)">
-                            <i class="fa fa-trash fa-lg"></i>
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </ng-container>
 
-    <ng-template #loading>
-        Carregando...
-    </ng-template>
+    <div class="control side-margin">
+        <ng-container *ngIf="usuarios.length > 0; else loading">
+            <table class="table is-striped is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <td>Nome</td>
+                        <td class="has-text-centered">E-mail</td>
+                        <td class="has-text-centered">Permissão</td>
+                        <td class="has-text-centered">Farmácias</td>
+                        <td class="has-text-centered">Editar/Excluir</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let usuario of usuarios">
+                        <td>{{ usuario.nome }}</td>
+                        <td class="has-text-centered">{{ usuario.email }}</td>
+                        <td class="has-text-centered">{{ usuario.permissao }}</td>
+                        <td class="has-text-centered">
+                            <a class="button is-danger is-small" (click)="editarFarmacias(usuario)">
+                                <i class="fa fa-medkit fa-lg"></i>
+                            </a>
+                        </td>
+                        <td class="has-text-centered">
+                            <a class="button is-danger is-small" (click)="editarUsuario(usuario)">
+                                <i class="fa fa-pencil-square-o fa-lg"></i>
+                            </a>
+                            <a class="button is-danger is-small" (click)="excluirUsuario(usuario)">
+                                <i class="fa fa-trash fa-lg"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+
+        <ng-template #loading>
+            Carregando...
+        </ng-template>
+    </div>
 
 </section>
