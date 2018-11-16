@@ -11,7 +11,7 @@
 
     <form class="form" (ngSubmit)="salvar()" [formGroup]="form">
         <div class="field">
-            <label class="label">Nome Comercial</label>
+            <label class="label">Nome Comercial *</label>
             <div class="control">
                 <input type="text"
                     class="input"
@@ -37,7 +37,7 @@
         </div>
 
         <div class="field">
-            <label class="label">Composição / Concentração</label>
+            <label class="label">Composição / Concentração *</label>
             <div class="control">
                 <input type="text"
                     class="input"
@@ -52,7 +52,7 @@
         </div>
 
         <div class="field">
-            <label class="label">Forma Farmacêutica</label>
+            <label class="label">Forma Farmacêutica *</label>
             <div class="control has-icons-left">
                 <div class="select"
                     [ngClass]="{'is-primary': form.get('forma').valid, 'is-danger': form.get('forma').touched && form.get('forma').errors}">

@@ -18,6 +18,7 @@ export class FormularioFarmaciaComponent {
     farmacias: AngularFireList<any>;
     form: FormGroup;
     isLoading: boolean = false;
+    pesquisandoCep: boolean = false;
 
     constructor(
         private _farmaciaService: FarmaciaService,
@@ -35,7 +36,7 @@ export class FormularioFarmaciaComponent {
             'logradouro': new FormControl(this.farmacia.logradouro, Validators.required),
             'numero': new FormControl(this.farmacia.numero, Validators.required),
             'bairro': new FormControl(this.farmacia.bairro, Validators.required),
-            'cidade': new FormControl(this.farmacia.cidade),
+            'cidade': new FormControl(this.farmacia.cidade, Validators.required),
             'telefone': new FormControl(this.farmacia.telefone, Validators.required),
         });
     }
@@ -43,14 +44,35 @@ export class FormularioFarmaciaComponent {
     pesquisarCep(e) {
         let cep = e.target.value;
         if(cep.length === 8) {
+            let formCep = this.form.get('cep');
+            let formLogradouro = this.form.get('logradouro');
+            let formCidade = this.form.get('cidade');
+            let formBairro = this.form.get('bairro');
+
+            formCep.disable();
+            formLogradouro.disable();
+            formCidade.disable();
+            formBairro.disable();
+            this.pesquisandoCep = true;
+
             this._request.get('https://viacep.com.br/ws/'+ cep +'/json/')
             .then(res => {
-                this.farmacia.endereco = res.logradouro;
-                this.farmacia.cidade = res.localidade;
-                this.farmacia.bairro = res.bairro;
+                formLogradouro.setValue(res.logradouro);
+                formCidade.setValue(res.localidade);
+                formBairro.setValue(res.bairro);
+                formCep.enable();
+                formLogradouro.enable();
+                formCidade.enable();
+                formBairro.enable();
+                this.pesquisandoCep = false;
             })
             .catch(err => {
                 console.log(err);
+                formCep.enable();
+                formLogradouro.enable();
+                formCidade.enable();
+                formBairro.enable();
+                this.pesquisandoCep = false;
             })
         }
     }
@@ -63,7 +85,7 @@ export class FormularioFarmaciaComponent {
     salvar() {
         this.isLoading = true;
         let farmacia = this.form.value;
-        farmacia.index = farmacia.nome + farmacia.cep + farmacia.logradouro + farmacia.bairro;
+        farmacia.index = farmacia.nome + ' ' + farmacia.cep + ' ' + farmacia.logradouro + ' ' + farmacia.bairro;
 
         // update
         if ('id' in this.farmacia) {
@@ -81,7 +103,7 @@ export class FormularioFarmaciaComponent {
             let key = this.farmacias.push(farmacia).key;
             this.farmacias.update(key, { id: key })
             .then(res => {
-                this.farmacia = {};
+                this.form.reset();
                 this.isLoading = false;
             })
             .catch(err => {

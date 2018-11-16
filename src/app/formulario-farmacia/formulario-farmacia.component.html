@@ -11,68 +11,105 @@
 
     <form class="form" (ngSubmit)="salvar()" [formGroup]="form">
         <div class="field">
-            <label class="label">Nome da Farmácia</label>
+            <label class="label">Nome da Farmácia *</label>
             <div class="control">
                 <input type="text"
                     class="input"
-                    placeholder=""
+                    [ngClass]="{'is-primary': form.get('nome').valid, 'is-danger': form.get('nome').touched && form.get('nome').errors}"
+                    placeholder="UBS Cauamé"
                     formControlName="nome" required>
             </div>
+            <p class="help is-danger"
+                *ngIf="form.get('nome').touched && !form.get('nome').value">
+                Campo obrigatório!
+            </p>
         </div>
     
         <div class="field">
             <label class="label">CEP</label>
-            <div class="control">
+            <div class="control" [ngClass]="{'is-loading': pesquisandoCep}">
                 <input type="tel"
                     class="input"
-                    formControlName="cep" required
+                    [ngClass]="{'is-primary': form.get('cep').value}"
+                    formControlName="cep"
+                    placeholder="69311006"
                     (keyup)="pesquisarCep($event)">
             </div>
         </div>
     
         <div class="field">
-            <label class="label">Logradouro</label>
-            <div class="control">
+            <label class="label">Logradouro *</label>
+            <div class="control" [ngClass]="{'is-loading': pesquisandoCep}">
                 <input type="text"
                     class="input"
+                    placeholder="Rua Alemanha"
+                    [ngClass]="{'is-primary': form.get('logradouro').valid, 'is-danger': form.get('logradouro').touched && form.get('logradouro').errors}"
                     formControlName="logradouro" required>
             </div>
+            <p class="help is-danger"
+                *ngIf="form.get('logradouro').touched && !form.get('logradouro').value">
+                Campo obrigatório!
+            </p>
         </div>
         
         <div class="field">
-            <label class="label">Número</label>
+            <label class="label">Número *</label>
             <div class="control">
                 <input type="text"
                     class="input"
+                    placeholder="206"
+                    [ngClass]="{'is-primary': form.get('numero').valid, 'is-danger': form.get('numero').touched && form.get('numero').errors}"
                     formControlName="numero" required>
             </div>
+            <p class="help is-danger"
+                *ngIf="form.get('numero').touched && !form.get('numero').value">
+                Campo obrigatório!
+            </p>
         </div>
         
         <div class="field">
-            <label class="label">Bairro</label>
-            <div class="control">
+            <label class="label">Bairro *</label>
+            <div class="control" [ngClass]="{'is-loading': pesquisandoCep}">
                 <input type="text"
                     class="input"
+                    placeholder="Cauamé"
+                    [ngClass]="{'is-primary': form.get('bairro').valid, 'is-danger': form.get('bairro').touched && form.get('bairro').errors}"
                     formControlName="bairro" required>
             </div>
+            <p class="help is-danger"
+                *ngIf="form.get('bairro').touched && !form.get('bairro').value">
+                Campo obrigatório!
+            </p>
         </div>
         
         <div class="field">
-            <label class="label">Cidade</label>
-            <div class="control">
+            <label class="label">Cidade *</label>
+            <div class="control" [ngClass]="{'is-loading': pesquisandoCep}">
                 <input type="text"
                     class="input"
+                    placeholder="Boa Vista"
+                    [ngClass]="{'is-primary': form.get('cidade').valid, 'is-danger': form.get('cidade').touched && form.get('cidade').errors}"
                     formControlName="cidade" required>
             </div>
+            <p class="help is-danger"
+                *ngIf="form.get('cidade').touched && !form.get('cidade').value">
+                Campo obrigatório!
+            </p>
         </div>
     
         <div class="field">
-            <label class="label">Telefone</label>
+            <label class="label">Telefone *</label>
             <div class="control">
                 <input type="text"
                     class="input"
+                    placeholder="(95) 3628-5670"
+                    [ngClass]="{'is-primary': form.get('telefone').valid, 'is-danger': form.get('telefone').touched && form.get('telefone').errors}"
                     formControlName="telefone" required>
             </div>
+            <p class="help is-danger"
+                *ngIf="form.get('telefone').touched && !form.get('telefone').value">
+                Campo obrigatório!
+            </p>
         </div>
     
         <div class="field is-grouped is-grouped-right">
