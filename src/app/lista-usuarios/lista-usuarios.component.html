@@ -22,11 +22,11 @@
             <table class="table is-striped is-hoverable is-fullwidth">
                 <thead>
                     <tr>
-                        <td>Nome</td>
-                        <td class="has-text-centered">E-mail</td>
-                        <td class="has-text-centered">Permissão</td>
-                        <td class="has-text-centered">Farmácias</td>
-                        <td class="has-text-centered">Editar/Excluir</td>
+                        <th>Nome</th>
+                        <th class="has-text-centered">E-mail</th>
+                        <th class="has-text-centered">Permissão</th>
+                        <th class="has-text-centered">Farmácias</th>
+                        <th class="has-text-centered">Editar | Excluir</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,12 +35,12 @@
                         <td class="has-text-centered">{{ usuario.email }}</td>
                         <td class="has-text-centered">{{ usuario.permissao }}</td>
                         <td class="has-text-centered">
-                            <a class="button is-danger is-small" (click)="editarFarmacias(usuario)">
+                            <a class="button is-info is-small" (click)="editarFarmacias(usuario)">
                                 <i class="fa fa-medkit fa-lg"></i>
                             </a>
                         </td>
                         <td class="has-text-centered">
-                            <a class="button is-danger is-small" (click)="editarUsuario(usuario)">
+                            <a class="button is-danger is-outlined is-small" (click)="editarUsuario(usuario)">
                                 <i class="fa fa-pencil-square-o fa-lg"></i>
                             </a>
                             <a class="button is-danger is-small" (click)="excluirUsuario(usuario)">

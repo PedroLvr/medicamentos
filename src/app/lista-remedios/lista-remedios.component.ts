@@ -13,6 +13,10 @@ import { RemedioService } from '../remedio.service';
 export class ListaRemediosComponent implements OnInit {
 
     remedios = [];
+    todosRemedios = [];
+    totalPages = 0;
+    pages = [0];
+    currentPage = 1;
 
     constructor(
         private _remedioService: RemedioService,
@@ -35,7 +39,15 @@ export class ListaRemediosComponent implements OnInit {
         this._remedioService.getRemedios(texto)
         .valueChanges()
         .subscribe(remedios => {
-            this.remedios = remedios;
+            this.todosRemedios = remedios;
+            let len = remedios.length;
+            this.currentPage = 1;
+            this.totalPages = Math.ceil(len / 20);
+            this.pages = [];
+            for(let i = 1; i <= this.totalPages; i++) {
+                this.pages.push(i);
+            }
+            this.remedios = this.todosRemedios.slice(0, 19);
         });
     }
 
@@ -54,6 +66,19 @@ export class ListaRemediosComponent implements OnInit {
                 this._remedioService.removeRemedio(remedio.id);
             }
         });
+    }
+
+    ir(page) {
+        this.currentPage = page;
+        this.remedios = this.todosRemedios.slice(20 * (page - 1), 19 + (20 * (page - 1)));
+    }
+
+    anterior() {
+        this.ir(this.currentPage - 1);
+    }
+
+    proximo() {
+        this.ir(this.currentPage + 1);
     }
 
 }

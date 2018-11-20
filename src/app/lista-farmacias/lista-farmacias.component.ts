@@ -6,11 +6,21 @@ import { PopupService } from '../popup/popup.service';
 
 @Component({
     selector: 'app-lista-farmacias',
-    templateUrl: './lista-farmacias.component.html'
+    templateUrl: './lista-farmacias.component.html',
+    styles: [`
+        .pagination-link.is-current {
+            background: #2EDCDC;
+            border-color: #2EDCDC;
+        }
+    `]
 })
 export class ListaFarmaciasComponent implements OnInit {
 
     farmacias = [];
+    todasFarmacias = [];
+    totalPages = 0;
+    pages = [0];
+    currentPage = 1;
 
     constructor(
         private _farmaciaService: FarmaciaService,
@@ -34,8 +44,15 @@ export class ListaFarmaciasComponent implements OnInit {
         this._farmaciaService.getFarmacias(texto)
         .valueChanges()
         .subscribe(farmacias => {
-            console.log(farmacias);
-            this.farmacias = farmacias;
+            this.todasFarmacias = farmacias;
+            let len = farmacias.length;
+            this.currentPage = 1;
+            this.totalPages = Math.ceil(len / 20);
+            this.pages = [];
+            for(let i = 1; i <= this.totalPages; i++) {
+                this.pages.push(i);
+            }
+            this.farmacias = this.todasFarmacias.slice(0, 19);
         });
     }
 
@@ -54,6 +71,19 @@ export class ListaFarmaciasComponent implements OnInit {
                 this._farmaciaService.removeFarmacia(farmacia.id);
             }
         });
+    }
+
+    ir(page) {
+        this.currentPage = page;
+        this.farmacias = this.todasFarmacias.slice(20 * (page - 1), 19 + (20 * (page - 1)));
+    }
+
+    anterior() {
+        this.ir(this.currentPage - 1);
+    }
+
+    proximo() {
+        this.ir(this.currentPage + 1);
     }
 
 }

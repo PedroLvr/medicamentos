@@ -19,18 +19,18 @@
 
     <div class="control side-margin">
         <ng-container *ngIf="farmacias.length; else loading">
-            <table class="table is-striped is-hoverable is-fullwidth">
+            <table class="table is-striped is-fullwidth">
                 <thead>
                     <tr>
-                        <td>Nome</td>
-                        <td class="has-text-centered">Editar/Excluir</td>
+                        <th>Nome</th>
+                        <th class="has-text-centered">Editar | Excluir</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let farmacia of farmacias">
                         <td>{{ farmacia.nome }}</td>
                         <td class="has-text-centered">
-                            <a class="button is-danger is-small" (click)="editar(farmacia)">
+                            <a class="button is-danger is-outlined is-small" (click)="editar(farmacia)">
                                 <i class="fa fa-pencil-square-o fa-lg"></i>
                             </a>
                             <a class="button is-danger is-small" (click)="remover($event, farmacia)">
@@ -40,6 +40,28 @@
                     </tr>
                 </tbody>
             </table>
+                
+            <ng-container *ngIf="totalPages > 1">
+                <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                    <button class="pagination-previous"
+                        [disabled]="currentPage == 1"
+                        (click)="anterior()">
+                        <i class="fa fa-chevron-left"></i>
+                    </button>
+                    <button class="pagination-next"
+                        [disabled]="currentPage == totalPages"
+                        (click)="proximo()">
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+                    <ul class="pagination-list">
+                        <li *ngFor="let page of pages">
+                            <a class="pagination-link"
+                                [ngClass]="{'is-current': currentPage == page}"
+                                (click)="ir(page)">{{ page }}</a>
+                        </li>
+                    </ul>
+                </nav>
+            </ng-container>
         </ng-container>
 
         <ng-template #loading>
