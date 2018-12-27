@@ -55,12 +55,13 @@ export class FarmaciaComponent implements OnInit {
 
     editarRemedios() {
         this._params.set(this.farmaciaSelecionada);
-        this._router.navigate(['/farmacia/remedios']);
+        this._router.navigate(['remedios'], { relativeTo: this._route });
     }
 
     escolherFarmacia(event) {
         let farmacia = this.farmacias.find(f => f.id == event.target.value);
         this.farmaciaSelecionada = farmacia;
+        console.log(this.farmaciaSelecionada)
         this.remedios = this.allRemedios.filter(r => r['farmacias'] && r['farmacias'].includes(farmacia.id));
     }
 

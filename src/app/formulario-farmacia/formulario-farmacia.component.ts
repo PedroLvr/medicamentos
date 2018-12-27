@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
+import { AngularFireList } from 'angularfire2/database';
 import { RequestService } from '../request.service';
 import { Location } from '@angular/common';
 import { FarmaciaService } from '../farmacia.service';
@@ -24,7 +22,6 @@ export class FormularioFarmaciaComponent {
         private _farmaciaService: FarmaciaService,
         private _location: Location,
         private _params: ParamsService,
-        private _router: Router,
         private _request: RequestService
     ) {
         this.farmacias = this._farmaciaService.getFarmacias();

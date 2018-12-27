@@ -58,7 +58,7 @@ export class ListaFarmaciasComponent implements OnInit {
 
     editar(farmacia) {
         this._params.set(farmacia);
-        this._router.navigate(['/farmacias/formulario']);
+        this.novaFarmacia();
     }
     
     remover(event, farmacia) {

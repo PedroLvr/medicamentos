@@ -38,7 +38,13 @@
                         </span>
                         <span>{{ usuario.email }}</span>
                     </div>
-                    <a class="navbar-item" href="/painel-controle">
+                    <a class="navbar-item" href="/farmacia">
+                        <span class="icon">
+                            <i class="fa fa-medkit" aria-hidden="true"></i>
+                        </span>
+                        <span>Controle de Remédios</span>
+                    </a>
+                    <a class="navbar-item" href="/painel-controle" *ngIf="usuario.permissao == 'administrador'">
                         <span class="icon">
                             <i class="fa fa-th-list" aria-hidden="true"></i>
                         </span>

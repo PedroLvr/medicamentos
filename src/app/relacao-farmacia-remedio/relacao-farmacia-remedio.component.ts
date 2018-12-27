@@ -1,10 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { ParamsService } from '../params.service';
 
 @Component({
     selector: 'app-relacao-farmacia-remedio',
-    templateUrl: './relacao-farmacia-remedio.component.html'
+    templateUrl: './relacao-farmacia-remedio.component.html',
+    styles: [`
+        .hero-body {
+            padding: 1.5rem .8rem;
+        }
+        .pagination-link.is-current {
+            background: #2EDCDC;
+            border-color: #2EDCDC;
+        }
+    `]
 })
 export class RelacaoFarmaciaRemedioComponent implements OnInit {
 
@@ -14,18 +24,24 @@ export class RelacaoFarmaciaRemedioComponent implements OnInit {
 
     constructor(
         private _db: AngularFireDatabase,
+        private _location: Location,
         private _params: ParamsService
     ) {
         this.remediosRef = this._db.list('/remedios');
         this.farmacia = this._params.getAll();
+        console.log(this.farmacia)
     }
 
     ngOnInit() {
         this.remediosRef.valueChanges()
             .subscribe(remedios => {
-                console.log(remedios);
                 this.remedios = remedios;
             });
+    }
+
+    voltar() {
+        this._params.destroy();
+        this._location.back();
     }
 
     togglePossui(remedio) {

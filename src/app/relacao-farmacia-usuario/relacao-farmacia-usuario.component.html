@@ -1,8 +1,21 @@
 <section class="container">
 
-    <div>
-        <h2>{{ usuario.nome }}</h2>
-        <h3>{{ usuario.email }}</h3>
+    <div class="control side-margin">
+        <button class="button has-margin-v is-warning is-inverted" (click)="voltar()">
+            <span class="icon">
+                <i class="fa fa-chevron-left"></i>
+            </span>
+            <span>Voltar</span>
+        </button>
+    </div>
+
+    <div class="hero">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">{{ usuario.nome }}</h1>
+                <h2 class="subtitle">{{ usuario.email }}</h2>
+            </div>
+        </div>
     </div>
 
     <div class="control has-icons-right has-margin">
@@ -12,29 +25,58 @@
         </span>
     </div>
 
-    <ng-container *ngIf="farmacias.length; else loading">
-        <table class="table is-striped is-hoverable is-fullwidth">
-            <thead>
-                <tr>
-                    <td>Colaborador</td>
-                    <td>Farmácia</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let farmacia of farmacias">
-                    <td>
-                        <a class="button is-small" (click)="toggleColaborador(farmacia)">
-                            {{ (usuario.farmacias && usuario.farmacias.indexOf(farmacia.id) > -1 ? 'Sim' : 'Não') }}
-                        </a>
-                    </td>
-                    <td>{{ farmacia.nome }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </ng-container>
+    <div class="control side-margin">
+        <ng-container *ngIf="farmacias.length; else loading">
+            <table class="table is-striped is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th class="has-text-centered">Colaborador</th>
+                        <th>Farmácia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let farmacia of farmacias">
+                        <td class="has-text-centered">
+                            <a class="button is-small"
+                                [ngClass]="{'is-warning': (usuario.farmacias && usuario.farmacias.indexOf(farmacia.id) > -1)}"
+                                (click)="toggleColaborador(farmacia)">
+                                {{ (usuario.farmacias && usuario.farmacias.indexOf(farmacia.id) > -1 ? 'Sim' : 'Não') }}
+                            </a>
+                        </td>
+                        <td>{{ farmacia.nome }}</td>
+                    </tr>
+                </tbody>
+            </table>
 
-    <ng-template #loading>
-        Carregando...
-    </ng-template>
+            <ng-container *ngIf="totalPages > 1">
+                <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                    <button class="pagination-previous"
+                        [disabled]="currentPage == 1"
+                        (click)="anterior()">
+                        <i class="fa fa-chevron-left"></i>
+                    </button>
+                    <button class="pagination-next"
+                        [disabled]="currentPage == totalPages"
+                        (click)="proximo()">
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+                    <ul class="pagination-list">
+                        <li *ngFor="let page of pages">
+                            <a class="pagination-link"
+                                [ngClass]="{'is-current': currentPage == page}"
+                                (click)="ir(page)">
+                                {{ page }}
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </ng-container>
+        </ng-container>
+
+        <ng-template #loading>
+            Carregando...
+        </ng-template>
+    </div>
+
 
 </section>

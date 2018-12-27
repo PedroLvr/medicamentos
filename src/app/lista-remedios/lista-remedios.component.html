@@ -29,7 +29,7 @@
                         <tr *ngFor="let remedio of remedios">
                             <td>{{ remedio.nome }}</td>
                             <td class="has-text-centered">
-                                <a class="button is-danger is-outlined is-small" (click)="editar(remedio)">
+                                <a class="button is-light is-small" (click)="editar(remedio)">
                                     <i class="fa fa-pencil-square-o fa-lg"></i>
                                 </a>
                                 <a class="button is-danger is-small" (click)="remover($event, remedio)">

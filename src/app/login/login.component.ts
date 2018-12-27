@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SessaoService } from '../sessao.service';
-import { LoadingService } from '../loading/loading.service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { PopupService } from '../popup/popup.service';
 
@@ -19,7 +18,6 @@ export class LoginComponent implements OnInit {
         private _db: AngularFireDatabase,
         private _sessao: SessaoService,
         private _router: Router,
-        private _loading: LoadingService,
         private _popup: PopupService
     ) { }
 

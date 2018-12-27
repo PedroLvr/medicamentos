@@ -36,11 +36,11 @@
                         <td class="has-text-centered">{{ usuario.permissao }}</td>
                         <td class="has-text-centered">
                             <a class="button is-info is-small" (click)="editarFarmacias(usuario)">
-                                <i class="fa fa-medkit fa-lg"></i>
+                                <i class="fa fa-hospital-o fa-lg"></i>
                             </a>
                         </td>
                         <td class="has-text-centered">
-                            <a class="button is-danger is-outlined is-small" (click)="editarUsuario(usuario)">
+                            <a class="button is-light is-small" (click)="editarUsuario(usuario)">
                                 <i class="fa fa-pencil-square-o fa-lg"></i>
                             </a>
                             <a class="button is-danger is-small" (click)="excluirUsuario(usuario)">
@@ -50,6 +50,30 @@
                     </tr>
                 </tbody>
             </table>
+
+            <ng-container *ngIf="totalPages > 1">
+                <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                    <button class="pagination-previous"
+                        [disabled]="currentPage == 1"
+                        (click)="anterior()">
+                        <i class="fa fa-chevron-left"></i>
+                    </button>
+                    <button class="pagination-next"
+                        [disabled]="currentPage == totalPages"
+                        (click)="proximo()">
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+                    <ul class="pagination-list">
+                        <li *ngFor="let page of pages">
+                            <a class="pagination-link"
+                                [ngClass]="{'is-current': currentPage == page}"
+                                (click)="ir(page)">
+                                {{ page }}
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </ng-container>
         </ng-container>
 
         <ng-template #loading>

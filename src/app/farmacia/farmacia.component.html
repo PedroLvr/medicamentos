@@ -11,8 +11,13 @@
         </div>
     </div>
 
-    <div class="control">
-        <button class="button is-info has-margin-v" (click)="editarRemedios()">Editar Remédios</button>
+    <div class="control side-margin">
+        <button class="button is-info has-margin-v is-inverted" (click)="editarRemedios()">
+            <span class="icon">
+                <i class="fa fa-plus"></i>
+            </span>
+            <span>Editar Remédios</span>
+        </button>
     </div>
 
     <div class="control has-icons-right">
@@ -26,14 +31,16 @@
         <table class="table is-striped is-hoverable is-fullwidth">
             <thead>
                 <tr>
-                    <td class="has-text-centered">Disponível</td>
-                    <td>Nome</td>
+                    <th class="has-text-centered">Disponível</th>
+                    <th>Nome</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let remedio of remedios">
                     <td class="has-text-centered">
-                        <a class="button is-danger is-small" (click)="toggleDisponivel(remedio)">
+                        <a class="button is-small"
+                            [ngClass]="{'is-primary': (farmaciaSelecionada.remedios && farmaciaSelecionada.remedios.includes(remedio.id))}"
+                            (click)="toggleDisponivel(remedio)">
                             {{ (farmaciaSelecionada.remedios && farmaciaSelecionada.remedios.includes(remedio.id)) ? 'Disponível' : 'Indisponível' }}
                         </a>
                     </td>
