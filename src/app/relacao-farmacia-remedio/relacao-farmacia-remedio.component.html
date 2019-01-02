@@ -1,6 +1,6 @@
-<section class="container">
+<section class="container side-margin">
 
-    <div class="control side-margin">
+    <div class="control">
         <button class="button has-margin-v is-info is-inverted" (click)="voltar()">
             <span class="icon">
                 <i class="fa fa-chevron-left"></i>
@@ -19,37 +19,66 @@
     </div>
 
     <div class="control has-icons-right has-margin">
-        <input class="input" type="text" placeholder="Pesquisar farmácia..." (input)="pesquisar($event)">
+        <input class="input" type="text" placeholder="Pesquisar remédio..." (input)="pesquisar($event)">
         <span class="icon is-right">
             <i class="fa fa-search"></i>
         </span>
     </div>
 
-    <ng-container *ngIf="remedios.length; else loading">
-        <table class="table is-striped is-hoverable is-fullwidth">
-            <thead>
-                <tr>
-                    <th class="has-text-centered">Possui</th>
-                    <th>Remédio</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let remedio of remedios">
-                    <td class="has-text-centered">
-                        <a class="button is-small"
-                            [ngClass]="{'is-info': remedio.farmacias && remedio.farmacias.includes(farmacia.id)}"
-                            (click)="togglePossui(remedio)">
-                            {{ (remedio.farmacias && remedio.farmacias.includes(farmacia.id) ? 'Sim' : 'Não') }}
-                        </a>
-                    </td>
-                    <td>{{ remedio.nome }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </ng-container>
 
-    <ng-template #loading>
-        Carregando...
-    </ng-template>
+    <div class="control">
+        <ng-container *ngIf="remedios.length; else loading">
+            <table class="table is-striped is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th class="has-text-centered">Possui</th>
+                        <th>Remédio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let remedio of remedios">
+                        <td class="has-text-centered">
+                            <a class="button is-small" [ngClass]="{'is-info': remedio.farmacias && remedio.farmacias.includes(farmacia.id)}"
+                                (click)="togglePossui(remedio)">
+                                {{ (remedio.farmacias && remedio.farmacias.includes(farmacia.id) ? 'Sim' : 'Não') }}
+                            </a>
+                        </td>
+                        <td>{{ remedio.nome }}</td>
+                    </tr>
+                </tbody>
+            </table>
+                
+            <ng-container *ngIf="totalPages > 1">
+                <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                    <button class="pagination-previous"
+                        [disabled]="currentPage == 1"
+                        (click)="anterior()">
+                        <i class="fa fa-chevron-left"></i>
+                    </button>
+                    <button class="pagination-next"
+                        [disabled]="currentPage == totalPages"
+                        (click)="proximo()">
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+                    <ul class="pagination-list">
+                        <li *ngFor="let page of pages">
+                            <a class="pagination-link"
+                                [ngClass]="{'is-current': currentPage == page}"
+                                (click)="ir(page)">{{ page }}</a>
+                        </li>
+                    </ul>
+                </nav>
+            </ng-container>
+        </ng-container>
+
+        <ng-template #loading>
+            <div class="column has-text-centered" style="padding: 20px 0;">
+                <p class="title is-4 has-text-grey" style="margin-bottom: 5px">
+                    Carregando
+                </p>
+                <i class="fa fa-spinner fa-spin fa-2x"></i>
+            </div>
+        </ng-template>
+    </div>
 
 </section>

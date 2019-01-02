@@ -22,9 +22,9 @@ const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'busca', component: BuscaComponent },
     { path: 'remedio', component: RemedioComponent },
-    { path: 'farmacia', component: FarmaciaComponent},
-    { path: 'farmacia/remedios', component: RelacaoFarmaciaRemedioComponent },
-    { path: 'painel-controle', component: PainelControleComponent, children: [
+    { path: 'controle-remedios', component: FarmaciaComponent},
+    { path: 'controle-remedios/remedios', component: RelacaoFarmaciaRemedioComponent },
+    { path: 'administracao', component: PainelControleComponent, children: [
         { path: '', redirectTo: 'remedios', pathMatch: 'prefix' },
         { path: 'remedios', component: ListaRemediosComponent },
         { path: 'remedios/formulario', component: FormularioRemedioComponent },

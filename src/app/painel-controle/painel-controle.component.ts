@@ -48,7 +48,6 @@ export class PainelControleComponent implements OnInit {
     ngOnInit() {
         this._loading.show();
         if(!this._sessao.hasSessao()) {
-            console.log("sem sessao")
             this._sessao.logout();
             this._router.navigate(['/login']);
         } else {

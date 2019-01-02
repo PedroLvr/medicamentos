@@ -3,20 +3,31 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { SessaoService } from '../sessao.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ParamsService } from '../params.service';
+import { RemedioService } from '../remedio.service';
 
 @Component({
     selector: 'app-farmacia',
-    templateUrl: './farmacia.component.html'
+    templateUrl: './farmacia.component.html',
+    styles: [`
+        .container {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    `]
 })
 export class FarmaciaComponent implements OnInit {
 
     usuario = {};
-    farmacias = [];
+    farmacias: any = [{nome: 'Selecione a Farmácia'}];
     farmaciaSelecionada = {};
-    allRemedios = [];
+    todosRemedios = [];
     remedios = [];
+    totalPages = 0;
+    pages = [0];
+    currentPage = 1;
 
     constructor(
+        private _remedioService: RemedioService,
         private _db: AngularFireDatabase,
         private _sessao: SessaoService,
         private _router: Router,
@@ -30,13 +41,31 @@ export class FarmaciaComponent implements OnInit {
             if(this.usuario['farmacias']) {
                 this._db.list('/farmacias').valueChanges().subscribe(farmacias => {
                     this.farmacias = farmacias.filter(f => this.usuario['farmacias'].includes(f['id']));
+                    this.farmacias.unshift({nome: 'Selecione a Farmácia'});
                 });
             }
-
-            this._db.list('/remedios').valueChanges().subscribe(remedios => {
-                this.allRemedios = remedios;
-            });
+            
+            this.pesquisar();
+        } else {
+            this._sessao.logout();
+            this._router.navigate(['/login']);
         }
+    }
+
+    pesquisar(event?) {
+        let texto = event ? event.target.value.trim() : '';
+        this._remedioService.getRemedios(texto)
+        .valueChanges()
+        .subscribe(remedios => {
+            this.todosRemedios = remedios;
+            if(this.farmaciaSelecionada) {
+                this.escolherFarmacia({
+                    target: {
+                        value: this.farmaciaSelecionada['id']
+                    }
+                });
+            }
+        });
     }
 
     toggleDisponivel(remedio) {
@@ -61,8 +90,27 @@ export class FarmaciaComponent implements OnInit {
     escolherFarmacia(event) {
         let farmacia = this.farmacias.find(f => f.id == event.target.value);
         this.farmaciaSelecionada = farmacia;
-        console.log(this.farmaciaSelecionada)
-        this.remedios = this.allRemedios.filter(r => r['farmacias'] && r['farmacias'].includes(farmacia.id));
+        this.remedios = this.todosRemedios.filter(r => r['farmacias'] && r['farmacias'].includes(farmacia.id));
+        let len = this.remedios.length;
+        this.currentPage = 1;
+        this.totalPages = Math.ceil(len / 20);
+        this.pages = [];
+        for(let i = 1; i <= this.totalPages; i++) {
+            this.pages.push(i);
+        }
+    }
+
+    ir(page) {
+        this.currentPage = page;
+        this.remedios = this.todosRemedios.slice(20 * (page - 1), 19 + (20 * (page - 1)));
+    }
+
+    anterior() {
+        this.ir(this.currentPage - 1);
+    }
+
+    proximo() {
+        this.ir(this.currentPage + 1);
     }
 
 }

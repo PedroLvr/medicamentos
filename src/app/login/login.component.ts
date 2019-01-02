@@ -50,9 +50,9 @@ export class LoginComponent implements OnInit {
                 this._sessao.login(user);
                 this.formularioLogin.reset();
                 if(user['permissao'] === 'administrador')
-                    this._router.navigate(['/painel-controle']);
+                    this._router.navigate(['/administracao']);
                 else
-                    this._router.navigate(['/farmacia']);
+                    this._router.navigate(['/controle-remedios']);
             } else {
                 this._popup.alert({
                     titulo: 'Falha no Login',

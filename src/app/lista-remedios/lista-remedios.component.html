@@ -1,72 +1,77 @@
-    <section class="container">
+<section class="container">
 
-        <div class="control side-margin">
-            <button class="button is-primary has-margin-v is-inverted" (click)="novoRemedio()">
-                <span class="icon">
-                    <i class="fa fa-plus"></i>
-                </span>
-                <span>Novo Remédio</span>
-            </button>
-        </div>
-
-        <div class="control has-icons-right side-margin">
-            <input class="input" type="text" placeholder="Pesquisar remédio..." (input)="pesquisar($event)">
-            <span class="icon is-right">
-                <i class="fa fa-search"></i>
+    <div class="control side-margin">
+        <button class="button is-primary has-margin-v is-inverted" (click)="novoRemedio()">
+            <span class="icon">
+                <i class="fa fa-plus"></i>
             </span>
-        </div>
+            <span>Novo Remédio</span>
+        </button>
+    </div>
 
-        <div class="control side-margin">
-            <ng-container *ngIf="remedios.length > 0; else loading">
-                <table class="table is-striped is-fullwidth">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th class="has-text-centered">Editar | Excluir</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let remedio of remedios">
-                            <td>{{ remedio.nome }}</td>
-                            <td class="has-text-centered">
-                                <a class="button is-light is-small" (click)="editar(remedio)">
-                                    <i class="fa fa-pencil-square-o fa-lg"></i>
-                                </a>
-                                <a class="button is-danger is-small" (click)="remover($event, remedio)">
-                                    <i class="fa fa-trash fa-lg"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <ng-container *ngIf="totalPages > 1">
-                    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-                        <button class="pagination-previous"
-                            [disabled]="currentPage == 1"
-                            (click)="anterior()">
-                            <i class="fa fa-chevron-left"></i>
-                        </button>
-                        <button class="pagination-next"
-                            [disabled]="currentPage == totalPages"
-                            (click)="proximo()">
-                            <i class="fa fa-chevron-right"></i>
-                        </button>
-                        <ul class="pagination-list">
-                            <li *ngFor="let page of pages">
-                                <a class="pagination-link"
-                                    [ngClass]="{'is-current': currentPage == page}"
-                                    (click)="ir(page)">{{ page }}</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </ng-container>
+    <div class="control has-icons-right side-margin">
+        <input class="input" type="text" placeholder="Pesquisar remédio..." (input)="pesquisar($event)">
+        <span class="icon is-right">
+            <i class="fa fa-search"></i>
+        </span>
+    </div>
 
+    <div class="control side-margin">
+        <ng-container *ngIf="remedios.length > 0; else loading">
+            <table class="table is-striped is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th class="has-text-centered">Editar | Excluir</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let remedio of remedios">
+                        <td>{{ remedio.nome }}</td>
+                        <td class="has-text-centered">
+                            <a class="button is-light is-small" (click)="editar(remedio)">
+                                <i class="fa fa-pencil-square-o fa-lg"></i>
+                            </a>
+                            <a class="button is-danger is-small" (click)="remover($event, remedio)">
+                                <i class="fa fa-trash fa-lg"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <ng-container *ngIf="totalPages > 1">
+                <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                    <button class="pagination-previous"
+                        [disabled]="currentPage == 1"
+                        (click)="anterior()">
+                        <i class="fa fa-chevron-left"></i>
+                    </button>
+                    <button class="pagination-next"
+                        [disabled]="currentPage == totalPages"
+                        (click)="proximo()">
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+                    <ul class="pagination-list">
+                        <li *ngFor="let page of pages">
+                            <a class="pagination-link"
+                                [ngClass]="{'is-current': currentPage == page}"
+                                (click)="ir(page)">{{ page }}</a>
+                        </li>
+                    </ul>
+                </nav>
             </ng-container>
-        
-            <ng-template #loading>
-                Carregando...
-            </ng-template>
-        </div>
 
-    </section>
+        </ng-container>
+    
+        <ng-template #loading>
+            <div class="column has-text-centered" style="padding: 20px 0;">
+                <p class="title is-4 has-text-grey" style="margin-bottom: 5px">
+                    Carregando
+                </p>
+                <i class="fa fa-spinner fa-spin fa-2x"></i>
+            </div>
+        </ng-template>
+    </div>
+
+</section>

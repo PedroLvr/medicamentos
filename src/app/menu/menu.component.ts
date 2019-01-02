@@ -30,5 +30,6 @@ export class MenuComponent implements OnInit {
         this._sessao.logout();
         this._router.navigate(['/']);
         this.toggleMenu();
+        this.usuario = null;
     }
 }
