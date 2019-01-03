@@ -17,6 +17,7 @@ import { QuemSomosComponent } from './quem-somos/quem-somos.component';
 import { PainelControleComponent } from './painel-controle/painel-controle.component';
 import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
 import { AvaliacaoComponent } from './avaliacao/avaliacao.component';
+import { RedefinirSenhaComponent } from './redefinir-senha/redefinir-senha.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -36,7 +37,8 @@ const routes: Routes = [
         { path: 'usuarios/formulario', component: FormularioUsuarioComponent },
         { path: 'usuarios/farmacias', component: RelacaoFarmaciaUsuarioComponent }
     ] },
-    { path: 'login', component: LoginComponent }
+    { path: 'login', component: LoginComponent },
+    { path: 'redefinir-senha', component: RedefinirSenhaComponent }
     // { path: '**', redirectTo: '/erro404', pathMatch: 'full' }
 ];
 

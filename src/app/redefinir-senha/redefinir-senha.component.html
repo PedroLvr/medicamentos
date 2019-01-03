@@ -1,0 +1,119 @@
+<div>
+
+    <!-- BANNER -->
+    <section class="hero is-dark">
+        <div class="hero-body">
+            <div class="container">
+
+                <a class="button is-primary is-inverted is-outlined" (click)="login()">
+                    <span class="icon">
+                        <i class="fa fa-chevron-left"></i>
+                    </span>
+                    <span>Login</span>
+                </a>
+                <h1 class="title">
+                    Redefinir Senha
+                </h1>
+
+            </div>
+        </div>
+    </section>
+    <!-- end BANNER -->
+
+    <section class="container" style="max-width: 450px;">
+        <form class="form" (ngSubmit)="redefinir()" [formGroup]="formularioSenha">
+
+            <div class="field">
+                <label class="label">E-mail</label>
+                <div class="control has-icons-left has-icons-right">
+                    <span class="icon is-small is-left">
+                        <i class="fa fa-envelope"></i>
+                    </span>
+
+                    <input type="text" class="input"
+                        placeholder="Digite o e-mail"
+                        [ngClass]="{'is-primary': formularioSenha.get('email').valid, 'is-danger': formularioSenha.get('email').touched && formularioSenha.get('email').errors}"
+                        formControlName="email" required/>
+
+                    <span class="icon is-small is-right"
+                        *ngIf="formularioSenha.get('email').value && formularioSenha.get('email').invalid">
+                        <i class="fa fa-exclamation-triangle"></i>
+                    </span>
+                    <span class="icon is-small is-right"
+                        *ngIf="formularioSenha.get('email').valid">
+                        <i class="fa fa-check"></i>
+                    </span>
+                </div>
+                <p class="help is-danger"
+                    *ngIf="formularioSenha.get('email').touched && !formularioSenha.get('email').value">
+                    Campo obrigatório!
+                </p>
+                <p class="help is-danger"
+                    *ngIf="formularioSenha.get('email').touched && formularioSenha.get('email').value && formularioSenha.get('email').errors">
+                    E-mail inválido!
+                </p>
+            </div>
+
+            <div class="field">
+                <label class="label">Nova Senha</label>
+                <div class="control has-icons-left has-icons-right">
+                    <span class="icon is-small is-left">
+                        <i class="fa fa-lock"></i>
+                    </span>
+
+                    <input type="password" class="input"
+                        placeholder="Digite a senha"
+                        [ngClass]="{'is-primary': formularioSenha.get('senha').valid, 'is-danger': formularioSenha.get('senha').touched && formularioSenha.get('senha').errors}"
+                        formControlName="senha" required/>
+
+                    <span class="icon is-small is-right"
+                        *ngIf="formularioSenha.get('senha').valid">
+                        <i class="fa fa-check"></i>
+                    </span>
+                </div>
+                <p class="help is-danger"
+                    *ngIf="formularioSenha.get('senha').touched && !formularioSenha.get('senha').value">
+                    Campo obrigatório!
+                </p>
+            </div>
+
+            <div class="field">
+                <label class="label">Confirmar Senha</label>
+                <div class="control has-icons-left has-icons-right">
+                    <span class="icon is-small is-left">
+                        <i class="fa fa-lock"></i>
+                    </span>
+
+                    <input type="password" class="input"
+                        placeholder="Confirme a nova senha"
+                        [ngClass]="{'is-primary': formularioSenha.get('confSenha').valid, 'is-danger': !formularioSenha.get('confSenha').hasError('required') && formularioSenha.get('confSenha').hasError('requireEquals')}"
+                        formControlName="confSenha" required/>
+
+                    <span class="icon is-small is-right"
+                        *ngIf="formularioSenha.get('confSenha').valid">
+                        <i class="fa fa-check"></i>
+                    </span>
+                </div>
+                <p class="help is-danger"
+                    *ngIf="formularioSenha.get('confSenha').touched && !formularioSenha.get('confSenha').value">
+                    Campo obrigatório!
+                </p>
+                <p class="help is-danger"
+                    *ngIf="!formularioSenha.get('confSenha').hasError('required') && formularioSenha.get('confSenha').hasError('requireEquals')">
+                    Senhas não conferem!
+                </p>
+            </div>
+
+            <div class="field">
+                <p class="control has-text-centered">
+                    <button type="submit" class="button is-fullwidth is-dark"
+                        [ngClass]="{'is-loading': isLoading}"
+                        [disabled]="formularioSenha.invalid || isLoading">
+                        Redefinir
+                    </button>
+                </p>
+            </div>
+        </form>
+    </section>
+
+</div>

@@ -39,26 +39,33 @@ export class LoginComponent implements OnInit {
         ).valueChanges()
         .first()
         .subscribe(usuarios => {
-            let user = null;
-            usuarios.forEach(u => {
-                if(u['senha'] == formulario.senha) {
-                    user = u;
-                }
-            });
+            if(usuarios.length > 0) {
+                let user = null;
+                usuarios.forEach(u => {
+                    if(u['senha'] == formulario.senha) {
+                        user = u;
+                    }
+                });
 
-            if(user != null) {
-                this._sessao.login(user);
-                this.formularioLogin.reset();
-                if(user['permissao'] === 'administrador')
-                    this._router.navigate(['/administracao']);
-                else
-                    this._router.navigate(['/controle-remedios']);
+                if(user != null) {
+                    this._sessao.login(user);
+                    this.formularioLogin.reset();
+                    if(user['permissao'] === 'administrador')
+                        this._router.navigate(['/administracao']);
+                    else
+                        this._router.navigate(['/controle-remedios']);
+                } else {
+                    this._popup.alert({
+                        titulo: 'Falha no Login',
+                        texto: 'Senha incorreta!'
+                    });
+                    this.isLoading = false;
+                }
             } else {
                 this._popup.alert({
-                    titulo: 'Falha no Login',
-                    texto: 'E-mail ou senha incorretos!'
+                    titulo: 'E-mail Inexistente',
+                    texto: 'Não existe nenhum usuário com o e-mail informado!'
                 });
-                this.isLoading = false;
             }
         }, err => {
             console.log(err);

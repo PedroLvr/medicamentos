@@ -1,7 +1,7 @@
 <div>
 
     <!-- BANNER -->
-    <section class="hero is-primary">
+    <section class="hero is-warning">
         <div class="hero-body">
             <div class="container">
 
@@ -82,14 +82,17 @@
 
             <div class="field">
                 <p class="control has-text-centered">
-                    <button type="submit" class="button is-fullwidth is-primary"
+                    <button type="submit" class="button is-fullwidth is-warning"
                         [ngClass]="{'is-loading': isLoading}"
                         [disabled]="formularioLogin.invalid || isLoading">
                         Entrar
                     </button>
                 </p>
                 <p class="control has-text-centered" style="margin-top: 25px;">
-                    <a href="">Esqueci a Senha!</a>
+                    <a href="redefinir-senha">Esqueci a Senha!</a>
+                </p>
+                <p class="control has-text-centered">
+                    <a href="redefinir-senha">Ainda não tenho senha!</a>
                 </p>
             </div>
         </form>

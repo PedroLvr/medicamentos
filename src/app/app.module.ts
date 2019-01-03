@@ -41,6 +41,7 @@ import { firebaseConfig } from './app.firebase';
 import { BuscaComponent } from './busca/busca.component';
 import { RelacaoFarmaciaUsuarioComponent } from './relacao-farmacia-usuario/relacao-farmacia-usuario.component';
 import { RelacaoFarmaciaRemedioComponent } from './relacao-farmacia-remedio/relacao-farmacia-remedio.component';
+import { RedefinirSenhaComponent } from './redefinir-senha/redefinir-senha.component';
 
 @NgModule({
     declarations: [
@@ -66,7 +67,8 @@ import { RelacaoFarmaciaRemedioComponent } from './relacao-farmacia-remedio/rela
         LoadingComponent,
         BuscaComponent,
         RelacaoFarmaciaUsuarioComponent,
-        RelacaoFarmaciaRemedioComponent
+        RelacaoFarmaciaRemedioComponent,
+        RedefinirSenhaComponent
     ],
     entryComponents: [
         LoadingComponent
