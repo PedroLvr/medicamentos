@@ -1,14 +1,19 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase';
-import { throws } from 'assert';
+import { Injectable, EventEmitter } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class SessaoService {
 
+    onChange: BehaviorSubject<any>;
+
+    constructor() {
+        this.onChange = new BehaviorSubject(this.getUser());
+    }
+
     login(user) {
         try {
             localStorage.setItem("remediosbv_usuario", JSON.stringify(user));
+            this.onChange.next(user);
         } catch (e) {
             console.error('Error loging in!', e);
         }
@@ -17,6 +22,7 @@ export class SessaoService {
     logout() {
         try {
             localStorage.removeItem("remediosbv_usuario");
+            this.onChange.next(null);
         } catch (e) {
             console.error('Error login out!', e);
         }

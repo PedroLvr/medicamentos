@@ -17,9 +17,9 @@ export class MenuComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        if(this._sessao.hasSessao()) {
-            this.usuario = this._sessao.getUser();
-        }
+        this._sessao.onChange.subscribe(usuario => {
+            this.usuario = usuario;
+        });
     }
 
     toggleMenu() {
