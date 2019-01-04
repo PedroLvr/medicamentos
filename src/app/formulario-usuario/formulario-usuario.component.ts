@@ -6,6 +6,7 @@ import { ParamsService } from '../params.service';
 import { Location } from '@angular/common';
 import { UsuarioService } from '../usuario.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { PopupService } from '../popup/popup.service';
 
 @Component({
     selector: 'app-formulario-usuario',
@@ -25,9 +26,11 @@ export class FormularioUsuarioComponent {
     isLoading: boolean = false;
 
     constructor(
+        private _db: AngularFireDatabase,
         private _params: ParamsService,
         private _usuarioService: UsuarioService,
         private _router: Router,
+        private _popup: PopupService,
         private _location: Location
     ) {
         this.usuarios = this._usuarioService.getUsuarios();
@@ -64,15 +67,31 @@ export class FormularioUsuarioComponent {
 
         // novo
         } else {
-            let key = this.usuarios.push(usuario).key;
-            this.usuarios.update(key, { id: key })
-            .then(res => {
-                this.form.reset();
-                this.isLoading = false;
-            })
-            .catch(err => {
-                console.log(err);
-                this.isLoading = false;
+            this._db.list('/usuarios', ref =>
+                ref.orderByChild('email')
+                    .startAt(usuario.email)
+                    .endAt(usuario.email + "\uf8ff")
+            ).valueChanges()
+            .first()
+            .subscribe(usuarios => {
+                if(usuarios.length > 0) {
+                    this.isLoading = false;
+                    this._popup.alert({
+                        titulo: 'E-mail Existente',
+                        texto: 'O e-mail informado já foi cadastrado!'
+                    });
+                } else {
+                    let key = this.usuarios.push(usuario).key;
+                    this.usuarios.update(key, { id: key })
+                    .then(res => {
+                        this.form.reset();
+                        this.isLoading = false;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        this.isLoading = false;
+                    });
+                }
             });
         }
     }

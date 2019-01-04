@@ -44,28 +44,25 @@ export class RedefinirSenhaComponent implements OnInit {
             .first()
             .subscribe(usuarios => {
                 if (usuarios.length > 0) {
-                    let user = null;
-                    usuarios.forEach(u => {
-                        if (u['senha'] == formulario.senha) {
-                            user = u;
-                        }
-                    });
-
-                    if (user != null) {
-                        this._sessao.login(user);
-                        this.formularioSenha.reset();
-                        if (user['permissao'] === 'administrador')
-                            this._router.navigate(['/administracao']);
-                        else
-                            this._router.navigate(['/controle-remedios']);
-                    } else {
+                    let user = usuarios[0];
+                    let senha = this.formularioSenha.get('senha').value;
+                    this._db.list('/usuarios').update(user['id'], {senha: senha})
+                    .then(res => {
                         this._popup.alert({
-                            titulo: 'Falha no Login',
-                            texto: 'Senha incorreta!'
+                            titulo: 'Senha Redefinida',
+                            texto: 'Sua senha foi redefinida com sucesso!'
+                        }).onFechar.subscribe(e => {
+                            this.login();
                         });
+                    }).catch(err => {
                         this.isLoading = false;
-                    }
+                        this._popup.alert({
+                            titulo: 'Erro ao Redefinir',
+                            texto: 'Ocorreu um erro inesperado e sua senha pode não ter sido redefinida!'
+                        });
+                    })
                 } else {
+                    this.isLoading = false;
                     this._popup.alert({
                         titulo: 'E-mail Inexistente',
                         texto: 'Não existe nenhum usuário com o e-mail informado!'
