@@ -1,0 +1,21 @@
+.modal-card-head {
+    padding: 10px 15px;
+
+    .modal-card-title {
+        font-size: 20px;
+    }
+}
+
+.modal-card-body {
+    padding: 15px 20px;
+    font-size: 16px;
+}
+
+.modal-card-foot {
+    padding: 5px;
+    justify-content: flex-end;
+
+    button {
+        min-width: 90px;
+    }
+}
