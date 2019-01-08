@@ -8,7 +8,7 @@ export class FarmaciaService {
 
     getFarmacias(busca = ''): AngularFireList<any> {
         return this._db.list('/farmacias', ref =>
-            ref.orderByChild('nome')
+            ref.orderByChild('index')
             .startAt(busca)
             .endAt(busca + "\uf8ff")
         );

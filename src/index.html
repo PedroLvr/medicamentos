@@ -62,13 +62,17 @@
     <!-- Service Worker -->
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./service-worker.js')
-                .then(function (registration) {
-                    console.log('Service Worker registrado com sucesso! Scope: ', registration.scope);
-                })
-                .catch(function (err) {
-                    console.log('Service Worker falhou! Erro: ', err);
-                });
+            try {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(function (registration) {
+                        console.log('Service Worker registrado com sucesso! Scope: ', registration.scope);
+                    })
+                    .catch(function (err) {
+                        console.log('Service Worker falhou! Erro: ', err);
+                    });
+            } catch(err) {
+                console.log(err);
+            }
         }
     </script>
 

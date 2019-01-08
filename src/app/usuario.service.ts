@@ -8,7 +8,7 @@ export class UsuarioService {
 
     getUsuarios(busca = ''): AngularFireList<any> {
         return this._db.list('/usuarios', ref =>
-            ref.orderByChild('nome')
+            ref.orderByChild('index')
                 .startAt(busca)
                 .endAt(busca + "\uf8ff")
         );

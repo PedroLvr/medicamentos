@@ -8,7 +8,7 @@ export class RemedioService {
 
     filtrar(start, end): AngularFireList<any> {
         return this._db.list('/remedios', ref =>
-            ref.orderByChild('nome')
+            ref.orderByChild('index')
             .limitToFirst(5)
             .startAt(start)
             .endAt(end)
@@ -17,7 +17,7 @@ export class RemedioService {
 
     getRemedios(busca = ''): AngularFireList<any> {
         return this._db.list('/remedios', ref =>
-            ref.orderByChild('nome')
+            ref.orderByChild('index')
             .startAt(busca)
             .endAt(busca + "\uf8ff")
         );

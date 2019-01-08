@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
         if (this.busca) {
             this._db.list('/remedios', ref =>
-                ref.orderByChild('nome')
+                ref.orderByChild('index')
                     .startAt(this.busca)
                     .endAt(this.busca + "\uf8ff")
             )

@@ -21,7 +21,6 @@ import { RedefinirSenhaComponent } from './redefinir-senha/redefinir-senha.compo
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
-    { path: 'busca', component: BuscaComponent },
     { path: 'remedio', component: RemedioComponent },
     { path: 'controle-remedios', component: FarmaciaComponent},
     { path: 'controle-remedios/remedios', component: RelacaoFarmaciaRemedioComponent },

@@ -29,6 +29,12 @@ export class PushNotification {
     }
 
     addToken(token): void {
-        this._db.list('/tokens').push(token);
+        this._db.list('/tokens').push(token).then(res => {
+            try {
+                localStorage.setItem("remediosbv_token", JSON.stringify(token));
+            } catch (e) {
+                console.error('Error loging in!', e);
+            }
+        })
     }
 }
