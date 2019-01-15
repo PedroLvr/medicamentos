@@ -16,7 +16,6 @@ import { FooterComponent } from './footer/footer.component';
 import { ListaRemediosComponent } from './lista-remedios/lista-remedios.component';
 import { FormularioRemedioComponent } from './formulario-remedio/formulario-remedio.component';
 import { FormularioFarmaciaComponent } from './formulario-farmacia/formulario-farmacia.component';
-import { FormularioFuncionarioComponent } from './formulario-funcionario/formulario-funcionario.component';
 import { ListaFarmaciasComponent } from './lista-farmacias/lista-farmacias.component';
 import { RelacionarFarmaciasComponent } from './relacionar-farmacias/relacionar-farmacias.component';
 import { LoginComponent } from './login/login.component';
@@ -55,7 +54,6 @@ import { RedefinirSenhaComponent } from './redefinir-senha/redefinir-senha.compo
         ListaRemediosComponent,
         FormularioRemedioComponent,
         FormularioFarmaciaComponent,
-        FormularioFuncionarioComponent,
         ListaFarmaciasComponent,
         RelacionarFarmaciasComponent,
         LoginComponent,

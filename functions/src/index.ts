@@ -1,36 +1,40 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-import * as algoliasearch from 'algoliasearch';
-
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
-
 
 const env = functions.config();
 admin.initializeApp({
     databaseURL: 'https://remedios-bv.firebaseio.com/'
 });
 
-const client = algoliasearch('GIV51TUG9V', '88db7c52c77a029b9f10383b98204986');
+exports.onRemedioDisponivel = functions.database.ref('/farmacias/{asdf}').onUpdate((snap, context) => {
+    console.log("BEFORE: " + JSON.stringify(snap.before.val()));
+    console.log("AFTER: " + JSON.stringify(snap.after.val()));
+    let before = snap.before.val();
+    let after = snap.after.val();
+    console.log('Antes tinha? ' + before.hasOwnProperty('remedios'));
 
-const index = client.initIndex('remedios');
+    if(!before.hasOwnProperty('remedios')) before.remedios = [];
+    if(!after.hasOwnProperty('remedios')) after.remedios = [];
 
-exports.onCreateRemedio = functions.database.ref('/remedios').onCreate((snap, context) => {
-    const data = snap.val;
-    const objectId = snap.key;
+    try {
+        console.log(before['remedios'].length, after['remedios'].length)
+    } catch(err){}
 
-    return index.saveObject({
-        objectId,
-        ...data
-    })
+    if(after['remedios'].length > before['remedios'].length) {
+        before['remedios'].forEach(remedio => {
+            let index = after['remedios'].indexOf(remedio);
+            after['remedios'].splice(index, 1);
+        });
+
+        let remedioAdicionado = after['remedios'][0];
+        console.log("Remedio adicionado: " + remedioAdicionado);
+
+        admin.database().ref('/notificacoes').once('value').then(e => {
+            console.log(e.val());
+            let notificacoes = e.val().filter(notificacao => notificacao.idRemedio == remedioAdicionado);
+            
+        }).catch(err => {
+            console.log(err);
+        })
+    }
 });
-
-exports.onDeleteRemedio = functions.database.ref('/remedios/{remedioKey}').onDelete((snap, context) => {
-    const objectId = snap.key;
-
-    return index.deleteObject(objectId);
-})

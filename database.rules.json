@@ -5,10 +5,10 @@
     ".read": true,
     ".write": true,
     "remedios": {
-      ".indexOn": ["nome", "principio"]
+      ".indexOn": ["index"]
     },
     "farmacias": {
-      ".indexOn": ["nome"]
+      ".indexOn": ["index"]
     }
   }
 }

@@ -19,7 +19,7 @@ import { RemedioService } from '../remedio.service';
 })
 export class RelacaoFarmaciaRemedioComponent implements OnInit {
 
-    farmacia = {};
+    farmacia: any = {};
     todosRemedios = [];
     remedios = [];
     remediosRef: AngularFireList<any>;

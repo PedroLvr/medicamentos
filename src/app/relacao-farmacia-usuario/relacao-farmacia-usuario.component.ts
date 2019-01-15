@@ -19,7 +19,7 @@ import { FarmaciaService } from '../farmacia.service';
 })
 export class RelacaoFarmaciaUsuarioComponent implements OnInit {
 
-    usuario = {};
+    usuario: any = {};
     farmacias = [];
     todasFarmacias = [];
     totalPages = 0;

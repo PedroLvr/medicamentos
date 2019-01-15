@@ -2,26 +2,36 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-const algoliasearch = require("algoliasearch");
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
 const env = functions.config();
 admin.initializeApp({
     databaseURL: 'https://remedios-bv.firebaseio.com/'
 });
-const client = algoliasearch('GIV51TUG9V', '88db7c52c77a029b9f10383b98204986');
-const index = client.initIndex('remedios');
-exports.onCreateRemedio = functions.database.ref('/remedios').onCreate((snap, context) => {
-    const data = snap.val;
-    const objectId = snap.key;
-    return index.saveObject(Object.assign({ objectId }, data));
-});
-exports.onDeleteRemedio = functions.database.ref('/remedios/{remedioKey}').onDelete((snap, context) => {
-    const objectId = snap.key;
-    return index.deleteObject(objectId);
+exports.onRemedioDisponivel = functions.database.ref('/farmacias/{asdf}').onUpdate((snap, context) => {
+    console.log("BEFORE: " + JSON.stringify(snap.before.val()));
+    console.log("AFTER: " + JSON.stringify(snap.after.val()));
+    let before = snap.before.val();
+    let after = snap.after.val();
+    console.log('Antes tinha? ' + before.hasOwnProperty('remedios'));
+    if (!before.hasOwnProperty('remedios'))
+        before.remedios = [];
+    if (!after.hasOwnProperty('remedios'))
+        after.remedios = [];
+    try {
+        console.log(before['remedios'].length, after['remedios'].length);
+    }
+    catch (err) { }
+    if (after['remedios'].length > before['remedios'].length) {
+        before['remedios'].forEach(remedio => {
+            let index = after['remedios'].indexOf(remedio);
+            after['remedios'].splice(index, 1);
+        });
+        let remedioAdicionado = after['remedios'][0];
+        console.log("Remedio adicionado: " + remedioAdicionado);
+        admin.database().ref('/notificacoes').once('value').then(e => {
+            console.log(e.val());
+        }).catch(err => {
+            console.log(err);
+        });
+    }
 });
 //# sourceMappingURL=index.js.map
