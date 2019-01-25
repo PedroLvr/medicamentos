@@ -4,8 +4,8 @@ import { ParamsService } from '../params.service';
 import { RemedioService } from '../remedio.service';
 import { FarmaciaService } from '../farmacia.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 import { PopupService } from '../popup/popup.service';
+import { PushNotification } from '../push-notification.service';
 
 @Component({
     selector: 'app-remedio',
@@ -25,6 +25,7 @@ export class RemedioComponent implements OnInit {
         private _route: ActivatedRoute,
         private _remedioService: RemedioService,
         private _farmaciaService: FarmaciaService,
+        private _push: PushNotification,
         private _popup: PopupService,
         private _params: ParamsService
     ) {
@@ -57,12 +58,57 @@ export class RemedioComponent implements OnInit {
         this.formularioNotificar.updateValueAndValidity();
         if(this.formularioNotificar.valid) {
             const formulario = this.formularioNotificar.value;
-            this._remedioService.notificar(this.remedio.id, formulario.email, formulario.telefone);
-            this.formularioNotificar.reset();
-            this._popup.alert({
-                titulo: 'Solicitação Enviada',
-                texto: 'Você será notificado assim que o remédio estiver disponível em alguma farmácia.'
-            });
+            if(this._push.hasToken) {
+                console.log('ja tem token de notificacao')
+                this._remedioService.notificar(
+                    this.remedio.id,
+                    formulario.email,
+                    formulario.telefone,
+                    this._push.token.token
+                );
+                this.formularioNotificar.reset();
+                this._popup.alert({
+                    titulo: 'Solicitação Enviada',
+                    texto: 'Você será notificado assim que o remédio estiver disponível em alguma farmácia.'
+                });
+            } else {
+                console.log('nao tem token de notificacao')
+                this._push.askPermission().then(() => {
+                    console.log("Usuario permitiu!");
+                    return this._push.askToken();
+                }, err => {
+                    console.log(err);
+                    console.log('usuario nao permitiu');
+                }).then(token => {
+                    return this._push.saveToken(token);
+                }).then(res => {
+                    console.log(res);
+                    this._remedioService.notificar(
+                        this.remedio.id,
+                        formulario.email,
+                        formulario.telefone,
+                        this._push.token.token
+                    );
+                    this.formularioNotificar.reset();
+                    this._popup.alert({
+                        titulo: 'Solicitação Enviada',
+                        texto: 'Você será notificado assim que o remédio estiver disponível em alguma farmácia.'
+                    });
+                }).catch(err => {
+                    console.log(err);
+                    this._remedioService.notificar(
+                        this.remedio.id,
+                        formulario.email,
+                        formulario.telefone,
+                        null
+                    );
+                    this.formularioNotificar.reset();
+                    this._popup.alert({
+                        titulo: 'Solicitação Enviada',
+                        texto: 'Você será notificado assim que o remédio estiver disponível em alguma farmácia.'
+                    });
+                })
+            }
         }
     }
 
