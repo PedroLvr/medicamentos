@@ -59,57 +59,29 @@ export class RemedioComponent implements OnInit {
         if(this.formularioNotificar.valid) {
             const formulario = this.formularioNotificar.value;
             if(this._push.hasToken) {
-                console.log('ja tem token de notificacao')
-                this._remedioService.notificar(
-                    this.remedio.id,
-                    formulario.email,
-                    formulario.telefone,
-                    this._push.token.token
-                );
-                this.formularioNotificar.reset();
-                this._popup.alert({
-                    titulo: 'Solicitação Enviada',
-                    texto: 'Você será notificado assim que o remédio estiver disponível em alguma farmácia.'
-                });
-            } else {
-                console.log('nao tem token de notificacao')
-                this._push.askPermission().then(() => {
-                    console.log("Usuario permitiu!");
-                    return this._push.askToken();
-                }, err => {
-                    console.log(err);
-                    console.log('usuario nao permitiu');
-                }).then(token => {
-                    return this._push.saveToken(token);
-                }).then(res => {
-                    console.log(res);
-                    this._remedioService.notificar(
-                        this.remedio.id,
-                        formulario.email,
-                        formulario.telefone,
-                        this._push.token.token
-                    );
-                    this.formularioNotificar.reset();
-                    this._popup.alert({
-                        titulo: 'Solicitação Enviada',
-                        texto: 'Você será notificado assim que o remédio estiver disponível em alguma farmácia.'
-                    });
+                this._push.run().then(() => {
+                    this.enviarNotificacao(formulario);
                 }).catch(err => {
                     console.log(err);
-                    this._remedioService.notificar(
-                        this.remedio.id,
-                        formulario.email,
-                        formulario.telefone,
-                        null
-                    );
-                    this.formularioNotificar.reset();
-                    this._popup.alert({
-                        titulo: 'Solicitação Enviada',
-                        texto: 'Você será notificado assim que o remédio estiver disponível em alguma farmácia.'
-                    });
                 })
+            } else {
+                this.enviarNotificacao(formulario);
             }
         }
+    }
+
+    enviarNotificacao(formulario) {
+        this._remedioService.notificar(
+            this.remedio.id,
+            formulario.email,
+            formulario.telefone,
+            this._push.token.token
+        );
+        this.formularioNotificar.reset();
+        this._popup.alert({
+            titulo: 'Solicitação Enviada',
+            texto: 'Você será notificado assim que o remédio estiver disponível em alguma farmácia.'
+        });
     }
 
     home(): void {

@@ -16,29 +16,38 @@ export class PushNotification {
         @Inject(FirebaseApp) private firebaseApp: firebase.app.App
     ) {
         this.messaging = firebase.messaging(this.firebaseApp);
-        this.delete().then(() => {
+        this.run();
+    }
 
-            this._token = this.retrieveToken();
-    
-            console.log('token gravado : ' + this._token);
-    
-            if(!!this._token) {
-                this.askPermission()
-                .then(() => {
-                    console.log('Notification granted!');
-                    return this.askToken();
-                }, err => {
-                    console.log(err);
-                    throw new Error(err);
-                })
-                .then(token => {
-                    this.saveToken(token);
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-            }
-        })
+    run(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.askPermission().then(() => {
+                console.log("Permissao concedida");
+                this._token = this.retrieveToken();
+                if(this.hasToken) {
+                    console.log("Token ja registrado!");
+                    resolve();
+                } else {
+                    this.askToken().then(token => {
+                        console.log("Token recebido: " + token);
+                        return this.saveToken(token);
+                    }).then(() => {
+                        console.log("Token salvo com sucesso!");
+                        resolve();
+                    })
+                }
+            }, err => {
+                console.log("Notificacao bloqueada");
+                this.delete().then(() => {
+                    this.persistToken(null);
+                    console.log("Token removido!");
+                    resolve();
+                });
+            }).catch(err => {
+                console.log(err);
+                reject(err);
+            });
+        });
     }
 
     get hasToken() {
@@ -65,7 +74,7 @@ export class PushNotification {
         localStorage.setItem(this._tokenKey, JSON.stringify(token));
     }
 
-    retrieveToken() {
+    retrieveToken(): object {
         try {
             return JSON.parse(localStorage.getItem(this._tokenKey));
         } catch(err){
@@ -81,9 +90,7 @@ export class PushNotification {
         return new Promise((resolve, reject) => {
             let key = this._db.list('/tokens').push({token: token}).key;
             this._db.list('/tokens').update(key, {id: key})
-            .then(res => {
-                console.log("reposta do push token")
-                console.log(res);
+            .then(() => {
                 this._token = {
                     id: key,
                     token: token

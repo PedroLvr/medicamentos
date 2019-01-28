@@ -29,6 +29,7 @@ exports.onRemedioDisponivel = functions.database.ref('/farmacias/{asdf}').onUpda
         console.log("Remedio adicionado: " + remedioAdicionado);
         admin.database().ref('/notificacoes').once('value').then(e => {
             console.log(e.val());
+            let notificacoes = e.val().filter(notificacao => notificacao.idRemedio == remedioAdicionado);
         }).catch(err => {
             console.log(err);
         });
