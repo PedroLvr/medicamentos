@@ -58,15 +58,11 @@ export class RemedioComponent implements OnInit {
         this.formularioNotificar.updateValueAndValidity();
         if(this.formularioNotificar.valid) {
             const formulario = this.formularioNotificar.value;
-            if(this._push.hasToken) {
-                this._push.run().then(() => {
-                    this.enviarNotificacao(formulario);
-                }).catch(err => {
-                    console.log(err);
-                })
-            } else {
+            this._push.run().then(() => {
                 this.enviarNotificacao(formulario);
-            }
+            }).catch(err => {
+                console.log(err);
+            });
         }
     }
 
