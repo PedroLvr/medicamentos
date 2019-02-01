@@ -34,18 +34,20 @@ export class PushNotification {
                     }).then(() => {
                         console.log("Token salvo com sucesso!");
                         resolve();
-                    })
+                    });
                 }
             }, err => {
                 console.log("Notificacao bloqueada");
                 if(this.hasToken) {
                     this.delete().then(() => {
-                        this.persistToken(null);
+                        this.dropToken();
+                        this._token = null;
                         console.log("Token removido!");
                         resolve();
                     });
                 } else {
-                    this.persistToken(null);
+                    this.dropToken();
+                    this._token = null;
                     console.log("Token removido!");
                     resolve();
                 }

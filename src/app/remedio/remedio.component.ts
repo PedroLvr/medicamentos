@@ -71,7 +71,7 @@ export class RemedioComponent implements OnInit {
             this.remedio.id,
             formulario.email,
             formulario.telefone,
-            this._push.token.token
+            this._push.token
         );
         this.formularioNotificar.reset();
         this._popup.alert({
