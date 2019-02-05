@@ -39,6 +39,17 @@ exports.onRemedioDisponivel = functions.database.ref('/farmacias/{asdf}').onUpda
                 console.log(token);
                 let email = notificacoes[key].email;
                 console.log(email);
+
+                admin.messaging().sendToDevice(token, {
+                    "title": "Remédio Disponível",
+                    "body": "O remédio que você estava esperando já está disponível!",
+                    "click_action": "https://remedios-bv.firebaseapp.com",
+                    "icon": "https://remedios-bv.firebaseapp.com/assets/img/icons/icon-512x512.png"
+                }).then(res => {
+                    console.log("sucesso notificacao: ", res);
+                }).catch(err => {
+                    console.log("erro notificacao: ", err);
+                })
             });
         }).catch(err => {
             console.log(err);
