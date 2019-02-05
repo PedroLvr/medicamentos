@@ -2,30 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-const env = functions.config();
 admin.initializeApp({
     databaseURL: 'https://remedios-bv.firebaseio.com/'
 });
 exports.onRemedioDisponivel = functions.database.ref('/farmacias/{asdf}').onUpdate((snap, context) => {
-    console.log("BEFORE: " + JSON.stringify(snap.before.val()));
-    console.log("AFTER: " + JSON.stringify(snap.after.val()));
-    let before = snap.before.val();
-    let after = snap.after.val();
-    console.log('Antes tinha? ' + before.hasOwnProperty('remedios'));
+    const before = snap.before.val();
+    const after = snap.after.val();
     if (!before.hasOwnProperty('remedios'))
         before.remedios = [];
     if (!after.hasOwnProperty('remedios'))
         after.remedios = [];
-    try {
-        console.log(before['remedios'].length, after['remedios'].length);
-    }
-    catch (err) { }
     if (after['remedios'].length > before['remedios'].length) {
         before['remedios'].forEach(remedio => {
-            let index = after['remedios'].indexOf(remedio);
+            const index = after['remedios'].indexOf(remedio);
             after['remedios'].splice(index, 1);
         });
-        let remedioAdicionado = after['remedios'][0];
+        const remedioAdicionado = after['remedios'][0];
         console.log("Remedio adicionado: " + remedioAdicionado);
         admin.database()
             .ref('/notificacoes')
@@ -33,23 +25,28 @@ exports.onRemedioDisponivel = functions.database.ref('/farmacias/{asdf}').onUpda
             .equalTo(remedioAdicionado)
             .once('value').then(e => {
             console.log(e.val());
-            let notificacoes = e.val();
+            const notificacoes = e.val();
             Object.keys(notificacoes).forEach(key => {
-                let token = notificacoes[key].token;
+                const token = notificacoes[key].token;
                 console.log(token);
-                let email = notificacoes[key].email;
+                const email = notificacoes[key].email;
                 console.log(email);
-
-                admin.messaging().sendToDevice(token, {
-                    "title": "Remédio Disponível",
-                    "body": "O remédio que você estava esperando já está disponível!",
-                    "click_action": "https://remedios-bv.firebaseapp.com",
-                    "icon": "https://remedios-bv.firebaseapp.com/assets/img/icons/icon-512x512.png"
-                }).then(res => {
-                    console.log("sucesso notificacao: ", res);
-                }).catch(err => {
-                    console.log("erro notificacao: ", err);
-                })
+                const remedioNome = notificacoes[key].remedioNome;
+                if (token) {
+                    admin.messaging().sendToDevice(token.token, {
+                        "notification": {
+                            "title": "Remédio Disponível",
+                            "body": "O remédio \"" + remedioNome + "\" que você estava esperando já está disponível!",
+                            "click_action": "https://remedios-bv.firebaseapp.com/" + remedioAdicionado,
+                            "icon": "https://remedios-bv.firebaseapp.com/assets/img/icons/icon-512x512.png"
+                        }
+                    }).then(res => {
+                        console.log("sucesso notificacao: ", res);
+                        admin.database().ref('/notificacoes/' + key).remove().then().catch();
+                    }).catch(err => {
+                        console.log("erro notificacao: ", err);
+                    });
+                }
             });
         }).catch(err => {
             console.log(err);
