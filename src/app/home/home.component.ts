@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
 
     escolher(remedio): void {
         this._params.set(remedio);
-        this._router.navigateByUrl('remedio');
+        this._router.navigate(['/remedio', remedio.id]);
     }
 
     autocompletar(event) {

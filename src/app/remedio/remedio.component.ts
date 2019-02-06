@@ -6,6 +6,7 @@ import { FarmaciaService } from '../farmacia.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PopupService } from '../popup/popup.service';
 import { PushNotification } from '../push-notification.service';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
     selector: 'app-remedio',
@@ -14,6 +15,7 @@ import { PushNotification } from '../push-notification.service';
 })
 export class RemedioComponent implements OnInit {
 
+    remedioId;
     remedio;
     farmacias = null;
     farmaciasDisponiveis = 0;
@@ -27,11 +29,24 @@ export class RemedioComponent implements OnInit {
         private _farmaciaService: FarmaciaService,
         private _push: PushNotification,
         private _popup: PopupService,
-        private _params: ParamsService
+        private _params: ParamsService,
+        private _db: AngularFireDatabase
     ) {
         this.remedio = this._params.getAll();
         if(Object.keys(this.remedio).length === 0) {
-            this.home();
+            this._route.params.subscribe(params => {
+                if(!params.hasOwnProperty('id')) {
+                    this.home();
+                } else {
+                    this._db.object('/remedios/' + params['id'])
+                    .valueChanges()
+                    .first()
+                    .subscribe(remedio => {
+                        console.log(remedio);
+                        this.remedio = remedio;
+                    });
+                }
+            });
         }
     }
 
@@ -69,6 +84,7 @@ export class RemedioComponent implements OnInit {
     enviarNotificacao(formulario) {
         this._remedioService.notificar(
             this.remedio.id,
+            this.remedio.nome,
             formulario.email,
             formulario.telefone,
             this._push.token

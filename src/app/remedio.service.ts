@@ -27,20 +27,17 @@ export class RemedioService {
         this._db.list('/remedios').remove(key);
     }
 
-    notificar(idRemedio, email, telefone, token) {
-        console.log()
+    notificar(idRemedio, nomeRemedio, email, telefone, token) {
         let notificacao = {
             idRemedio: idRemedio,
+            nomeRemedio: nomeRemedio,
             email: email,
             telefone: telefone,
             token: token
         };
 
-        console.log(notificacao);
-
         this._db.list('/notificacoes').push(notificacao)
         .then(res => {
-            console.log(res);
             console.log('notificacao registrada com sucesso!');
         }, err => {
             console.log('erro notificacao');
