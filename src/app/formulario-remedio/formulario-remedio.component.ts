@@ -101,7 +101,7 @@ export class FormularioRemedioComponent {
     salvar() {
         this.isLoading = true;
         let remedio = this.form.value;
-        remedio.index = remedio.nome + ' ' + remedio.principio + ' ' + remedio.concentracao + ' ' + remedio.forma;
+        remedio.index = (remedio.nome + ' ' + remedio.principio + ' ' + remedio.concentracao + ' ' + remedio.forma).toLowerCase();
 
         // update
         if('id' in this.remedio) {

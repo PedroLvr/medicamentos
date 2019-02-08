@@ -31,12 +31,12 @@ exports.onRemedioDisponivel = functions.database.ref('/farmacias/{asdf}').onUpda
                 console.log(token);
                 const email = notificacoes[key].email;
                 console.log(email);
-                const remedioNome = notificacoes[key].remedioNome;
+                const nomeRemedio = notificacoes[key].nomeRemedio;
                 if (token) {
                     admin.messaging().sendToDevice(token.token, {
                         "notification": {
                             "title": "Remédio Disponível",
-                            "body": "O remédio \"" + remedioNome + "\" que você estava esperando já está disponível!",
+                            "body": "O remédio \"" + nomeRemedio + "\" que você estava esperando já está disponível!",
                             "click_action": "https://remedios-bv.firebaseapp.com/" + remedioAdicionado,
                             "icon": "https://remedios-bv.firebaseapp.com/assets/img/icons/icon-512x512.png"
                         }

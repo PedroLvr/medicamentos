@@ -15,6 +15,8 @@ export class HomeComponent implements OnInit {
     @ViewChild('heroBody') heroBody: ElementRef;
     autocompletes: Array<any> = [];
 
+    isLoading: boolean = false;
+
     remedios = [];
     busca = "";
 
@@ -39,32 +41,43 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         if (this.busca) {
+            this.isLoading = true;
             this._db.list('/remedios', ref =>
                 ref.orderByChild('index')
-                    .startAt(this.busca)
-                    .endAt(this.busca + "\uf8ff")
+                    .startAt(this.busca.toLocaleLowerCase())
+                    .endAt(this.busca.toLocaleLowerCase() + "\uf8ff")
             )
                 .valueChanges()
                 .subscribe(res => {
+                    this.isLoading = false;
                     this.remedios = res;
+                }, err => {
+                    this.isLoading = false;
                 });
         } else {
+            this.isLoading = true;
             this._db.list("/remedios", ref => ref.limitToFirst(12))
                 .valueChanges()
                 .subscribe(res => {
+                    this.isLoading = false;
                     this.remedios = res;
+                }, err => {
+                    this.isLoading = false;
                 });
         }
 
         Observable.combineLatest(this.startobs, this.endobs).subscribe((value) => {
+            this.isLoading = true;
             this._remedioService.filtrar(value[0], value[1])
                 .valueChanges()
                 .subscribe(res => {
+                    this.isLoading = false;
                     console.log(res);
                     this.autocompletes = res;
                 }, err => {
+                    this.isLoading = false;
                     this.autocompletes = [];
-                })
+                });
         });
     }
 
@@ -76,8 +89,8 @@ export class HomeComponent implements OnInit {
     autocompletar(event) {
         let value = event.target.value;
         if (value != '') {
-            this.startAt.next(value);
-            this.endAt.next(value + '\uf8ff');
+            this.startAt.next(value.toLocaleLowerCase());
+            this.endAt.next(value.toLocaleLowerCase() + '\uf8ff');
         } else {
             this.autocompletes = [];
         }

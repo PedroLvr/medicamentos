@@ -8,6 +8,9 @@ import { PopupService } from '../popup/popup.service';
     selector: 'app-lista-farmacias',
     templateUrl: './lista-farmacias.component.html',
     styles: [`
+        #table-farmacias {
+            margin: 5px 0 15px;
+        }
         .pagination-link.is-current {
             background: #2EDCDC;
             border-color: #2EDCDC;
@@ -15,6 +18,8 @@ import { PopupService } from '../popup/popup.service';
     `]
 })
 export class ListaFarmaciasComponent implements OnInit {
+
+    isLoading: boolean = false;
 
     farmacias = [];
     todasFarmacias = [];
@@ -40,7 +45,7 @@ export class ListaFarmaciasComponent implements OnInit {
 
     pesquisar(event?): void {
         let texto = event ? event.target.value.trim() : '';
-        console.log(texto)
+        this.isLoading = true;
         this._farmaciaService.getFarmacias(texto)
         .valueChanges()
         .subscribe(farmacias => {
@@ -53,6 +58,9 @@ export class ListaFarmaciasComponent implements OnInit {
                 this.pages.push(i);
             }
             this.farmacias = this.todasFarmacias.slice(0, 19);
+            this.isLoading = false;
+        }, err => {
+            this.isLoading = false;
         });
     }
 

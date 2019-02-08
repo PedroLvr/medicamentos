@@ -17,52 +17,69 @@
     </div>
 
     <div class="control side-margin">
-        <ng-container *ngIf="remedios.length > 0; else loading">
-            <table class="table is-striped is-fullwidth">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th class="has-text-centered">Editar | Excluir</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let remedio of remedios">
-                        <td>{{ remedio.nome }}</td>
-                        <td class="has-text-centered">
-                            <a class="button is-light is-small" (click)="editar(remedio)">
-                                <i class="fa fa-pencil-square-o fa-lg"></i>
-                            </a>
-                            <a class="button is-danger is-small" (click)="remover($event, remedio)">
-                                <i class="fa fa-trash fa-lg"></i>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <ng-container *ngIf="totalPages > 1">
-                <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-                    <button class="pagination-previous"
-                        [disabled]="currentPage == 1"
-                        (click)="anterior()">
-                        <i class="fa fa-chevron-left"></i>
-                    </button>
-                    <button class="pagination-next"
-                        [disabled]="currentPage == totalPages"
-                        (click)="proximo()">
-                        <i class="fa fa-chevron-right"></i>
-                    </button>
-                    <ul class="pagination-list">
-                        <li *ngFor="let page of pages">
-                            <a class="pagination-link"
-                                [ngClass]="{'is-current': currentPage == page}"
-                                (click)="ir(page)">{{ page }}</a>
-                        </li>
-                    </ul>
-                </nav>
-            </ng-container>
+        <ng-container *ngIf="!isLoading > 0; else loading">
+            <ng-container *ngIf="remedios.length > 0; else notFound">
+                <table id="table-remedios" class="table is-striped is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>Remédios</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let remedio of remedios">
+                            <td>{{ remedio.nome }}</td>
+                            <td class="has-text-centered" style="width: 185px;">
+                                <a class="button is-small" (click)="editar(remedio)">
+                                    <span class="icon">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </span>
+                                    <span>Editar</span>
+                                </a>
+                                <a class="button is-danger is-small" (click)="remover($event, remedio)">
+                                    <span class="icon">
+                                        <i class="fa fa-trash"></i>
+                                    </span>
+                                    <span>Excluir</span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <ng-container *ngIf="totalPages > 1">
+                    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                        <button class="pagination-previous"
+                            [disabled]="currentPage == 1"
+                            (click)="anterior()">
+                            <i class="fa fa-chevron-left"></i>
+                        </button>
+                        <button class="pagination-next"
+                            [disabled]="currentPage == totalPages"
+                            (click)="proximo()">
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                        <ul class="pagination-list">
+                            <li *ngFor="let page of pages">
+                                <a class="pagination-link"
+                                    [ngClass]="{'is-current': currentPage == page}"
+                                    (click)="ir(page)">{{ page }}</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </ng-container>
 
+            </ng-container>
         </ng-container>
+
+        <ng-template #notFound>
+            <div class="column has-text-centered" style="padding: 20px 0;">
+                <p class="title is-4 has-text-grey" style="margin-bottom: 5px">
+                    Nenhum remédio encontrado
+                </p>
+                <i class="fa fa-frown-o fa-4x has-text-grey"></i>
+            </div>
+        </ng-template>
     
         <ng-template #loading>
             <div class="column has-text-centered" style="padding: 20px 0;">

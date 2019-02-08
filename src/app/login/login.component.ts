@@ -66,8 +66,10 @@ export class LoginComponent implements OnInit {
                     titulo: 'E-mail Inexistente',
                     texto: 'Não existe nenhum usuário com o e-mail informado!'
                 });
+                this.isLoading = false;
             }
         }, err => {
+            this.isLoading = false;
             console.log(err);
         });
     }

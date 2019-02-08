@@ -8,9 +8,16 @@ import { RemedioService } from '../remedio.service';
 
 @Component({
     selector: 'app-lista-remedios',
-    templateUrl: './lista-remedios.component.html'
+    templateUrl: './lista-remedios.component.html',
+    styles: [`
+        #table-remedios {
+            margin: 5px 0 15px;
+        }
+    `]
 })
 export class ListaRemediosComponent implements OnInit {
+
+    isLoading: boolean = false;
 
     remedios = [];
     todosRemedios = [];
@@ -36,6 +43,7 @@ export class ListaRemediosComponent implements OnInit {
 
     pesquisar(event?) {
         let texto = event ? event.target.value.trim() : '';
+        this.isLoading = true;
         this._remedioService.getRemedios(texto)
         .valueChanges()
         .subscribe(remedios => {
@@ -48,6 +56,9 @@ export class ListaRemediosComponent implements OnInit {
                 this.pages.push(i);
             }
             this.remedios = this.todosRemedios.slice(0, 19);
+            this.isLoading = false;
+        }, err => {
+            this.isLoading = false;
         });
     }
 

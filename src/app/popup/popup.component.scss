@@ -1,18 +1,22 @@
+.modal-card {
+    max-width: 475px;
+}
+
 .modal-card-head {
-    padding: 10px 15px;
+    padding: 8px 15px;
 
     .modal-card-title {
-        font-size: 20px;
+        font-size: 18px;
     }
 }
 
 .modal-card-body {
-    padding: 15px 20px;
+    padding: 10px 20px 15px;
     font-size: 16px;
 }
 
 .modal-card-foot {
-    padding: 5px;
+    padding: 3px;
     justify-content: flex-end;
 
     button {

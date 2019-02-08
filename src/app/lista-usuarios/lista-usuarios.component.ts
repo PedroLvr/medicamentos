@@ -9,6 +9,9 @@ import { UsuarioService } from '../usuario.service';
     selector: 'app-lista-usuarios',
     templateUrl: './lista-usuarios.component.html',
     styles: [`
+        #table-usuarios {
+            margin: 5px 0 15px;
+        }
         .pagination-link.is-current {
             background: #f26522;
             border-color: #f26522;
@@ -16,6 +19,8 @@ import { UsuarioService } from '../usuario.service';
     `]
 })
 export class ListaUsuariosComponent implements OnInit {
+
+    isLoading: boolean = false;
 
     usuarios = [];
     todosUsuarios = [];
@@ -42,7 +47,7 @@ export class ListaUsuariosComponent implements OnInit {
 
     pesquisar(event?): void {
         let texto = event ? event.target.value.trim() : '';
-        console.log(texto)
+        this.isLoading = true;
         this._usuarioService.getUsuarios(texto)
         .valueChanges()
         .subscribe(usuarios => {
@@ -55,6 +60,9 @@ export class ListaUsuariosComponent implements OnInit {
                 this.pages.push(i);
             }
             this.usuarios = this.todosUsuarios.slice(0, 19);
+            this.isLoading = false;
+        }, err => {
+            this.isLoading = false;
         });
     }
 

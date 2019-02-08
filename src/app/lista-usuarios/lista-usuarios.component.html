@@ -18,63 +18,80 @@
 
 
     <div class="control side-margin">
-        <ng-container *ngIf="usuarios.length > 0; else loading">
-            <table class="table is-striped is-hoverable is-fullwidth">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th class="has-text-centered">E-mail</th>
-                        <th class="has-text-centered">Permissão</th>
-                        <th class="has-text-centered">Farmácias</th>
-                        <th class="has-text-centered">Editar | Excluir</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let usuario of usuarios">
-                        <td>{{ usuario.nome }}</td>
-                        <td class="has-text-centered">{{ usuario.email }}</td>
-                        <td class="has-text-centered">{{ usuario.permissao }}</td>
-                        <td class="has-text-centered">
-                            <a class="button is-info is-small" (click)="editarFarmacias(usuario)">
-                                <i class="fa fa-hospital-o fa-lg"></i>
-                            </a>
-                        </td>
-                        <td class="has-text-centered">
-                            <a class="button is-light is-small" (click)="editarUsuario(usuario)">
-                                <i class="fa fa-pencil-square-o fa-lg"></i>
-                            </a>
-                            <a class="button is-danger is-small" (click)="excluirUsuario(usuario)">
-                                <i class="fa fa-trash fa-lg"></i>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <ng-container *ngIf="!isLoading > 0; else loading">
+            <ng-container *ngIf="usuarios.length > 0; else notFound">
+                <table id="table-usuarios" class="table is-striped is-hoverable is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>Usuário</th>
+                            <th class="has-text-centered">E-mail</th>
+                            <th class="has-text-centered">Permissão</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let usuario of usuarios">
+                            <td>{{ usuario.nome }}</td>
+                            <td class="has-text-centered">{{ usuario.email }}</td>
+                            <td class="has-text-centered">{{ usuario.permissao }}</td>
+                            <td class="has-text-centered" style="width: 275px;">
+                                    <a class="button is-info is-small" (click)="editarFarmacias(usuario)">
+                                        <span class="icon">
+                                            <i class="fa fa-hospital-o fa-lg"></i>
+                                        </span>
+                                        <span>Farmácias</span>
+                                    </a>
+                                <a class="button is-small" (click)="editarUsuario(usuario)">
+                                    <span class="icon">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </span>
+                                    <span>Editar</span>
+                                </a>
+                                <a class="button is-danger is-small" (click)="excluirUsuario(usuario)">
+                                    <span class="icon">
+                                        <i class="fa fa-trash"></i>
+                                    </span>
+                                    <span>Excluir</span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-            <ng-container *ngIf="totalPages > 1">
-                <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-                    <button class="pagination-previous"
-                        [disabled]="currentPage == 1"
-                        (click)="anterior()">
-                        <i class="fa fa-chevron-left"></i>
-                    </button>
-                    <button class="pagination-next"
-                        [disabled]="currentPage == totalPages"
-                        (click)="proximo()">
-                        <i class="fa fa-chevron-right"></i>
-                    </button>
-                    <ul class="pagination-list">
-                        <li *ngFor="let page of pages">
-                            <a class="pagination-link"
-                                [ngClass]="{'is-current': currentPage == page}"
-                                (click)="ir(page)">
-                                {{ page }}
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                <ng-container *ngIf="totalPages > 1">
+                    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                        <button class="pagination-previous"
+                            [disabled]="currentPage == 1"
+                            (click)="anterior()">
+                            <i class="fa fa-chevron-left"></i>
+                        </button>
+                        <button class="pagination-next"
+                            [disabled]="currentPage == totalPages"
+                            (click)="proximo()">
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                        <ul class="pagination-list">
+                            <li *ngFor="let page of pages">
+                                <a class="pagination-link"
+                                    [ngClass]="{'is-current': currentPage == page}"
+                                    (click)="ir(page)">
+                                    {{ page }}
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </ng-container>
             </ng-container>
         </ng-container>
+
+        <ng-template #notFound>
+            <div class="column has-text-centered" style="padding: 20px 0;">
+                <p class="title is-4 has-text-grey" style="margin-bottom: 5px">
+                    Nenhum usuário encontrado
+                </p>
+                <i class="fa fa-frown-o fa-4x has-text-grey"></i>
+            </div>
+        </ng-template>
 
         <ng-template #loading>
             <div class="column has-text-centered" style="padding: 20px 0;">
