@@ -18,7 +18,7 @@
 
 
     <div class="control side-margin">
-        <ng-container *ngIf="!isLoading > 0; else loading">
+        <ng-container *ngIf="!isLoading; else loading">
             <ng-container *ngIf="usuarios.length > 0; else notFound">
                 <table id="table-usuarios" class="table is-striped is-hoverable is-fullwidth">
                     <thead>

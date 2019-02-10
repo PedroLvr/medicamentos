@@ -18,13 +18,11 @@ exports.onRemedioDisponivel = functions.database.ref('/farmacias/{asdf}').onUpda
             after['remedios'].splice(index, 1);
         });
         const remedioAdicionado = after['remedios'][0];
-        console.log("Remedio adicionado: " + remedioAdicionado);
         admin.database()
             .ref('/notificacoes')
             .orderByChild('idRemedio')
             .equalTo(remedioAdicionado)
             .once('value').then(e => {
-            console.log(e.val());
             const notificacoes = e.val();
             Object.keys(notificacoes).forEach(key => {
                 const token = notificacoes[key].token;
@@ -37,7 +35,7 @@ exports.onRemedioDisponivel = functions.database.ref('/farmacias/{asdf}').onUpda
                         "notification": {
                             "title": "Remédio Disponível",
                             "body": "O remédio \"" + nomeRemedio + "\" que você estava esperando já está disponível!",
-                            "click_action": "https://remedios-bv.firebaseapp.com/" + remedioAdicionado,
+                            "click_action": "https://remedios-bv.firebaseapp.com/remedio/" + remedioAdicionado,
                             "icon": "https://remedios-bv.firebaseapp.com/assets/img/icons/icon-512x512.png"
                         }
                     }).then(res => {
