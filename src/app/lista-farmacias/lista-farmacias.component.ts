@@ -46,7 +46,7 @@ export class ListaFarmaciasComponent implements OnInit {
     pesquisar(event?): void {
         let texto = event ? event.target.value.trim() : '';
         this.isLoading = true;
-        this._farmaciaService.getFarmacias(texto)
+        this._farmaciaService.getFarmacias(texto.toLowerCase())
         .valueChanges()
         .subscribe(farmacias => {
             this.todasFarmacias = farmacias;

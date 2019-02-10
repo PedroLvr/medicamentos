@@ -48,9 +48,10 @@ export class ListaUsuariosComponent implements OnInit {
     pesquisar(event?): void {
         let texto = event ? event.target.value.trim() : '';
         this.isLoading = true;
-        this._usuarioService.getUsuarios(texto)
+        this._usuarioService.getUsuarios(texto.toLowerCase())
         .valueChanges()
         .subscribe(usuarios => {
+            console.log(usuarios);
             this.todosUsuarios = usuarios;
             let len = usuarios.length;
             this.currentPage = 1;

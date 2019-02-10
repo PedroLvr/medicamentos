@@ -52,7 +52,7 @@ export class FormularioUsuarioComponent {
     salvar() {
         this.isLoading = true;
         let usuario = this.form.value;
-        usuario.index = usuario.nome + ' ' + usuario.email;
+        usuario.index = (usuario.nome + ' ' + usuario.email).toLowerCase();
 
         // update
         if ('id' in this.usuario) {

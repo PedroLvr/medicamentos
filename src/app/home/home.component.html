@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <nav class="panel painel-completes" *ngIf="autocompletes.length > 0">
-                        <a class="panel-block" *ngFor="let complete of autocompletes" (click)="buscar(complete.nome + ' ' + complete.concentracao)">
+                        <a class="panel-block" *ngFor="let complete of autocompletes" (click)="buscar(complete)">
                             {{ complete.nome + ' ' + complete.concentracao }}
                         </a>
                     </nav>

@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div class="control has-icons-right has-margin">
+    <div class="control has-icons-right side-margin">
         <input class="input" type="text" placeholder="Pesquisar farmácia..." (input)="pesquisar($event)">
         <span class="icon is-right">
             <i class="fa fa-search"></i>
@@ -26,52 +26,63 @@
     </div>
 
     <div class="control side-margin">
-        <ng-container *ngIf="farmacias.length; else loading">
-            <table class="table is-striped is-hoverable is-fullwidth">
-                <thead>
-                    <tr>
-                        <th class="has-text-centered">Colaborador</th>
-                        <th>Farmácia</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let farmacia of farmacias">
-                        <td class="has-text-centered">
-                            <a class="button is-small"
-                                [ngClass]="{'is-warning': (usuario.farmacias && usuario.farmacias.indexOf(farmacia.id) > -1)}"
-                                (click)="toggleColaborador(farmacia)">
-                                {{ (usuario.farmacias && usuario.farmacias.indexOf(farmacia.id) > -1 ? 'Sim' : 'Não') }}
-                            </a>
-                        </td>
-                        <td>{{ farmacia.nome }}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <ng-container *ngIf="!isLoading; else loading">
+            <ng-container *ngIf="farmacias.length; else notFound">
+                <table id="table-farmacias"class="table is-striped is-hoverable is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th class="has-text-centered" style="width: 130px;">Colaborador</th>
+                            <th>Farmácia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let farmacia of farmacias">
+                            <td class="has-text-centered">
+                                <a class="button is-small"
+                                    [ngClass]="{'is-warning': (usuario.farmacias && usuario.farmacias.indexOf(farmacia.id) > -1)}"
+                                    (click)="toggleColaborador(farmacia)">
+                                    {{ (usuario.farmacias && usuario.farmacias.indexOf(farmacia.id) > -1 ? 'Sim' : 'Não') }}
+                                </a>
+                            </td>
+                            <td>{{ farmacia.nome }}</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-            <ng-container *ngIf="totalPages > 1">
-                <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-                    <button class="pagination-previous"
-                        [disabled]="currentPage == 1"
-                        (click)="anterior()">
-                        <i class="fa fa-chevron-left"></i>
-                    </button>
-                    <button class="pagination-next"
-                        [disabled]="currentPage == totalPages"
-                        (click)="proximo()">
-                        <i class="fa fa-chevron-right"></i>
-                    </button>
-                    <ul class="pagination-list">
-                        <li *ngFor="let page of pages">
-                            <a class="pagination-link"
-                                [ngClass]="{'is-current': currentPage == page}"
-                                (click)="ir(page)">
-                                {{ page }}
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                <ng-container *ngIf="totalPages > 1">
+                    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                        <button class="pagination-previous"
+                            [disabled]="currentPage == 1"
+                            (click)="anterior()">
+                            <i class="fa fa-chevron-left"></i>
+                        </button>
+                        <button class="pagination-next"
+                            [disabled]="currentPage == totalPages"
+                            (click)="proximo()">
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                        <ul class="pagination-list">
+                            <li *ngFor="let page of pages">
+                                <a class="pagination-link"
+                                    [ngClass]="{'is-current': currentPage == page}"
+                                    (click)="ir(page)">
+                                    {{ page }}
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </ng-container>
             </ng-container>
         </ng-container>
+
+        <ng-template #notFound>
+            <div class="column has-text-centered" style="padding: 20px 0;">
+                <p class="title is-4 has-text-grey" style="margin-bottom: 5px">
+                    Nenhuma farmácia encontrada
+                </p>
+                <i class="fa fa-frown-o fa-4x has-text-grey"></i>
+            </div>
+        </ng-template>
 
         <ng-template #loading>
             <div class="column has-text-centered" style="padding: 20px 0;">

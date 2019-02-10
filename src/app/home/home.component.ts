@@ -72,7 +72,6 @@ export class HomeComponent implements OnInit {
                 .valueChanges()
                 .subscribe(res => {
                     this.isLoading = false;
-                    console.log(res);
                     this.autocompletes = res;
                 }, err => {
                     this.isLoading = false;
@@ -100,7 +99,7 @@ export class HomeComponent implements OnInit {
         this._router.navigate([''], {
             relativeTo: this._route,
             queryParams: {
-                busca: busca
+                busca: busca['nome']
             }
         }).then(res => {
             window.location.reload();

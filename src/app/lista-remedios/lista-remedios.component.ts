@@ -44,7 +44,7 @@ export class ListaRemediosComponent implements OnInit {
     pesquisar(event?) {
         let texto = event ? event.target.value.trim() : '';
         this.isLoading = true;
-        this._remedioService.getRemedios(texto)
+        this._remedioService.getRemedios(texto.toLowerCase())
         .valueChanges()
         .subscribe(remedios => {
             this.todosRemedios = remedios;

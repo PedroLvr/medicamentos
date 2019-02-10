@@ -7,20 +7,22 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PopupService } from '../popup/popup.service';
 import { PushNotification } from '../push-notification.service';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-remedio',
-    templateUrl: './remedio.component.html',
-    styleUrls: ['./remedio.component.scss']
+    templateUrl: './remedio.component.html'
 })
 export class RemedioComponent implements OnInit {
 
     remedioId;
-    remedio;
-    farmacias = null;
+    remedio = null;
+    farmacias = [];
     farmaciasDisponiveis = 0;
     formularioNotificar: FormGroup;
     isLoading: boolean = false;
+
+    subFarmacia: Subscription;
 
     constructor(
         private _router: Router,
@@ -40,10 +42,10 @@ export class RemedioComponent implements OnInit {
                 } else {
                     this._db.object('/remedios/' + params['id'])
                     .valueChanges()
-                    .first()
                     .subscribe(remedio => {
-                        console.log(remedio);
                         this.remedio = remedio;
+
+                        this.getFarmacias();
                     });
                 }
             });
@@ -51,21 +53,33 @@ export class RemedioComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._farmaciaService.getFarmacias()
+        this.getFarmacias();
+        this.formularioNotificar = new FormGroup({
+            'email': new FormControl('', [Validators.required, Validators.email]),
+            'telefone': new FormControl('', Validators.required)
+        });
+    }
+
+    getFarmacias() {
+        this.isLoading = true;
+
+        if(!!this.subFarmacia) {
+            this.subFarmacia.unsubscribe();
+        }
+
+        this.subFarmacia
+        this.subFarmacia = this._farmaciaService.getFarmacias()
         .valueChanges()
         .subscribe(farmacias => {
             if(this.remedio['farmacias']) {
                 this.farmacias = farmacias.filter(farmacia => this.remedio['farmacias'].indexOf(farmacia.id) > -1);
-                this.farmaciasDisponiveis = this.farmacias.reduce((total, farmacia) => farmacia.remedios && farmacia.remedios.indexOf(this.remedio.id) ? ++total : total, 0);
+                this.farmaciasDisponiveis = this.farmacias.reduce((total, farmacia) => farmacia.remedios && (farmacia.remedios.indexOf(this.remedio.id) >= 0) ? ++total : total, 0);
             }
+            this.isLoading = false;
         }, err => {
             console.log(err);
             this.farmacias = null;
-        });
-
-        this.formularioNotificar = new FormGroup({
-            'email': new FormControl('', [Validators.required, Validators.email]),
-            'telefone': new FormControl('', Validators.required)
+            this.isLoading = false;
         });
     }
 

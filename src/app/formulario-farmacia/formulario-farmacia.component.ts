@@ -82,7 +82,7 @@ export class FormularioFarmaciaComponent {
     salvar() {
         this.isLoading = true;
         let farmacia = this.form.value;
-        farmacia.index = farmacia.nome + ' ' + farmacia.cep + ' ' + farmacia.logradouro + ' ' + farmacia.bairro;
+        farmacia.index = (farmacia.nome + ' ' + farmacia.cep + ' ' + farmacia.logradouro + ' ' + farmacia.bairro).toLowerCase();
 
         // update
         if ('id' in this.farmacia) {

@@ -9,6 +9,9 @@ import { RemedioService } from '../remedio.service';
     selector: 'app-farmacia',
     templateUrl: './farmacia.component.html',
     styles: [`
+        #table-remedios {
+            margin: 5px 0 15px;
+        }
         .container {
             margin-top: 15px;
             margin-bottom: 15px;
@@ -17,9 +20,11 @@ import { RemedioService } from '../remedio.service';
 })
 export class FarmaciaComponent implements OnInit {
 
+    isLoading: boolean = false;
+
     usuario = {};
-    farmacias: any = [{nome: 'Selecione a Farmácia'}];
-    farmaciaSelecionada = {};
+    farmacias: any = [];
+    farmaciaSelecionada = null;
     todosRemedios = [];
     remedios = [];
     totalPages = 0;
@@ -39,7 +44,7 @@ export class FarmaciaComponent implements OnInit {
         if(this._sessao.hasSessao()) {
             this.usuario = this._sessao.getUser();
             if(this.usuario['farmacias']) {
-                this._db.list('/farmacias').valueChanges().subscribe(farmacias => {
+                this._db.list('/farmacias').valueChanges().first().subscribe(farmacias => {
                     this.farmacias = farmacias.filter(f => this.usuario['farmacias'].includes(f['id']));
                     this.farmacias.unshift({nome: 'Selecione a Farmácia'});
                 });
@@ -54,17 +59,21 @@ export class FarmaciaComponent implements OnInit {
 
     pesquisar(event?) {
         let texto = event ? event.target.value.trim() : '';
+        this.isLoading = true;
         this._remedioService.getRemedios(texto)
         .valueChanges()
         .subscribe(remedios => {
             this.todosRemedios = remedios;
-            if(this.farmaciaSelecionada) {
+            if(!!this.farmaciaSelecionada) {
                 this.escolherFarmacia({
                     target: {
                         value: this.farmaciaSelecionada['id']
                     }
                 });
             }
+            this.isLoading = false;
+        }, err => {
+            this.isLoading = false;
         });
     }
 
@@ -83,14 +92,16 @@ export class FarmaciaComponent implements OnInit {
     }
 
     editarRemedios() {
-        this._params.set(this.farmaciaSelecionada);
-        this._router.navigate(['remedios'], { relativeTo: this._route });
+        if(!!this.farmaciaSelecionada) {
+            this._params.set(this.farmaciaSelecionada);
+            this._router.navigate(['remedios'], { relativeTo: this._route });
+        }
     }
 
     escolherFarmacia(event) {
         let farmacia = this.farmacias.find(f => f.id == event.target.value);
         this.farmaciaSelecionada = farmacia;
-        this.remedios = this.todosRemedios.filter(r => r['farmacias'] && r['farmacias'].includes(farmacia.id));
+        this.remedios = this.todosRemedios.filter(r => r['farmacias'] && r['farmacias'].includes(this.farmaciaSelecionada['id']));
         let len = this.remedios.length;
         this.currentPage = 1;
         this.totalPages = Math.ceil(len / 20);

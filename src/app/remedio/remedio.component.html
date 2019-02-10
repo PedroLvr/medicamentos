@@ -23,8 +23,8 @@
     </section>
     <!-- end BANNER -->
 
-    <section class="section notificar" *ngIf="farmaciasDisponiveis === 0">
-        <div class="container">
+    <section class="section notificar" *ngIf="!isLoading && farmaciasDisponiveis === 0">
+        <div class="container" style="max-width: 600px;">
 
             <div class="subtitle is-6" style="margin-bottom: 0;">
                 Poxa, parece que nenhuma farmácia tem este remédio disponível. Quer ser notificado quando o remédio chegar? Preencha o formulário
@@ -80,11 +80,11 @@
 
     <section class="container resultado">
 
-        <ng-container *ngIf="farmacias != null; else loading">
+        <ng-container *ngIf="!isLoading; else loading">
 
             <div class="columns is-multiline">
 
-                <ng-container *ngIf="farmacias.length > 0; else naoencontrado">
+                <ng-container *ngIf="farmacias.length > 0; else notFound">
                     <div class="column is-half-tablet is-one-third-desktop" *ngFor="let farmacia of farmacias">
 
                         <div class="card">
@@ -109,7 +109,7 @@
                                             <a [href]="'tel:' + farmacia.telefone">{{ farmacia.telefone }}</a>
                                             <br/>
                                             <i class="fa fa-map-marker"></i>
-                                            <a [href]="'https://www.google.com/maps/search/?api=1&query=' + farmacia.logradouro + ', ' + farmacia.bairro" target="_blank">{{ farmacia.endereco + ', ' + farmacia.bairro }}</a>
+                                            <a [href]="'https://www.google.com/maps/search/?api=1&query=' + farmacia.logradouro + ', ' + farmacia.numero + ', ' + farmacia.bairro" target="_blank">{{ farmacia.logradouro + ', ' + farmacia.numero + ' - ' + farmacia.bairro }}</a>
                                         </p>
                                     </div>
 
@@ -120,7 +120,7 @@
                     </div>
                 </ng-container>
 
-                <ng-template #naoencontrado>
+                <ng-template #notFound>
                     <div class="column has-text-centered" style="padding: 20px 0;">
                         <p class="title is-4 has-text-grey" style="margin-bottom: 5px">
                             Nenhuma farmácia encontrada

@@ -2,7 +2,10 @@
 
     <div class="field">
         <label class="label">Farmácia</label>
-        <div class="control">
+        <div class="control" *ngIf="farmacias.length == 0">
+            Carregando Farmácias ...
+        </div>
+        <div class="control" *ngIf="farmacias.length > 0">
             <div class="select is-primary">
                 <select (change)="escolherFarmacia($event)">
                     <option *ngFor="let farmacia of farmacias" [value]="farmacia.id">{{ farmacia.nome }}</option>
@@ -29,50 +32,61 @@
 
 
     <div class="control">
-        <ng-container *ngIf="remedios.length > 0; else loading">
-            <table class="table is-striped is-hoverable is-fullwidth">
-                <thead>
-                    <tr>
-                        <th class="has-text-centered">Disponível</th>
-                        <th>Remédio</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let remedio of remedios">
-                        <td class="has-text-centered">
-                            <a class="button is-small" [ngClass]="{'is-primary': (farmaciaSelecionada.remedios && farmaciaSelecionada.remedios.includes(remedio.id))}"
-                                (click)="toggleDisponivel(remedio)">
-                                {{ (farmaciaSelecionada.remedios && farmaciaSelecionada.remedios.includes(remedio.id))
-                                ? 'Disponível' : 'Indisponível' }}
-                            </a>
-                        </td>
-                        <td>{{ remedio.nome }}</td>
-                    </tr>
-                </tbody>
-            </table>
-                
-            <ng-container *ngIf="totalPages > 1">
-                <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-                    <button class="pagination-previous"
-                        [disabled]="currentPage == 1"
-                        (click)="anterior()">
-                        <i class="fa fa-chevron-left"></i>
-                    </button>
-                    <button class="pagination-next"
-                        [disabled]="currentPage == totalPages"
-                        (click)="proximo()">
-                        <i class="fa fa-chevron-right"></i>
-                    </button>
-                    <ul class="pagination-list">
-                        <li *ngFor="let page of pages">
-                            <a class="pagination-link"
-                                [ngClass]="{'is-current': currentPage == page}"
-                                (click)="ir(page)">{{ page }}</a>
-                        </li>
-                    </ul>
-                </nav>
+        <ng-container *ngIf="!isLoading; else loading">
+            <ng-container *ngIf="remedios.length > 0; else notFound">
+                <table id="table-remedios" class="table is-striped is-hoverable is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th class="has-text-centered" style="width: 130px;">Disponível</th>
+                            <th>Remédio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let remedio of remedios">
+                            <td class="has-text-centered">
+                                <a class="button is-small" [ngClass]="{'is-primary': (farmaciaSelecionada.remedios && farmaciaSelecionada.remedios.includes(remedio.id))}"
+                                    (click)="toggleDisponivel(remedio)">
+                                    {{ (farmaciaSelecionada.remedios && farmaciaSelecionada.remedios.includes(remedio.id))
+                                    ? 'Disponível' : 'Indisponível' }}
+                                </a>
+                            </td>
+                            <td>{{ remedio.nome }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                    
+                <ng-container *ngIf="totalPages > 1">
+                    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                        <button class="pagination-previous"
+                            [disabled]="currentPage == 1"
+                            (click)="anterior()">
+                            <i class="fa fa-chevron-left"></i>
+                        </button>
+                        <button class="pagination-next"
+                            [disabled]="currentPage == totalPages"
+                            (click)="proximo()">
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                        <ul class="pagination-list">
+                            <li *ngFor="let page of pages">
+                                <a class="pagination-link"
+                                    [ngClass]="{'is-current': currentPage == page}"
+                                    (click)="ir(page)">{{ page }}</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </ng-container>
             </ng-container>
         </ng-container>
+
+        <ng-template #notFound>
+            <div class="column has-text-centered" style="padding: 20px 0;">
+                <p class="title is-4 has-text-grey" style="margin-bottom: 5px">
+                    Nenhum remédio encontrado
+                </p>
+                <i class="fa fa-frown-o fa-4x has-text-grey"></i>
+            </div>
+        </ng-template>
 
         <ng-template #loading>
             <div class="column has-text-centered" style="padding: 20px 0;">
